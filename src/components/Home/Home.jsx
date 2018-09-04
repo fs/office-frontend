@@ -4,20 +4,19 @@ import { withStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import PropTypes from 'prop-types';
 
-const drawerWidth = 240;
+const drawerWidth = 340;
 
 const styles = theme => ({
   root: {
     flexGrow: 1,
   },
-  appFrame: {
+  appWrapper: {
     height: '100%',
     zIndex: 1,
     overflow: 'hidden',
@@ -38,11 +37,6 @@ const styles = theme => ({
       easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.enteringScreen,
     }),
-  },
-  'appBarShift-left': {
-    marginLeft: drawerWidth,
-  },
-  'appBarShift-right': {
     marginRight: drawerWidth,
   },
   toolBar: {
@@ -86,11 +80,6 @@ const styles = theme => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
-  },
-  'content-left': {
-    marginLeft: -drawerWidth,
-  },
-  'content-right': {
     marginRight: -drawerWidth,
   },
   contentShift: {
@@ -98,53 +87,17 @@ const styles = theme => ({
       easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.enteringScreen,
     }),
-  },
-  'contentShift-left': {
-    marginLeft: 0,
-  },
-  'contentShift-right': {
     marginRight: 0,
   },
 });
 
-const home = ({ handleDrawerOpen, handleDrawerClose, open, anchor, classes }) => {
-  const drawer = (
-    <Drawer
-      variant="persistent"
-      anchor={anchor}
-      open={open}
-      classes={{
-        paper: classes.drawerPaper,
-      }}
-    >
-      <div className={classes.drawerHeader}>
-        <IconButton onClick={handleDrawerClose}>
-          <ChevronLeftIcon />
-        </IconButton>
-      </div>
-      <Divider />
-      <List />
-      <Divider />
-      <List />
-    </Drawer>
-  );
-
-  let before = null;
-  let after = null;
-
-  if (anchor === 'left') {
-    before = drawer;
-  } else {
-    after = drawer;
-  }
-
+const home = ({ handleDrawerOpen, handleDrawerClose, open, classes }) => {
   return (
     <div className={classes.root}>
-      <div className={classes.appFrame}>
+      <div className={classes.appWrapper}>
         <AppBar
           className={classNames(classes.appBar, {
             [classes.appBarShift]: open,
-            [classes[`appBarShift-${anchor}`]]: open,
           })}
         >
           <Toolbar className={classes.toolBar} disableGutters={!open}>
@@ -161,18 +114,29 @@ const home = ({ handleDrawerOpen, handleDrawerClose, open, anchor, classes }) =>
             </Typography>
           </Toolbar>
         </AppBar>
-        {before}
         <main
-          className={classNames(classes.content, classes[`content-${anchor}`], {
+          className={classNames(classes.content, {
             [classes.contentShift]: open,
-            [classes[`contentShift-${anchor}`]]: open,
           })}
         >
           <div className={classes.drawerHeader} />
-
           <Typography>{'You think water moves fast? You should see ice.'}</Typography>
         </main>
-        {after}
+        <Drawer
+          variant="persistent"
+          anchor={'right'}
+          open={open}
+          classes={{
+            paper: classes.drawerPaper,
+          }}
+        >
+          <div className={classes.drawerHeader}>
+            <IconButton onClick={handleDrawerClose}>
+              <ChevronLeftIcon />
+            </IconButton>
+          </div>
+          <Divider />
+        </Drawer>
       </div>
     </div>
   );
