@@ -15,6 +15,7 @@ const drawerWidth = 340;
 const styles = theme => ({
   root: {
     flexGrow: 1,
+    height: '100vh',
   },
   appWrapper: {
     height: '100%',
@@ -42,9 +43,6 @@ const styles = theme => ({
   toolBar: {
     paddingLeft: '30px',
     paddingRight: '30px',
-  },
-  root: {
-    height: '100vh',
   },
   loginButton: {
     position: 'absolute',
@@ -144,7 +142,9 @@ const home = ({ handleDrawerOpen, handleDrawerClose, open, classes }) => {
 
 home.propTypes = {
   classes: PropTypes.object.isRequired,
-  theme: PropTypes.object.isRequired,
+  open: PropTypes.bool.isRequired,
+  handleDrawerOpen: PropTypes.func.isRequired,
+  handleDrawerClose: PropTypes.func.isRequired,
 };
 
-export default withStyles(styles, { withTheme: true })(home);
+export default withStyles(styles)(home);

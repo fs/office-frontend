@@ -13,24 +13,14 @@ class HomeContainer extends React.Component {
       };
     });
   };
-
   handleDrawerClose = () => {
     this.setState({ open: false });
   };
-
-  handleChangeAnchor = event => {
-    this.setState({
-      anchor: event.target.value,
-    });
-  };
-
   render() {
     return (
       <Home
         handleDrawerOpen={this.handleDrawerOpen}
         handleDrawerClose={this.handleDrawerClose}
-        handleChangeAnchor={this.handleChangeAnchor}
-        {...this.props}
         {...this.state}
       />
     );
