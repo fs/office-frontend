@@ -9,7 +9,6 @@ import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import Button from '@material-ui/core/Button';
-import Avatar from '@material-ui/core/Avatar';
 import PersonIcon from '@material-ui/icons/Person';
 import PropTypes from 'prop-types';
 import AuthContainer from '../../containers/Auth/AuthContainer';
@@ -77,26 +76,28 @@ const styles = theme => ({
     }),
     marginRight: 0,
   },
-  avatar: {
-    margin: theme.spacing.unit,
-    backgroundColor: theme.palette.secondary.main,
-  },
 });
 
 const Home = ({ handleDrawerToggle, open, isAuthenticated, classes }) => {
   console.log(isAuthenticated);
 
   let auth = (
-    <Button color="inherit" aria-label="Open drawer" onClick={handleDrawerToggle}>
+    <Button color="inherit" aria-label="Open login" onClick={handleDrawerToggle}>
       Login
     </Button>
   );
 
   if (isAuthenticated) {
     auth = (
-      <Avatar className={classes.avatar} onClick={handleDrawerToggle}>
+      <Button
+        variant="fab"
+        color="secondary"
+        aria-label="Profile"
+        onClick={handleDrawerToggle}
+        mini
+      >
         <PersonIcon />
-      </Avatar>
+      </Button>
     );
   }
 

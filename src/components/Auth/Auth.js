@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -57,17 +57,20 @@ const Auth = ({
   onPasswordChange,
   onSubmit,
   onSwitchAuthMode,
+  onLogout,
   loading,
   error,
+  isAuthenticated,
   classes,
 }) => {
   const errorMessage = error && error.message.split('_').join(' ');
-  return (
-    <div className={classes.wrapper}>
+
+  let authFrom = (
+    <Fragment>
       <Avatar className={classes.avatar}>
         <LockIcon />
       </Avatar>
-      <Typography variant="headline">Sign in</Typography>
+      <Typography variant="headline">Sign {isSignUp ? 'up' : 'in'}</Typography>
       <form className={classes.form} onSubmit={onSubmit}>
         <FormControl margin="normal" required fullWidth>
           <InputLabel htmlFor="email">Email Address</InputLabel>
@@ -111,8 +114,24 @@ const Auth = ({
       >
         Switch to sign {isSignUp ? 'in' : 'up'}
       </Button>
-    </div>
+    </Fragment>
   );
+
+  if (isAuthenticated) {
+    authFrom = (
+      <Button
+        variant="contained"
+        fullWidth
+        color="secondary"
+        className={classes.button}
+        onClick={onLogout}
+      >
+        Logout
+      </Button>
+    );
+  }
+
+  return <div className={classes.wrapper}>{authFrom}</div>;
 };
 
 Auth.propTypes = {

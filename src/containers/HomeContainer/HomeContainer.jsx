@@ -1,11 +1,16 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Home from '../../components/Home/Home';
+import * as actions from '../../store/actions/index';
 
 class HomeContainer extends React.Component {
   state = {
     open: false,
   };
+
+  componentDidMount() {
+    this.props.onTryAutoSignup();
+  }
 
   handleDrawerToggle = () => {
     this.setState(prevState => {
@@ -32,4 +37,13 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(HomeContainer);
+const mapDispatchToProps = dispatch => {
+  return {
+    onTryAutoSignup: () => dispatch(actions.authCheckState()),
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(HomeContainer);
