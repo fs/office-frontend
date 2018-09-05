@@ -78,7 +78,7 @@ const styles = theme => ({
   },
 });
 
-const Home = ({ handleDrawerOpen, handleDrawerClose, open, classes }) => (
+const Home = ({ handleDrawerToggle, open, classes }) => (
   <div className={classes.root}>
     <div className={classes.appWrapper}>
       <AppBar
@@ -94,7 +94,7 @@ const Home = ({ handleDrawerOpen, handleDrawerClose, open, classes }) => (
             className={classes.loginButton}
             color="inherit"
             aria-label="Open drawer"
-            onClick={handleDrawerOpen}
+            onClick={handleDrawerToggle}
           >
             Login
           </Typography>
@@ -117,7 +117,7 @@ const Home = ({ handleDrawerOpen, handleDrawerClose, open, classes }) => (
         }}
       >
         <div className={classes.drawerHeader}>
-          <IconButton onClick={handleDrawerClose}>
+          <IconButton onClick={handleDrawerToggle}>
             <ChevronLeftIcon />
           </IconButton>
         </div>
