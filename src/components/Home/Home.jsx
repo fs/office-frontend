@@ -10,6 +10,7 @@ import IconButton from '@material-ui/core/IconButton';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import Button from '@material-ui/core/Button';
 import PropTypes from 'prop-types';
+import AuthContainer from '../../containers/Auth/AuthContainer';
 
 const drawerWidth = 340;
 
@@ -76,7 +77,7 @@ const styles = theme => ({
   },
 });
 
-const Home = ({ handleDrawerOpen, handleDrawerClose, open, classes }) => (
+const Home = ({ handleDrawerToggle, open, classes }) => (
   <div className={classes.root}>
     <div className={classes.appWrapper}>
       <AppBar className={classNames(classes.appBar, { [classes.appBarShift]: open })}>
@@ -84,7 +85,7 @@ const Home = ({ handleDrawerOpen, handleDrawerClose, open, classes }) => (
           <Typography variant="title" color="inherit" noWrap>
             FS Office
           </Typography>
-          <Button color="inherit" aria-label="Open drawer" onClick={handleDrawerOpen}>
+          <Button color="inherit" aria-label="Open drawer" onClick={handleDrawerToggle}>
             Login
           </Button>
         </Toolbar>
@@ -100,11 +101,12 @@ const Home = ({ handleDrawerOpen, handleDrawerClose, open, classes }) => (
         classes={{ paper: classes.drawerPaper }}
       >
         <div className={classes.drawerHeader}>
-          <IconButton onClick={handleDrawerClose}>
+          <IconButton onClick={handleDrawerToggle}>
             <ChevronLeftIcon />
           </IconButton>
         </div>
         <Divider />
+        <AuthContainer />
       </Drawer>
     </div>
   </div>
@@ -113,8 +115,7 @@ const Home = ({ handleDrawerOpen, handleDrawerClose, open, classes }) => (
 Home.propTypes = {
   classes: PropTypes.object.isRequired,
   open: PropTypes.bool.isRequired,
-  handleDrawerOpen: PropTypes.func.isRequired,
-  handleDrawerClose: PropTypes.func.isRequired,
+  handleDrawerToggle: PropTypes.func.isRequired,
 };
 
 export default withStyles(styles)(Home);
