@@ -10,6 +10,7 @@ import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import OfficeMapContainer from '../../containers/OfficeMapContainer/OfficeMapContainer';
+
 const drawerWidth = 340;
 
 const styles = theme => ({
