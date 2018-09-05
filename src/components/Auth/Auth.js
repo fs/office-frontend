@@ -6,8 +6,10 @@ import FormControl from '@material-ui/core/FormControl';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import LockIcon from '@material-ui/icons/LockOutlined';
-import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import green from '@material-ui/core/colors/green';
+import red from '@material-ui/core/colors/red';
 import withStyles from '@material-ui/core/styles/withStyles';
 
 const styles = theme => ({
@@ -28,6 +30,22 @@ const styles = theme => ({
   button: {
     marginTop: theme.spacing.unit * 3,
   },
+  buttonWrapper: {
+    marginTop: theme.spacing.unit * 3,
+    position: 'relative',
+  },
+  buttonProgress: {
+    color: green[500],
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    marginTop: -12,
+    marginLeft: -12,
+  },
+  error: {
+    marginTop: theme.spacing.unit * 3,
+    color: red[500],
+  },
 });
 
 const Auth = ({
@@ -38,8 +56,11 @@ const Auth = ({
   onPasswordChange,
   onSubmit,
   onSwitchAuthMode,
+  loading,
+  error,
   classes,
 }) => {
+  console.log('Loading', loading);
   return (
     <div className={classes.wrapper}>
       <Avatar className={classes.avatar}>
@@ -70,9 +91,13 @@ const Auth = ({
             value={password}
           />
         </FormControl>
-        <Button type="submit" fullWidth variant="raised" color="primary" className={classes.button}>
-          Sign {isSignUp ? 'up' : 'in'}
-        </Button>
+        {error && <Typography className={classes.error}>{error.message}</Typography>}
+        <div className={classes.buttonWrapper}>
+          <Button type="submit" fullWidth variant="raised" color="primary" disabled={loading}>
+            Sign {isSignUp ? 'up' : 'in'}
+          </Button>
+          {loading && <CircularProgress size={24} className={classes.buttonProgress} />}
+        </div>
       </form>
       <Button
         variant="text"

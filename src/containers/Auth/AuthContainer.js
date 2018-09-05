@@ -42,10 +42,19 @@ class AuthContainer extends Component {
         onSubmit={this.handleSubmit}
         onSwitchAuthMode={this.handleSwitchAuthMode}
         isSignUp={this.state.isSignUp}
+        loading={this.props.loading}
+        error={this.props.error}
       />
     );
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    loading: state.auth.loading,
+    error: state.auth.error,
+  };
+};
 
 const mapDispatchToProps = dispatch => {
   return {
@@ -54,6 +63,6 @@ const mapDispatchToProps = dispatch => {
 };
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(AuthContainer);
