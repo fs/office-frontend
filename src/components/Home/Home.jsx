@@ -9,7 +9,9 @@ import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import Button from '@material-ui/core/Button';
 import OfficeMapContainer from '../../containers/OfficeMapContainer/OfficeMapContainer';
+import AuthContainer from '../../containers/Auth/AuthContainer';
 
 const drawerWidth = 340;
 
@@ -42,23 +44,9 @@ const styles = theme => ({
     marginRight: drawerWidth,
   },
   toolBar: {
-    paddingLeft: '30px',
-    paddingRight: '30px',
-  },
-  loginButton: {
-    position: 'absolute',
-    right: '30px',
-    top: '50%',
-    transform: 'translateY(-50%)',
-    fontSize: '16px',
-    fontWeight: 'bold',
-  },
-  menuButton: {
-    marginLeft: 12,
-    marginRight: 20,
-  },
-  hide: {
-    display: 'none',
+    paddingLeft: theme.spacing.unit * 3,
+    paddingRight: theme.spacing.unit * 3,
+    justifyContent: 'space-between',
   },
   drawerPaper: {
     position: 'relative',
@@ -134,6 +122,7 @@ const Home = ({ handleDrawerOpen, handleDrawerClose, open, classes }) => (
           </IconButton>
         </div>
         <Divider />
+        <AuthContainer />
       </Drawer>
     </div>
   </div>
@@ -142,8 +131,7 @@ const Home = ({ handleDrawerOpen, handleDrawerClose, open, classes }) => (
 Home.propTypes = {
   classes: PropTypes.object.isRequired,
   open: PropTypes.bool.isRequired,
-  handleDrawerOpen: PropTypes.func.isRequired,
-  handleDrawerClose: PropTypes.func.isRequired,
+  handleDrawerToggle: PropTypes.func.isRequired,
 };
 
 export default withStyles(styles)(Home);

@@ -6,7 +6,7 @@ class HomeContainer extends Component {
     open: false,
   };
 
-  handleDrawerOpen = () => {
+  handleDrawerToggle = () => {
     this.setState(prevState => {
       return {
         open: !prevState.open,
@@ -14,18 +14,8 @@ class HomeContainer extends Component {
     });
   };
 
-  handleDrawerClose = () => {
-    this.setState({ open: false });
-  };
-
   render() {
-    return (
-      <Home
-        handleDrawerOpen={this.handleDrawerOpen}
-        handleDrawerClose={this.handleDrawerClose}
-        {...this.state}
-      />
-    );
+    return <Home handleDrawerToggle={this.handleDrawerToggle} {...this.state} />;
   }
 }
 

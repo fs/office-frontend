@@ -11,12 +11,11 @@ import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
 
 const styles = theme => ({
-  paper: {
-    marginTop: theme.spacing.unit * 8,
+  wrapper: {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 3}px ${theme.spacing.unit * 3}px`,
+    padding: `${theme.spacing.unit * 3}px `,
   },
   avatar: {
     margin: theme.spacing.unit,
@@ -26,14 +25,23 @@ const styles = theme => ({
     width: '100%', // Fix IE11 issue.
     marginTop: theme.spacing.unit,
   },
-  submit: {
+  button: {
     marginTop: theme.spacing.unit * 3,
   },
 });
 
-const Auth = ({ email, password, onEmailChange, onPasswordChange, onSubmit, classes }) => {
+const Auth = ({
+  email,
+  password,
+  isSignUp,
+  onEmailChange,
+  onPasswordChange,
+  onSubmit,
+  onSwitchAuthMode,
+  classes,
+}) => {
   return (
-    <Paper className={classes.paper}>
+    <div className={classes.wrapper}>
       <Avatar className={classes.avatar}>
         <LockIcon />
       </Avatar>
@@ -62,17 +70,27 @@ const Auth = ({ email, password, onEmailChange, onPasswordChange, onSubmit, clas
             value={password}
           />
         </FormControl>
-        <Button type="submit" fullWidth variant="raised" color="primary" className={classes.submit}>
-          Sign in
+        <Button type="submit" fullWidth variant="raised" color="primary" className={classes.button}>
+          Sign {isSignUp ? 'up' : 'in'}
         </Button>
       </form>
-    </Paper>
+      <Button
+        variant="text"
+        fullWidth
+        color="secondary"
+        className={classes.button}
+        onClick={onSwitchAuthMode}
+      >
+        Switch to sign {isSignUp ? 'in' : 'up'}
+      </Button>
+    </div>
   );
 };
 
 Auth.propTypes = {
   email: PropTypes.string.isRequired,
   password: PropTypes.string.isRequired,
+  isSignUp: PropTypes.bool.isRequired,
   onEmailChange: PropTypes.func.isRequired,
   onPasswordChange: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
