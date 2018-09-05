@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { Component } from 'react';
 import Home from '../../components/Home/Home';
 
-class HomeContainer extends React.Component {
+class HomeContainer extends Component {
   state = {
     open: false,
   };
@@ -13,9 +13,11 @@ class HomeContainer extends React.Component {
       };
     });
   };
+
   handleDrawerClose = () => {
     this.setState({ open: false });
   };
+
   render() {
     return (
       <Home
