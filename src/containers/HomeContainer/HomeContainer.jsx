@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import Home from '../../components/Home/Home';
 
 class HomeContainer extends React.Component {
@@ -15,8 +16,20 @@ class HomeContainer extends React.Component {
   };
 
   render() {
-    return <Home handleDrawerToggle={this.handleDrawerToggle} {...this.state} />;
+    return (
+      <Home
+        isAuthenticated={this.props.isAuthenticated}
+        handleDrawerToggle={this.handleDrawerToggle}
+        {...this.state}
+      />
+    );
   }
 }
 
-export default HomeContainer;
+const mapStateToProps = state => {
+  return {
+    isAuthenticated: state.auth.token !== null,
+  };
+};
+
+export default connect(mapStateToProps)(HomeContainer);

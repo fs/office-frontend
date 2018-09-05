@@ -45,6 +45,7 @@ const styles = theme => ({
   error: {
     marginTop: theme.spacing.unit * 3,
     color: red[500],
+    textAlign: 'center',
   },
 });
 
@@ -60,7 +61,7 @@ const Auth = ({
   error,
   classes,
 }) => {
-  console.log('Loading', loading);
+  const errorMessage = error && error.message.split('_').join(' ');
   return (
     <div className={classes.wrapper}>
       <Avatar className={classes.avatar}>
@@ -78,6 +79,7 @@ const Auth = ({
             autoFocus
             onChange={event => onEmailChange(event.target.value)}
             value={email}
+            error={error}
           />
         </FormControl>
         <FormControl margin="normal" required fullWidth>
@@ -89,9 +91,10 @@ const Auth = ({
             autoComplete="current-password"
             onChange={event => onPasswordChange(event.target.value)}
             value={password}
+            error={error}
           />
         </FormControl>
-        {error && <Typography className={classes.error}>{error.message}</Typography>}
+        {errorMessage && <Typography className={classes.error}>{errorMessage}</Typography>}
         <div className={classes.buttonWrapper}>
           <Button type="submit" fullWidth variant="raised" color="primary" disabled={loading}>
             Sign {isSignUp ? 'up' : 'in'}
@@ -116,6 +119,8 @@ Auth.propTypes = {
   email: PropTypes.string.isRequired,
   password: PropTypes.string.isRequired,
   isSignUp: PropTypes.bool.isRequired,
+  loading: PropTypes.bool.isRequired,
+  error: PropTypes.object,
   onEmailChange: PropTypes.func.isRequired,
   onPasswordChange: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
