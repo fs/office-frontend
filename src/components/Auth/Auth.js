@@ -11,12 +11,11 @@ import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
 
 const styles = theme => ({
-  paper: {
-    marginTop: theme.spacing.unit * 8,
+  wrapper: {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 3}px ${theme.spacing.unit * 3}px`,
+    padding: `${theme.spacing.unit * 3}px `,
   },
   avatar: {
     margin: theme.spacing.unit,
@@ -42,7 +41,7 @@ const Auth = ({
   classes,
 }) => {
   return (
-    <Paper className={classes.paper}>
+    <div className={classes.wrapper}>
       <Avatar className={classes.avatar}>
         <LockIcon />
       </Avatar>
@@ -84,7 +83,7 @@ const Auth = ({
       >
         Switch to sign {isSignUp ? 'in' : 'up'}
       </Button>
-    </Paper>
+    </div>
   );
 };
 
