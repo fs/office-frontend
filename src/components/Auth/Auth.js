@@ -25,12 +25,21 @@ const styles = theme => ({
     width: '100%', // Fix IE11 issue.
     marginTop: theme.spacing.unit,
   },
-  submit: {
+  button: {
     marginTop: theme.spacing.unit * 3,
   },
 });
 
-const Auth = ({ email, password, onEmailChange, onPasswordChange, onSubmit, classes }) => {
+const Auth = ({
+  email,
+  password,
+  isSignUp,
+  onEmailChange,
+  onPasswordChange,
+  onSubmit,
+  onSwitchAuthMode,
+  classes,
+}) => {
   return (
     <div className={classes.wrapper}>
       <Avatar className={classes.avatar}>
@@ -61,10 +70,19 @@ const Auth = ({ email, password, onEmailChange, onPasswordChange, onSubmit, clas
             value={password}
           />
         </FormControl>
-        <Button type="submit" fullWidth variant="raised" color="primary" className={classes.submit}>
-          Sign in
+        <Button type="submit" fullWidth variant="raised" color="primary" className={classes.button}>
+          Sign {isSignUp ? 'up' : 'in'}
         </Button>
       </form>
+      <Button
+        variant="text"
+        fullWidth
+        color="secondary"
+        className={classes.button}
+        onClick={onSwitchAuthMode}
+      >
+        Switch to sign {isSignUp ? 'in' : 'up'}
+      </Button>
     </div>
   );
 };
@@ -72,6 +90,7 @@ const Auth = ({ email, password, onEmailChange, onPasswordChange, onSubmit, clas
 Auth.propTypes = {
   email: PropTypes.string.isRequired,
   password: PropTypes.string.isRequired,
+  isSignUp: PropTypes.bool.isRequired,
   onEmailChange: PropTypes.func.isRequired,
   onPasswordChange: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
