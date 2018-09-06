@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Home from '../../components/Home/Home';
 import * as actions from '../../store/actions/index';
 
-class HomeContainer extends React.Component {
+class HomeContainer extends Component {
   state = {
     open: false,
   };

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -10,7 +11,7 @@ import IconButton from '@material-ui/core/IconButton';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import Button from '@material-ui/core/Button';
 import PersonIcon from '@material-ui/icons/Person';
-import PropTypes from 'prop-types';
+import OfficeMapContainer from '../../containers/OfficeMapContainer/OfficeMapContainer';
 import AuthContainer from '../../containers/Auth/AuthContainer';
 
 const drawerWidth = 340;
@@ -114,7 +115,7 @@ const Home = ({ handleDrawerToggle, open, isAuthenticated, classes }) => {
         </AppBar>
         <main className={classNames(classes.content, { [classes.contentShift]: open })}>
           <div className={classes.drawerHeader} />
-          <Typography>{'You think water moves fast? You should see ice.'}</Typography>
+          <OfficeMapContainer />
         </main>
         <Drawer
           variant="persistent"
