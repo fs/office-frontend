@@ -3,7 +3,7 @@ import { CREATE_TABLE, CREATE_TABLE_SUCCESS, CREATE_TABLE_FAILURE } from '../act
 const initialState = {
   isLoading: false,
   loaded: false,
-  data: [],
+  tables: [],
   error: false,
   errorText: '',
 };
@@ -22,7 +22,7 @@ export default (state = initialState, action) => {
     case CREATE_TABLE_SUCCESS:
       return {
         ...state,
-        data: state.data.concat(payload.data),
+        tables: payload,
         isLoading: false,
         loaded: true,
         error: null,

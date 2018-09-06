@@ -4,9 +4,7 @@ import { withStyles } from '@material-ui/core/styles/index';
 const styles = () => ({
   wrapper: {
     width: '100%',
-    maxWidth: '1400px',
     height: '100%',
-    backgroundSize: '80%',
     transformOrigin: 'left top',
     position: 'relative',
   },
@@ -23,7 +21,7 @@ class OfficeMap extends Component {
     const tableRectList = document.getElementsByClassName(classes.table);
     Array.prototype.map.call(tableRectList, tableRect => {
       tableRect.onclick = function(e) {
-        addTable({ tableId: e.target.id, owner: '?' });
+        addTable({ tableId: e.target.id, owner: { name: 'liya', email: 'ss@' } });
       };
     });
   }

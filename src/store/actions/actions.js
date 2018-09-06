@@ -8,7 +8,7 @@ export function addTableAsync(table) {
   return dispatch => {
     dispatch({ type: CREATE_TABLE });
     axios
-      .post('/tables.json', table)
+      .patch(`/tables/${table.tableId}.json`, table.owner)
       .then(res => {
         dispatch({ type: CREATE_TABLE_SUCCESS, payload: res });
       })
