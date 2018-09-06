@@ -1,10 +1,16 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import Home from '../../components/Home/Home';
+import * as actions from '../../store/actions/index';
 
 class HomeContainer extends Component {
   state = {
     open: false,
   };
+
+  componentDidMount() {
+    this.props.onTryAutoSignup();
+  }
 
   handleDrawerToggle = () => {
     this.setState(prevState => {
@@ -15,8 +21,29 @@ class HomeContainer extends Component {
   };
 
   render() {
-    return <Home handleDrawerToggle={this.handleDrawerToggle} {...this.state} />;
+    return (
+      <Home
+        isAuthenticated={this.props.isAuthenticated}
+        handleDrawerToggle={this.handleDrawerToggle}
+        {...this.state}
+      />
+    );
   }
 }
 
-export default HomeContainer;
+const mapStateToProps = state => {
+  return {
+    isAuthenticated: state.auth.token !== null,
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onTryAutoSignup: () => dispatch(actions.authCheckState()),
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(HomeContainer);

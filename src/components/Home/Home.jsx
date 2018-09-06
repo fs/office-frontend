@@ -10,6 +10,7 @@ import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import Button from '@material-ui/core/Button';
+import PersonIcon from '@material-ui/icons/Person';
 import OfficeMapContainer from '../../containers/OfficeMapContainer/OfficeMapContainer';
 import AuthContainer from '../../containers/Auth/AuthContainer';
 
@@ -78,55 +79,62 @@ const styles = theme => ({
   },
 });
 
-const Home = ({ handleDrawerToggle, open, classes }) => (
-  <div className={classes.root}>
-    <div className={classes.appWrapper}>
-      <AppBar
-        className={classNames(classes.appBar, {
-          [classes.appBarShift]: open,
-        })}
+const Home = ({ handleDrawerToggle, open, isAuthenticated, classes }) => {
+  console.log(isAuthenticated);
+
+  let auth = (
+    <Button color="inherit" aria-label="Open login" onClick={handleDrawerToggle}>
+      Login
+    </Button>
+  );
+
+  if (isAuthenticated) {
+    auth = (
+      <Button
+        variant="fab"
+        color="secondary"
+        aria-label="Profile"
+        onClick={handleDrawerToggle}
+        mini
       >
-        <Toolbar className={classes.toolBar} disableGutters={!open}>
-          <Typography variant="title" color="inherit" noWrap>
-            FS Office
-          </Typography>
-          <Typography
-            className={classes.loginButton}
-            color="inherit"
-            aria-label="Open drawer"
-            onClick={handleDrawerToggle}
-          >
-            Login
-          </Typography>
-        </Toolbar>
-      </AppBar>
-      <main
-        className={classNames(classes.content, {
-          [classes.contentShift]: open,
-        })}
-      >
-        <div className={classes.drawerHeader} />
-        <OfficeMapContainer />
-      </main>
-      <Drawer
-        variant="persistent"
-        anchor={'right'}
-        open={open}
-        classes={{
-          paper: classes.drawerPaper,
-        }}
-      >
-        <div className={classes.drawerHeader}>
-          <IconButton onClick={handleDrawerToggle}>
-            <ChevronLeftIcon />
-          </IconButton>
-        </div>
-        <Divider />
-        <AuthContainer />
-      </Drawer>
+        <PersonIcon />
+      </Button>
+    );
+  }
+
+  return (
+    <div className={classes.root}>
+      <div className={classes.appWrapper}>
+        <AppBar className={classNames(classes.appBar, { [classes.appBarShift]: open })}>
+          <Toolbar className={classes.toolBar}>
+            <Typography variant="title" color="inherit" noWrap>
+              FS Office
+            </Typography>
+            {auth}
+          </Toolbar>
+        </AppBar>
+        <main className={classNames(classes.content, { [classes.contentShift]: open })}>
+          <div className={classes.drawerHeader} />
+          <OfficeMapContainer />
+        </main>
+        <Drawer
+          variant="persistent"
+          anchor={'right'}
+          open={open}
+          classes={{ paper: classes.drawerPaper }}
+        >
+          <div className={classes.drawerHeader}>
+            <IconButton onClick={handleDrawerToggle}>
+              <ChevronLeftIcon />
+            </IconButton>
+          </div>
+          <Divider />
+          <AuthContainer />
+        </Drawer>
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 Home.propTypes = {
   classes: PropTypes.object.isRequired,
