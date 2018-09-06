@@ -32,7 +32,12 @@ class AuthContainer extends Component {
   handleSubmit = event => {
     event.preventDefault();
     console.log(event.target.files);
-    this.props.onAuth(this.state.email, this.state.password, this.state.isSignUp);
+    this.props.onAuth(this.state.email, this.state.password, this.state.isSignUp, this.state.name);
+  };
+
+  handleUpdateProfile = event => {
+    event.preventDefault();
+    this.props.updateProfile(this.props.token, this.state.name, this.state.photo);
   };
 
   handleSwitchAuthMode = () => {
@@ -58,6 +63,7 @@ class AuthContainer extends Component {
         loading={this.props.loading}
         error={this.props.error}
         isAuthenticated={this.props.isAuthenticated}
+        onUpdateProfile={this.handleUpdateProfile}
       />
     );
   }
@@ -67,13 +73,17 @@ const mapStateToProps = state => {
   return {
     loading: state.auth.loading,
     error: state.auth.error,
+    token: state.auth.token,
     isAuthenticated: state.auth.token !== null,
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    onAuth: (email, password, isSignUp) => dispatch(actions.auth(email, password, isSignUp)),
+    onAuth: (email, password, isSignUp, displayName, photoUrl) =>
+      dispatch(actions.auth(email, password, isSignUp, displayName, photoUrl)),
+    onUpdateProfile: (idToken, displayName, photoUrl) =>
+      dispatch(actions.updateProfile(idToken, displayName, photoUrl)),
     onLogout: () => dispatch(actions.logout()),
   };
 };

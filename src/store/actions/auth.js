@@ -95,3 +95,57 @@ export const authCheckState = () => {
     }
   };
 };
+
+export const updateProfileStart = () => {
+  return {
+    type: actionTypes.UPDATE_PROFILE_START,
+  };
+};
+
+export const updateProfileSuccess = (email, displayName, photoUrl) => {
+  return {
+    type: actionTypes.UPDATE_PROFILE_SUCCESS,
+    payload: {
+      email,
+      displayName,
+      photoUrl,
+    },
+  };
+};
+
+export const updateProfileFail = error => {
+  return {
+    type: actionTypes.UPDATE_PROFILE_FAIL,
+    payload: {
+      error,
+    },
+  };
+};
+
+export const updateProfile = (idToken, displayName, photoUrl) => {
+  return dispatch => {
+    dispatch(updateProfileStart());
+    const updateData = {
+      idToken,
+      displayName,
+      photoUrl,
+    };
+    const url = `https://www.googleapis.com/identitytoolkit/v3/relyingparty/setAccountInfo?key=${API_KEY}`;
+
+    axios
+      .post(url, updateData)
+      .then(response => {
+        console.log(response.data);
+        dispatch(
+          updateProfileSuccess(
+            response.data.email,
+            response.data.displayName,
+            response.data.photoUrl
+          )
+        );
+      })
+      .catch(error => {
+        dispatch(updateProfileFail(error));
+      });
+  };
+};
