@@ -47,14 +47,20 @@ const styles = theme => ({
     color: red[500],
     textAlign: 'center',
   },
+  input: {
+    display: 'none',
+  },
 });
 
 const Auth = ({
   email,
   password,
+  name,
   isSignUp,
   onEmailChange,
   onPasswordChange,
+  onFileChange,
+  onNameChange,
   onSubmit,
   onSwitchAuthMode,
   onLogout,
@@ -64,6 +70,37 @@ const Auth = ({
   classes,
 }) => {
   const errorMessage = error && error.message.split('_').join(' ');
+
+  const signUpFields = isSignUp ? (
+    <Fragment>
+      <FormControl margin="normal" required fullWidth>
+        <InputLabel htmlFor="name">Full Name</InputLabel>
+        <Input
+          name="name"
+          id="name"
+          autoComplete="name"
+          onChange={event => onNameChange(event.target.value)}
+          value={name}
+          error={error}
+        />
+      </FormControl>
+      <div className={classes.buttonWrapper}>
+        <input
+          accept="image/png, image/jpeg"
+          className={classes.input}
+          id="contained-button-file"
+          name="photo"
+          type="file"
+          onChange={onFileChange}
+        />
+        <label htmlFor="contained-button-file">
+          <Button variant="contained" fullWidth component="span" color="secondary">
+            Upload photo
+          </Button>
+        </label>
+      </div>
+    </Fragment>
+  ) : null;
 
   let authFrom = (
     <Fragment>
@@ -97,6 +134,7 @@ const Auth = ({
             error={error}
           />
         </FormControl>
+        {signUpFields}
         {errorMessage && <Typography className={classes.error}>{errorMessage}</Typography>}
         <div className={classes.buttonWrapper}>
           <Button type="submit" fullWidth variant="raised" color="primary" disabled={loading}>

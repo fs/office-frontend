@@ -7,6 +7,8 @@ class AuthContainer extends Component {
   state = {
     email: '',
     password: '',
+    name: '',
+    file: null,
     isSignUp: true,
   };
 
@@ -18,8 +20,18 @@ class AuthContainer extends Component {
     this.setState({ password: value });
   };
 
+  handleNameChange = value => {
+    this.setState({ name: value });
+  };
+
+  handleFileChange = event => {
+    console.log(event.target.files);
+    this.setState({ file: event.target.files[0] });
+  };
+
   handleSubmit = event => {
     event.preventDefault();
+    console.log(event.target.files);
     this.props.onAuth(this.state.email, this.state.password, this.state.isSignUp);
   };
 
@@ -34,8 +46,11 @@ class AuthContainer extends Component {
       <Auth
         email={this.state.email}
         password={this.state.password}
+        name={this.state.name}
         onEmailChange={this.handleEmailChange}
         onPasswordChange={this.handlePasswordChange}
+        onNameChange={this.handleNameChange}
+        onFileChange={this.handleFileChange}
         onSubmit={this.handleSubmit}
         onSwitchAuthMode={this.handleSwitchAuthMode}
         onLogout={this.props.onLogout}
