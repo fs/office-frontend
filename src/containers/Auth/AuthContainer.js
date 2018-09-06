@@ -12,6 +12,13 @@ class AuthContainer extends Component {
     isSignUp: true,
   };
 
+  componentDidMount() {
+    const token = localStorage.getItem('token');
+    if (token) {
+      this.props.onFetchProfile(token);
+    }
+  }
+
   handleEmailChange = value => {
     this.setState({ email: value });
   };
@@ -32,12 +39,15 @@ class AuthContainer extends Component {
   handleSubmit = event => {
     event.preventDefault();
     console.log(event.target.files);
-    this.props.onAuth(this.state.email, this.state.password, this.state.isSignUp, this.state.name);
+    this.props
+      .onAuth(this.state.email, this.state.password, this.state.isSignUp, this.state.name)
+      .then(() => this.props.onFetchProfile(this.props.token))
+      .catch(error => console.log('Lox epta', error));
   };
 
   handleUpdateProfile = event => {
     event.preventDefault();
-    this.props.updateProfile(this.props.token, this.state.name, this.state.photo);
+    this.props.onUpdateProfile(this.props.token, this.state.name, '/test-photo.jpg');
   };
 
   handleSwitchAuthMode = () => {
@@ -64,6 +74,8 @@ class AuthContainer extends Component {
         error={this.props.error}
         isAuthenticated={this.props.isAuthenticated}
         onUpdateProfile={this.handleUpdateProfile}
+        displayName={this.props.displayName}
+        photoUrl={this.props.photoUrl}
       />
     );
   }
@@ -75,6 +87,8 @@ const mapStateToProps = state => {
     error: state.auth.error,
     token: state.auth.token,
     isAuthenticated: state.auth.token !== null,
+    displayName: state.profile.displayName,
+    photoUrl: state.profile.photoUrl,
   };
 };
 
@@ -82,9 +96,10 @@ const mapDispatchToProps = dispatch => {
   return {
     onAuth: (email, password, isSignUp, displayName, photoUrl) =>
       dispatch(actions.auth(email, password, isSignUp, displayName, photoUrl)),
+    onLogout: () => dispatch(actions.logout()),
     onUpdateProfile: (idToken, displayName, photoUrl) =>
       dispatch(actions.updateProfile(idToken, displayName, photoUrl)),
-    onLogout: () => dispatch(actions.logout()),
+    onFetchProfile: idToken => dispatch(actions.fetchUserProfile(idToken)),
   };
 };
 

@@ -68,6 +68,8 @@ const Auth = ({
   loading,
   error,
   isAuthenticated,
+  displayName,
+  photoUrl,
   classes,
 }) => {
   const errorMessage = error && error.message.split('_').join(' ');
@@ -124,50 +126,58 @@ const Auth = ({
     </Fragment>
   );
 
+  const updateForm = displayName ? null : (
+    <form className={classes.form} onSubmit={onUpdateProfile}>
+      <FormControl margin="normal" required fullWidth>
+        <InputLabel htmlFor="name">Full Name</InputLabel>
+        <Input
+          name="name"
+          id="name"
+          autoComplete="name"
+          onChange={event => onNameChange(event.target.value)}
+          value={name}
+          error={error}
+        />
+      </FormControl>
+
+      <Button
+        variant="contained"
+        fullWidth
+        component="label"
+        color="secondary"
+        className={classes.button}
+      >
+        Upload photo
+        <input
+          accept="image/png, image/jpeg"
+          className={classes.input}
+          id="contained-button-file"
+          name="photo"
+          type="file"
+          onChange={onFileChange}
+        />
+      </Button>
+      <Button
+        variant="contained"
+        fullWidth
+        type="submit"
+        color="primary"
+        className={classes.button}
+      >
+        Update profile
+      </Button>
+    </form>
+  );
+
+  console.log('isAuthenticated', isAuthenticated);
   if (isAuthenticated) {
     authFrom = (
       <Fragment>
         <Avatar className={classes.avatar}>
           <LockIcon />
         </Avatar>
-        <Typography variant="headline">Your profile</Typography>
-        <form className={classes.form} onSubmit={onUpdateProfile}>
-          <FormControl margin="normal" required fullWidth>
-            <InputLabel htmlFor="name">Full Name</InputLabel>
-            <Input
-              name="name"
-              id="name"
-              autoComplete="name"
-              onChange={event => onNameChange(event.target.value)}
-              value={name}
-              error={error}
-            />
-          </FormControl>
-          <div className={classes.buttonWrapper}>
-            <input
-              accept="image/png, image/jpeg"
-              className={classes.input}
-              id="contained-button-file"
-              name="photo"
-              type="file"
-              onChange={onFileChange}
-            />
-            <label htmlFor="contained-button-file">
-              <Button variant="contained" fullWidth component="span" color="secondary">
-                Upload photo
-              </Button>
-            </label>
-          </div>
-          <Button
-            variant="contained"
-            fullWidth
-            type="submit"
-            color="primary"
-            className={classes.button}
-          >
-            Update profile
-          </Button>
-        </form>
+        <Typography variant="headline">{'Your profile' && displayName}</Typography>
+        {updateForm}
         <Button
           variant="contained"
           fullWidth

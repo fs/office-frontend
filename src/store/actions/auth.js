@@ -9,12 +9,13 @@ export const authStart = () => {
   };
 };
 
-export const authSuccess = (token, userId) => {
+export const authSuccess = (token, userId, email) => {
   return {
     type: actionTypes.AUTH_SUCCESS,
     payload: {
       token,
       userId,
+      email,
     },
   };
 };
@@ -59,7 +60,7 @@ export const auth = (email, password, isSignUp) => {
       url = `https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=${API_KEY}`;
     }
 
-    axios
+    return axios
       .post(url, authData)
       .then(response => {
         console.log(response);
@@ -67,12 +68,14 @@ export const auth = (email, password, isSignUp) => {
         localStorage.setItem('token', response.data.idToken);
         localStorage.setItem('userId', response.data.localId);
         localStorage.setItem('expirationDate', expirationDate);
-        dispatch(authSuccess(response.data.idToken, response.data.localId));
+        console.log(response.data);
+        dispatch(authSuccess(response.data.idToken, response.data.localId, response.data.email));
         dispatch(checkAuthTimeOut(response.data.expiresIn));
       })
       .catch(error => {
         console.log(error.response);
         dispatch(authFail(error.response.data.error));
+        throw error;
       });
   };
 };
@@ -93,59 +96,5 @@ export const authCheckState = () => {
         dispatch(checkAuthTimeOut((expirationDate.getTime() - new Date().getTime()) / 1000));
       }
     }
-  };
-};
-
-export const updateProfileStart = () => {
-  return {
-    type: actionTypes.UPDATE_PROFILE_START,
-  };
-};
-
-export const updateProfileSuccess = (email, displayName, photoUrl) => {
-  return {
-    type: actionTypes.UPDATE_PROFILE_SUCCESS,
-    payload: {
-      email,
-      displayName,
-      photoUrl,
-    },
-  };
-};
-
-export const updateProfileFail = error => {
-  return {
-    type: actionTypes.UPDATE_PROFILE_FAIL,
-    payload: {
-      error,
-    },
-  };
-};
-
-export const updateProfile = (idToken, displayName, photoUrl) => {
-  return dispatch => {
-    dispatch(updateProfileStart());
-    const updateData = {
-      idToken,
-      displayName,
-      photoUrl,
-    };
-    const url = `https://www.googleapis.com/identitytoolkit/v3/relyingparty/setAccountInfo?key=${API_KEY}`;
-
-    axios
-      .post(url, updateData)
-      .then(response => {
-        console.log(response.data);
-        dispatch(
-          updateProfileSuccess(
-            response.data.email,
-            response.data.displayName,
-            response.data.photoUrl
-          )
-        );
-      })
-      .catch(error => {
-        dispatch(updateProfileFail(error));
-      });
   };
 };
