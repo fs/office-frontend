@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -9,7 +10,7 @@ import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import Button from '@material-ui/core/Button';
-import PropTypes from 'prop-types';
+import OfficeMapContainer from '../../containers/OfficeMapContainer/OfficeMapContainer';
 import AuthContainer from '../../containers/Auth/AuthContainer';
 
 const drawerWidth = 340;
@@ -80,25 +81,40 @@ const styles = theme => ({
 const Home = ({ handleDrawerToggle, open, classes }) => (
   <div className={classes.root}>
     <div className={classes.appWrapper}>
-      <AppBar className={classNames(classes.appBar, { [classes.appBarShift]: open })}>
-        <Toolbar className={classes.toolBar}>
+      <AppBar
+        className={classNames(classes.appBar, {
+          [classes.appBarShift]: open,
+        })}
+      >
+        <Toolbar className={classes.toolBar} disableGutters={!open}>
           <Typography variant="title" color="inherit" noWrap>
             FS Office
           </Typography>
-          <Button color="inherit" aria-label="Open drawer" onClick={handleDrawerToggle}>
+          <Typography
+            className={classes.loginButton}
+            color="inherit"
+            aria-label="Open drawer"
+            onClick={handleDrawerToggle}
+          >
             Login
-          </Button>
+          </Typography>
         </Toolbar>
       </AppBar>
-      <main className={classNames(classes.content, { [classes.contentShift]: open })}>
+      <main
+        className={classNames(classes.content, {
+          [classes.contentShift]: open,
+        })}
+      >
         <div className={classes.drawerHeader} />
-        <Typography>{'You think water moves fast? You should see ice.'}</Typography>
+        <OfficeMapContainer />
       </main>
       <Drawer
         variant="persistent"
         anchor={'right'}
         open={open}
-        classes={{ paper: classes.drawerPaper }}
+        classes={{
+          paper: classes.drawerPaper,
+        }}
       >
         <div className={classes.drawerHeader}>
           <IconButton onClick={handleDrawerToggle}>
