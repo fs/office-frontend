@@ -15,7 +15,6 @@ class OfficeMapContainer extends Component {
 
   setUserToTable = tableId => {
     const { tables } = this.props;
-    console.log(tables);
 
     Object.keys(tables).forEach(tableId => {
       if (this.tableId === tableId) {
@@ -33,7 +32,7 @@ class OfficeMapContainer extends Component {
 
   componentWillReceiveProps(nextProps) {
     this.setState({ currentUserEmail: nextProps.email });
-    if (nextProps.loaded === false && this.props.isLoading === false) {
+    if (nextProps.updateTables === true) {
       this.props.getTables();
     }
   }
@@ -73,6 +72,7 @@ export default connect(
     isLoading: state.connectApi.isLoading,
     loaded: state.connectApi.loaded,
     tables: state.connectApi.tables,
+    updateTables: state.connectApi.updateTables,
   }),
   { addTable: addTableAsync, getTables: getTablesAsync, deleteTable: deleteTableAsync }
 )(OfficeMapContainer);
