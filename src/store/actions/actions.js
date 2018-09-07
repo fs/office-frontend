@@ -1,11 +1,11 @@
 import axios from '../../axios';
 import * as actionTypes from '../actions/actionTypes';
 
-export function addTableAsync(table) {
+export function addTableAsync(table, token) {
   return dispatch => {
     dispatch({ type: actionTypes.CREATE_TABLE });
     axios
-      .patch(`/tables/${table.tableId}.json`, table.owner)
+      .patch(`/tables/${table.tableId}.json?auth=${token}'`, table.owner)
       .then(res => {
         dispatch({ type: actionTypes.CREATE_TABLE_SUCCESS, payload: res });
       })
@@ -39,11 +39,11 @@ export function getTablesAsync() {
   };
 }
 
-export function deleteTableAsync(table) {
+export function deleteTableAsync(table, token) {
   return dispatch => {
     dispatch({ type: actionTypes.DELETE_TABLE });
     axios
-      .delete(`/tables/${table.tableId}.json`, table.owner)
+      .delete(`/tables/${table.tableId}.json?auth=${token}`, table.owner)
       .then(res => {
         dispatch({ type: actionTypes.DELETE_TABLE_SUCCESS, payload: res });
       })
