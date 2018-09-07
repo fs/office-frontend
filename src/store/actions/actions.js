@@ -40,16 +40,18 @@ export function getTablesAsync() {
 }
 
 export function deleteTableAsync(table, token) {
-  return dispatch => {
-    dispatch({ type: actionTypes.DELETE_TABLE });
-    axios
-      .delete(`/tables/${table.tableId}.json?auth=${token}`, table.owner)
-      .then(res => {
-        dispatch({ type: actionTypes.DELETE_TABLE_SUCCESS, payload: res });
-      })
-      .catch(error => {
-        console.log(error);
-        dispatch({ type: actionTypes.DELETE_TABLE_FAILURE, payload: error });
-      });
-  };
+  if (window.confirm('Are you sure you want to hold ?')) {
+    return dispatch => {
+      dispatch({ type: actionTypes.DELETE_TABLE });
+      axios
+        .delete(`/tables/${table.tableId}.json?auth=${token}`, table.owner)
+        .then(res => {
+          dispatch({ type: actionTypes.DELETE_TABLE_SUCCESS, payload: res });
+        })
+        .catch(error => {
+          console.log(error);
+          dispatch({ type: actionTypes.DELETE_TABLE_FAILURE, payload: error });
+        });
+    };
+  }
 }
