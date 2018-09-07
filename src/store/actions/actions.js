@@ -25,7 +25,6 @@ export const getTablesSuccess = tables => {
 };
 
 export function getTablesAsync() {
-  console.log('fetching');
   return dispatch => {
     dispatch({ type: actionTypes.FETCH_TABLES });
     axios

@@ -17,16 +17,16 @@ const styles = () => ({
 
 const prepareTables = ({ classes, setUserToTable, tables, onTableClick }) => {
   const tableRectList = document.getElementsByClassName(classes.table);
-  console.log(tables);
   const arr = Array.from(tableRectList);
+
   arr.map(tableRect => {
     if (tables && tables[tableRect.id]) {
       tableRect.style.fill = '#000000';
     } else {
       tableRect.style.fill = '#eeeeee';
     }
+
     tableRect.onclick = function(e) {
-      // setUserToTable(e.target.id);
       onTableClick(tableRect, tables[tableRect.id]);
     };
   });
@@ -37,14 +37,10 @@ const OfficeMap = ({ classes, setUserToTable, isLoading, loaded, tables, onTable
 
   return (
     <Fragment>
-      {popup && (
-        <Popup
-          x={popup.x}
-          y={popup.y}
-          user={popup.user}
-          onHoldPlace={() => setUserToTable(popup.tableId)}
-        />
-      )}
+      {popup &&
+        popup.opened && (
+          <Popup x={popup.x} y={popup.y} user={popup.user} onHoldPlace={setUserToTable} />
+        )}
       <section className={classes.wrapper}>
         {isLoading && 'fuck'}
         <svg width="100%" height="100%" viewBox="0 0 1005 766" version="1.1">
