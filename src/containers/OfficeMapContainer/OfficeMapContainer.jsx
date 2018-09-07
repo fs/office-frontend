@@ -9,12 +9,14 @@ class OfficeMapContainer extends Component {
 
     this.state = {
       currentUserEmail: null,
+      popup: null,
     };
   }
 
-  setUserToTable = tableId => {
+  setUserToTable = () => {
+    const tableId = this.state.popup.tableId;
     const { tables } = this.props;
-
+    this.setState({ popup: { opened: false } });
     Object.keys(tables).forEach(tableId => {
       if (this.tableId === tableId) {
         return;
@@ -35,13 +37,35 @@ class OfficeMapContainer extends Component {
       this.props.getTables();
     }
   }
-
   componentDidMount() {
     this.props.getTables();
   }
+  handleTableClick = (element, user) => {
+    const rect = element.getBoundingClientRect();
+    this.setState({
+      popup: {
+        x: rect.x,
+        y: rect.y,
+        user,
+        tableId: element.id,
+        opened: true,
+      },
+    });
+    setTimeout(() => {
+      this.setState({ popup: { opened: false } });
+    }, 1000);
+  };
 
   render() {
-    return <OfficeMap setUserToTable={this.setUserToTable} {...this.props} />;
+    return (
+      <OfficeMap
+        innerRef={this.setWrapperRef}
+        onTableClick={this.handleTableClick}
+        setUserToTable={this.setUserToTable}
+        {...this.props}
+        {...this.state}
+      />
+    );
   }
 }
 export default connect(
