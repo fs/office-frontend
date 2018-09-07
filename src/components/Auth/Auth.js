@@ -140,7 +140,7 @@ const Auth = ({
         />
       </FormControl>
 
-      <Button
+      {/* <Button
         variant="contained"
         fullWidth
         component="label"
@@ -156,7 +156,7 @@ const Auth = ({
           type="file"
           onChange={onFileChange}
         />
-      </Button>
+      </Button> */}
       <Button
         variant="contained"
         fullWidth
