@@ -144,13 +144,15 @@ class SearchBox extends React.Component {
   render() {
     const { classes, theme, tables } = this.props;
 
-    const items = Object.keys(tables).map(item => {
-      const table = {
-        id: item,
-        ...tables[item],
-      };
-      return table;
-    });
+    const items = Object.keys(tables)
+      .map(item => {
+        const table = {
+          id: item,
+          ...tables[item],
+        };
+        return table;
+      })
+      .filter(item => item.email || item.name);
 
     const solutions = items.map(item => {
       return {
