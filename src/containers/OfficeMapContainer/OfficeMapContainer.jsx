@@ -42,6 +42,7 @@ class OfficeMapContainer extends Component {
         innerRef={this.setWrapperRef}
         onTableClick={this.props.onTableShow}
         setUserToTable={this.setUserToTable}
+        handleClosePopupClick={this.props.handleClosePopupClick}
         {...this.props}
         {...this.state}
       />

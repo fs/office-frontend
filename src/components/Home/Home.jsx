@@ -94,6 +94,7 @@ const Home = ({
   tables,
   onTableShow,
   popup,
+  handleClosePopupClick,
 }) => {
   let auth = (
     <Button color="inherit" aria-label="Open login" onClick={handleDrawerToggle}>
@@ -131,7 +132,11 @@ const Home = ({
         </AppBar>
         <main className={classNames(classes.content, { [classes.contentShift]: open })}>
           <div className={classes.drawerHeader} />
-          <OfficeMapContainer onTableShow={onTableShow} popup={popup} />
+          <OfficeMapContainer
+            onTableShow={onTableShow}
+            popup={popup}
+            handleClosePopupClick={handleClosePopupClick}
+          />
         </main>
         <Drawer
           variant="persistent"

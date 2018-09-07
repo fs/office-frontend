@@ -28,6 +28,14 @@ class HomeContainer extends Component {
     });
   };
 
+  handleClosePopupClick = () => {
+    this.setState({
+      popup: {
+        opened: false,
+      },
+    });
+  };
+
   handleTableShow = (element, user) => {
     const rect = element.getBoundingClientRect();
     this.setState({
@@ -39,9 +47,6 @@ class HomeContainer extends Component {
         opened: true,
       },
     });
-    setTimeout(() => {
-      this.setState({ popup: { opened: false } });
-    }, 5000);
   };
 
   render() {
@@ -51,6 +56,7 @@ class HomeContainer extends Component {
         handleDrawerToggle={this.handleDrawerToggle}
         tables={this.props.tables}
         onTableShow={this.handleTableShow}
+        handleClosePopupClick={this.handleClosePopupClick}
         {...this.state}
       />
     );
