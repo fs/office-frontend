@@ -169,7 +169,6 @@ const Auth = ({
     </form>
   );
 
-  console.log('isAuthenticated', isAuthenticated);
   if (isAuthenticated) {
     authFrom = (
       <Fragment>
