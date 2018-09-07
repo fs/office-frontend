@@ -8,46 +8,75 @@ class OfficeMapContainer extends Component {
     super(props);
 
     this.state = {
-      currentUserEmail: null,
+      currentUser: null,
+      popup: null,
     };
   }
 
-  setUserToTable = tableId => {
+  setUserToTable = () => {
+    const tableId = this.state.popup.tableId;
     const { tables } = this.props;
-
+    this.setState({ popup: { opened: false } });
     Object.keys(tables).forEach(tableId => {
       if (this.tableId === tableId) {
         return;
       }
-      if (tables[tableId] != null && tables[tableId].email === this.state.currentUserEmail) {
-        this.props.deleteTable({ tableId, owner: tables[tableId] });
+      if (tables[tableId] != null && tables[tableId].email === this.state.currentUser.email) {
+        this.props.deleteTable({ tableId, owner: tables[tableId] }, this.props.token);
       }
     });
-    this.props.addTable({
-      tableId: tableId,
-      owner: { name: 'liya', email: this.state.currentUserEmail },
-    });
+    this.props.addTable(
+      {
+        tableId: tableId,
+        owner: this.state.currentUser,
+      },
+      this.props.token
+    );
   };
 
   componentWillReceiveProps(nextProps) {
-    this.setState({ currentUserEmail: nextProps.email });
+    this.setState({ currentUser: { email: nextProps.email, name: nextProps.name } });
     if (nextProps.updateTables === true) {
       this.props.getTables();
     }
   }
-
   componentDidMount() {
     this.props.getTables();
   }
+  handleTableClick = (element, user) => {
+    const rect = element.getBoundingClientRect();
+    this.setState({
+      popup: {
+        x: rect.x,
+        y: rect.y,
+        user,
+        tableId: element.id,
+        opened: true,
+      },
+    });
+    setTimeout(() => {
+      this.setState({ popup: { opened: false } });
+    }, 3000);
+  };
 
   render() {
-    return <OfficeMap setUserToTable={this.setUserToTable} {...this.props} />;
+    return (
+      <OfficeMap
+        innerRef={this.setWrapperRef}
+        onTableClick={this.handleTableClick}
+        setUserToTable={this.setUserToTable}
+        {...this.props}
+        {...this.state}
+      />
+    );
   }
 }
 export default connect(
   state => ({
     isAuthenticated: state.auth.token !== null,
+    token: state.auth.token,
     email: state.profile.email,
+    name: state.profile.displayName,
     isLoading: state.connectApi.isLoading,
     loaded: state.connectApi.loaded,
     tables: state.connectApi.tables,
