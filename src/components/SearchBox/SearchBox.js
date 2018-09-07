@@ -169,7 +169,17 @@ class SearchBox extends React.Component {
             components={components}
             placeholder="Search user"
             onChange={e => {
-              this.props.clicked(e.id);
+              const element = document.getElementById(e.id);
+
+              const user = {
+                name: e.value,
+                email: e.label,
+              };
+
+              console.log(e);
+
+              console.log(user);
+              this.props.clicked(element, user);
             }}
           />
         </MuiThemeProvider>

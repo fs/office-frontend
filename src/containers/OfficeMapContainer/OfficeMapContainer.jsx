@@ -43,27 +43,12 @@ class OfficeMapContainer extends Component {
   componentDidMount() {
     this.props.getTables();
   }
-  handleTableClick = (element, user) => {
-    const rect = element.getBoundingClientRect();
-    this.setState({
-      popup: {
-        x: rect.x,
-        y: rect.y,
-        user,
-        tableId: element.id,
-        opened: true,
-      },
-    });
-    setTimeout(() => {
-      this.setState({ popup: { opened: false } });
-    }, 3000);
-  };
 
   render() {
     return (
       <OfficeMap
         innerRef={this.setWrapperRef}
-        onTableClick={this.handleTableClick}
+        onTableClick={this.props.onTableShow}
         setUserToTable={this.setUserToTable}
         {...this.props}
         {...this.state}

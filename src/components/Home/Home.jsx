@@ -86,7 +86,7 @@ const styles = theme => ({
   },
 });
 
-const Home = ({ handleDrawerToggle, open, isAuthenticated, classes, tables, clicked }) => {
+const Home = ({ handleDrawerToggle, open, isAuthenticated, classes, tables, onTableShow }) => {
   console.log(isAuthenticated);
 
   let auth = (
@@ -118,14 +118,14 @@ const Home = ({ handleDrawerToggle, open, isAuthenticated, classes, tables, clic
               FS Office
             </Typography>
             <div className={classes.toolBarRight}>
-              <SearchBox tables={tables} clicked={clicked} />
+              <SearchBox tables={tables} clicked={onTableShow} />
               {auth}
             </div>
           </Toolbar>
         </AppBar>
         <main className={classNames(classes.content, { [classes.contentShift]: open })}>
           <div className={classes.drawerHeader} />
-          <OfficeMapContainer />
+          <OfficeMapContainer onTableShow={onTableShow} />
         </main>
         <Drawer
           variant="persistent"

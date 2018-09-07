@@ -22,8 +22,20 @@ class HomeContainer extends Component {
     });
   };
 
-  handleClick = id => {
-    console.log(id);
+  handleTableShow = (element, user) => {
+    const rect = element.getBoundingClientRect();
+    this.setState({
+      popup: {
+        x: rect.x,
+        y: rect.y,
+        user,
+        tableId: element.id,
+        opened: true,
+      },
+    });
+    setTimeout(() => {
+      this.setState({ popup: { opened: false } });
+    }, 3000);
   };
 
   render() {
@@ -33,7 +45,7 @@ class HomeContainer extends Component {
         handleDrawerToggle={this.handleDrawerToggle}
         {...this.state}
         tables={this.props.tables}
-        clicked={this.handleClick}
+        onTableShow={this.handleTableShow}
       />
     );
   }
