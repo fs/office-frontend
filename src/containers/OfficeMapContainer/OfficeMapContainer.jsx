@@ -22,13 +22,16 @@ class OfficeMapContainer extends Component {
         return;
       }
       if (tables[tableId] != null && tables[tableId].email === this.state.currentUser.email) {
-        this.props.deleteTable({ tableId, owner: tables[tableId] });
+        this.props.deleteTable({ tableId, owner: tables[tableId] }, this.props.token);
       }
     });
-    this.props.addTable({
-      tableId: tableId,
-      owner: this.state.currentUser,
-    });
+    this.props.addTable(
+      {
+        tableId: tableId,
+        owner: this.state.currentUser,
+      },
+      this.props.token
+    );
   };
 
   componentWillReceiveProps(nextProps) {
@@ -71,6 +74,7 @@ class OfficeMapContainer extends Component {
 export default connect(
   state => ({
     isAuthenticated: state.auth.token !== null,
+    token: state.auth.token,
     email: state.profile.email,
     name: state.profile.displayName,
     isLoading: state.connectApi.isLoading,
