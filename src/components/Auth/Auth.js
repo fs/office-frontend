@@ -47,20 +47,29 @@ const styles = theme => ({
     color: red[500],
     textAlign: 'center',
   },
+  input: {
+    display: 'none',
+  },
 });
 
 const Auth = ({
   email,
   password,
+  name,
   isSignUp,
   onEmailChange,
   onPasswordChange,
+  onUpdateProfile,
+  onFileChange,
+  onNameChange,
   onSubmit,
   onSwitchAuthMode,
   onLogout,
   loading,
   error,
   isAuthenticated,
+  displayName,
+  photoUrl,
   classes,
 }) => {
   const errorMessage = error && error.message.split('_').join(' ');
@@ -117,17 +126,67 @@ const Auth = ({
     </Fragment>
   );
 
-  if (isAuthenticated) {
-    authFrom = (
+  const updateForm = displayName ? null : (
+    <form className={classes.form} onSubmit={onUpdateProfile}>
+      <FormControl margin="normal" required fullWidth>
+        <InputLabel htmlFor="name">Full Name</InputLabel>
+        <Input
+          name="name"
+          id="name"
+          autoComplete="name"
+          onChange={event => onNameChange(event.target.value)}
+          value={name}
+          error={error}
+        />
+      </FormControl>
+
       <Button
         variant="contained"
         fullWidth
+        component="label"
         color="secondary"
         className={classes.button}
-        onClick={onLogout}
       >
-        Logout
+        Upload photo
+        <input
+          accept="image/png, image/jpeg"
+          className={classes.input}
+          id="contained-button-file"
+          name="photo"
+          type="file"
+          onChange={onFileChange}
+        />
       </Button>
+      <Button
+        variant="contained"
+        fullWidth
+        type="submit"
+        color="primary"
+        className={classes.button}
+      >
+        Update profile
+      </Button>
+    </form>
+  );
+
+  if (isAuthenticated) {
+    authFrom = (
+      <Fragment>
+        <Avatar className={classes.avatar}>
+          <LockIcon />
+        </Avatar>
+        <Typography variant="headline">{'Your profile' && displayName}</Typography>
+        {updateForm}
+        <Button
+          variant="contained"
+          fullWidth
+          color="secondary"
+          className={classes.button}
+          onClick={onLogout}
+        >
+          Logout
+        </Button>
+      </Fragment>
     );
   }
 

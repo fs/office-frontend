@@ -1,8 +1,9 @@
-import { CREATE_TABLE, CREATE_TABLE_SUCCESS, CREATE_TABLE_FAILURE } from '../actions/actions';
+import * as actionTypes from '../actions/actionTypes';
 
 const initialState = {
   isLoading: false,
   loaded: false,
+  updateTables: false,
   tables: [],
   error: false,
   errorText: '',
@@ -12,23 +13,62 @@ export default (state = initialState, action) => {
   const payload = action.payload;
 
   switch (action.type) {
-    case CREATE_TABLE:
+    case actionTypes.CREATE_TABLE:
       return {
         ...state,
+        updateTables: false,
+      };
+
+    case actionTypes.CREATE_TABLE_SUCCESS:
+      return {
+        ...state,
+        updateTables: true,
+        error: null,
+      };
+
+    case actionTypes.CREATE_TABLE_FAILURE:
+      return {
+        ...state,
+        error: payload,
+      };
+
+    case actionTypes.DELETE_TABLE:
+      return {
+        ...state,
+        updateTables: false,
+      };
+
+    case actionTypes.DELETE_TABLE_SUCCESS:
+      return {
+        ...state,
+        updateTables: true,
+        error: null,
+      };
+
+    case actionTypes.DELETE_TABLE_FAILURE:
+      return {
+        ...state,
+        error: payload,
+      };
+
+    case actionTypes.FETCH_TABLES:
+      return {
+        ...state,
+        updateTables: false,
         isLoading: true,
         loaded: false,
       };
 
-    case CREATE_TABLE_SUCCESS:
+    case actionTypes.FETCH_TABLES_SUCCESS:
       return {
         ...state,
-        tables: payload,
+        tables: action.payload.tables,
         isLoading: false,
         loaded: true,
         error: null,
       };
 
-    case CREATE_TABLE_FAILURE:
+    case actionTypes.FETCH_TABLES_FAILURE:
       return {
         ...state,
         isLoading: false,
