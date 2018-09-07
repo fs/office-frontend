@@ -39,6 +39,7 @@ const OfficeMap = ({
   isLoading,
   tables,
   onTableClick,
+  email,
   popup,
 }) => {
   prepareTables({ classes, setUserToTable, tables, onTableClick });
@@ -54,6 +55,7 @@ const OfficeMap = ({
             user={popup.user}
             onHoldPlace={setUserToTable}
             isAuthenticated={isAuthenticated}
+            currentUserEmail={email}
           />
         )}
       <section className={classes.wrapper}>
