@@ -12,7 +12,7 @@ class AuthContainer extends Component {
     isSignUp: true,
   };
 
-  componentDidMount() {
+  componentWillMount() {
     const token = localStorage.getItem('token');
     if (token) {
       this.props.onFetchProfile(token);
@@ -32,13 +32,11 @@ class AuthContainer extends Component {
   };
 
   handleFileChange = event => {
-    console.log(event.target.files);
     this.setState({ file: event.target.files[0] });
   };
 
   handleSubmit = event => {
     event.preventDefault();
-    console.log(event.target.files);
     this.props
       .onAuth(this.state.email, this.state.password, this.state.isSignUp, this.state.name)
       .then(() => this.props.onFetchProfile(this.props.token))

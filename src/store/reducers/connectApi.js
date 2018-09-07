@@ -1,4 +1,4 @@
-import { CREATE_TABLE, CREATE_TABLE_SUCCESS, CREATE_TABLE_FAILURE } from '../actions/actions';
+import * as actionTypes from '../actions/actionTypes';
 
 const initialState = {
   isLoading: false,
@@ -10,25 +10,62 @@ const initialState = {
 
 export default (state = initialState, action) => {
   const payload = action.payload;
-
+  console.log(action.type);
   switch (action.type) {
-    case CREATE_TABLE:
+    case actionTypes.CREATE_TABLE:
+      return {
+        ...state,
+      };
+
+    case actionTypes.CREATE_TABLE_SUCCESS:
+      return {
+        ...state,
+        error: null,
+      };
+
+    case actionTypes.CREATE_TABLE_FAILURE:
+      return {
+        ...state,
+        error: payload,
+      };
+
+    case actionTypes.DELETE_TABLE:
+      return {
+        ...state,
+      };
+
+    case actionTypes.DELETE_TABLE_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        loaded: false,
+        error: null,
+      };
+
+    case actionTypes.DELETE_TABLE_FAILURE:
+      return {
+        ...state,
+        error: payload,
+      };
+
+    case actionTypes.FETCH_TABLES:
       return {
         ...state,
         isLoading: true,
         loaded: false,
       };
 
-    case CREATE_TABLE_SUCCESS:
+    case actionTypes.FETCH_TABLES_SUCCESS:
+      console.log(action.type);
       return {
         ...state,
-        tables: payload,
+        tables: action.payload.tables,
         isLoading: false,
         loaded: true,
         error: null,
       };
 
-    case CREATE_TABLE_FAILURE:
+    case actionTypes.FETCH_TABLES_FAILURE:
       return {
         ...state,
         isLoading: false,
