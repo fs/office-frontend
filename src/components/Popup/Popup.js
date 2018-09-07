@@ -5,6 +5,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import PersonIcon from '@material-ui/icons/Person';
+import ClearIcon from '@material-ui/icons/Clear';
 
 const styles = theme => ({
   root: {
@@ -36,13 +37,29 @@ const styles = theme => ({
     margin: theme.spacing.unit,
     backgroundColor: theme.palette.secondary.main,
   },
+  clearButton: {
+    position: 'absolute',
+    top: '10px',
+    right: '10px',
+    cursor: 'pointer',
+  },
 });
 
-const Popup = ({ classes, user, x, y, onHoldPlace, isAuthenticated, currentUserEmail }) => {
+const Popup = ({
+  classes,
+  user,
+  x,
+  y,
+  onHoldPlace,
+  isAuthenticated,
+  currentUserEmail,
+  handleClosePopupClick,
+}) => {
   return (
     <Paper className={classes.root} elevation={0} style={{ top: y + 'px', left: x + 17 + 'px' }}>
       {user ? (
         <Fragment>
+          <ClearIcon className={classes.clearButton} onClick={handleClosePopupClick} />
           <Avatar className={classes.avatar}>
             <PersonIcon />
           </Avatar>

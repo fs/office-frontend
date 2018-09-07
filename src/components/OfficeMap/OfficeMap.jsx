@@ -41,6 +41,7 @@ const OfficeMap = ({
   onTableClick,
   email,
   popup,
+  handleClosePopupClick,
 }) => {
   prepareTables({ classes, setUserToTable, tables, onTableClick });
 
@@ -56,6 +57,7 @@ const OfficeMap = ({
             onHoldPlace={setUserToTable}
             isAuthenticated={isAuthenticated}
             currentUserEmail={email}
+            handleClosePopupClick={handleClosePopupClick}
           />
         )}
       <section className={classes.wrapper}>
