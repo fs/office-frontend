@@ -1,10 +1,10 @@
 import React, { Fragment } from 'react';
 import Paper from '@material-ui/core/Paper';
-import LockIcon from '@material-ui/icons/LockOutlined';
 import Avatar from '@material-ui/core/Avatar';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
+import PersonIcon from '@material-ui/icons/Person';
 
 const styles = theme => ({
   root: {
@@ -38,16 +38,16 @@ const styles = theme => ({
   },
 });
 
-const Popup = ({ classes, user, x, y, onHoldPlace, isAuthenticated }) => {
+const Popup = ({ classes, user, x, y, onHoldPlace, isAuthenticated, currentUserEmail }) => {
   return (
     <Paper className={classes.root} elevation={0} style={{ top: y + 'px', left: x + 17 + 'px' }}>
       {user ? (
         <Fragment>
           <Avatar className={classes.avatar}>
-            <LockIcon />
+            <PersonIcon />
           </Avatar>
           <Typography variant="headline" component="h3">
-            {user.name}
+            {currentUserEmail == user.email ? 'You are here' : user.name}
           </Typography>
           <Typography>{user.email}</Typography>
         </Fragment>

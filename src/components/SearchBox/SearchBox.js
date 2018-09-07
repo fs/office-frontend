@@ -157,6 +157,8 @@ class SearchBox extends React.Component {
         id: item.id,
         value: item.name,
         label: item.name,
+        email: item.email,
+        name: item.name,
       };
     });
 
@@ -169,11 +171,14 @@ class SearchBox extends React.Component {
             components={components}
             placeholder="Search user"
             onChange={e => {
+              if (!e.id) {
+                return;
+              }
               const element = document.getElementById(e.id);
 
               const user = {
-                name: e.value,
-                email: e.label,
+                name: e.name,
+                email: e.email,
               };
 
               this.props.clicked(element, user);
