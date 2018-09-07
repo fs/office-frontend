@@ -86,9 +86,15 @@ const styles = theme => ({
   },
 });
 
-const Home = ({ handleDrawerToggle, open, isAuthenticated, classes }) => {
-  console.log(isAuthenticated);
-
+const Home = ({
+  handleDrawerToggle,
+  open,
+  isAuthenticated,
+  classes,
+  tables,
+  onTableShow,
+  popup,
+}) => {
   let auth = (
     <Button color="inherit" aria-label="Open login" onClick={handleDrawerToggle}>
       Login
@@ -118,14 +124,14 @@ const Home = ({ handleDrawerToggle, open, isAuthenticated, classes }) => {
               FS Office
             </Typography>
             <div className={classes.toolBarRight}>
-              <SearchBox />
+              <SearchBox tables={tables} clicked={onTableShow} />
               {auth}
             </div>
           </Toolbar>
         </AppBar>
         <main className={classNames(classes.content, { [classes.contentShift]: open })}>
           <div className={classes.drawerHeader} />
-          <OfficeMapContainer />
+          <OfficeMapContainer onTableShow={onTableShow} popup={popup} />
         </main>
         <Drawer
           variant="persistent"
