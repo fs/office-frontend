@@ -38,7 +38,7 @@ const styles = theme => ({
   },
 });
 
-const Popup = ({ classes, user, x, y, onHoldPlace }) => {
+const Popup = ({ classes, user, x, y, onHoldPlace, isAuthenticated }) => {
   return (
     <Paper className={classes.root} elevation={0} style={{ top: y + 'px', left: x + 17 + 'px' }}>
       {user ? (
@@ -51,10 +51,12 @@ const Popup = ({ classes, user, x, y, onHoldPlace }) => {
           </Typography>
           <Typography>{user.email}</Typography>
         </Fragment>
-      ) : (
+      ) : isAuthenticated ? (
         <Button variant="contained" fullWidth color="secondary" onClick={onHoldPlace}>
           Hold this place
         </Button>
+      ) : (
+        <p>Please, sign in to hold this place</p>
       )}
     </Paper>
   );

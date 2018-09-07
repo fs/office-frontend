@@ -32,7 +32,15 @@ const prepareTables = ({ classes, setUserToTable, tables, onTableClick }) => {
   });
 };
 
-const OfficeMap = ({ classes, setUserToTable, isLoading, loaded, tables, onTableClick, popup }) => {
+const OfficeMap = ({
+  classes,
+  isAuthenticated,
+  setUserToTable,
+  isLoading,
+  tables,
+  onTableClick,
+  popup,
+}) => {
   prepareTables({ classes, setUserToTable, tables, onTableClick });
 
   return (
@@ -40,7 +48,13 @@ const OfficeMap = ({ classes, setUserToTable, isLoading, loaded, tables, onTable
       {isLoading && 'fuck'}
       {popup &&
         popup.opened && (
-          <Popup x={popup.x} y={popup.y} user={popup.user} onHoldPlace={setUserToTable} />
+          <Popup
+            x={popup.x}
+            y={popup.y}
+            user={popup.user}
+            onHoldPlace={setUserToTable}
+            isAuthenticated={isAuthenticated}
+          />
         )}
       <section className={classes.wrapper}>
         <svg width="100%" height="100%" viewBox="0 0 1005 766" version="1.1">
