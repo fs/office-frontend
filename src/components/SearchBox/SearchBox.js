@@ -176,9 +176,6 @@ class SearchBox extends React.Component {
                 email: e.label,
               };
 
-              console.log(e);
-
-              console.log(user);
               this.props.clicked(element, user);
             }}
           />

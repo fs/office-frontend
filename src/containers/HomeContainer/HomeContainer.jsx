@@ -9,6 +9,12 @@ class HomeContainer extends Component {
     popup: null,
   };
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.updateTables === true) {
+      this.props.onGetTables();
+    }
+  }
+
   componentDidMount() {
     this.props.onTryAutoSignup();
     this.props.onGetTables();
@@ -35,7 +41,7 @@ class HomeContainer extends Component {
     });
     setTimeout(() => {
       this.setState({ popup: { opened: false } });
-    }, 3000);
+    }, 5000);
   };
 
   render() {
@@ -43,9 +49,9 @@ class HomeContainer extends Component {
       <Home
         isAuthenticated={this.props.isAuthenticated}
         handleDrawerToggle={this.handleDrawerToggle}
-        {...this.state}
         tables={this.props.tables}
         onTableShow={this.handleTableShow}
+        {...this.state}
       />
     );
   }
@@ -55,6 +61,7 @@ const mapStateToProps = state => {
   return {
     isAuthenticated: state.auth.token !== null,
     tables: state.connectApi.tables,
+    updateTables: state.connectApi.updateTables,
   };
 };
 

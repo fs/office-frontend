@@ -86,9 +86,15 @@ const styles = theme => ({
   },
 });
 
-const Home = ({ handleDrawerToggle, open, isAuthenticated, classes, tables, onTableShow }) => {
-  console.log(isAuthenticated);
-
+const Home = ({
+  handleDrawerToggle,
+  open,
+  isAuthenticated,
+  classes,
+  tables,
+  onTableShow,
+  popup,
+}) => {
   let auth = (
     <Button color="inherit" aria-label="Open login" onClick={handleDrawerToggle}>
       Login
@@ -125,7 +131,7 @@ const Home = ({ handleDrawerToggle, open, isAuthenticated, classes, tables, onTa
         </AppBar>
         <main className={classNames(classes.content, { [classes.contentShift]: open })}>
           <div className={classes.drawerHeader} />
-          <OfficeMapContainer onTableShow={onTableShow} />
+          <OfficeMapContainer onTableShow={onTableShow} popup={popup} />
         </main>
         <Drawer
           variant="persistent"
