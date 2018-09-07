@@ -3,6 +3,7 @@ import * as actionTypes from '../actions/actionTypes';
 const initialState = {
   isLoading: false,
   loaded: false,
+  updateTables: false,
   tables: [],
   error: false,
   errorText: '',
@@ -10,16 +11,18 @@ const initialState = {
 
 export default (state = initialState, action) => {
   const payload = action.payload;
-  console.log(action.type);
+
   switch (action.type) {
     case actionTypes.CREATE_TABLE:
       return {
         ...state,
+        updateTables: false,
       };
 
     case actionTypes.CREATE_TABLE_SUCCESS:
       return {
         ...state,
+        updateTables: true,
         error: null,
       };
 
@@ -32,13 +35,13 @@ export default (state = initialState, action) => {
     case actionTypes.DELETE_TABLE:
       return {
         ...state,
+        updateTables: false,
       };
 
     case actionTypes.DELETE_TABLE_SUCCESS:
       return {
         ...state,
-        isLoading: false,
-        loaded: false,
+        updateTables: true,
         error: null,
       };
 
@@ -51,6 +54,7 @@ export default (state = initialState, action) => {
     case actionTypes.FETCH_TABLES:
       return {
         ...state,
+        updateTables: false,
         isLoading: true,
         loaded: false,
       };
