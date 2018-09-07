@@ -13,19 +13,17 @@ const styles = () => ({
     fill: '#eeeeee',
     cursor: 'pointer',
   },
-  tablePLaced: {
-    fill: '#000000',
-    cursor: 'pointer',
-  },
 });
 
 const prepareTables = ({ classes, setUserToTable, tables }) => {
   const tableRectList = document.getElementsByClassName(classes.table);
-
+  console.log(tables);
   const arr = Array.from(tableRectList);
   arr.map(tableRect => {
     if (tables && tables[tableRect.id]) {
-      tableRect.setAttribute('class', classes.tablePLaced);
+      tableRect.style.fill = '#000000';
+    } else {
+      tableRect.style.fill = '#eeeeee';
     }
     tableRect.onclick = function(e) {
       setUserToTable(e.target.id);
@@ -34,10 +32,10 @@ const prepareTables = ({ classes, setUserToTable, tables }) => {
 };
 
 const OfficeMap = ({ classes, setUserToTable, isLoading, loaded, tables }) => {
-  if (isLoading) return 'fuck';
   prepareTables({ classes, setUserToTable, tables });
   return (
     <section className={classes.wrapper}>
+      {isLoading && 'fuck'}
       <svg width="100%" height="100%" viewBox="0 0 1005 766" version="1.1">
         <g id="Artboard" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
           <g id="Group-3" transform="translate(239.000000, 116.000000)" fill="#6CADF6">
@@ -455,7 +453,7 @@ const OfficeMap = ({ classes, setUserToTable, isLoading, loaded, tables }) => {
             <rect id="71" className={classes.table} x="509" y="175" width="34" height="20" rx="2" />
             <rect id="30" className={classes.table} x="547" y="340" width="34" height="20" rx="2" />
             <rect id="43" className={classes.table} x="400" y="490" width="34" height="20" rx="2" />
-            <rect id="70" className={classes.table} x="206" y="56" width="34" height="20" rx="2" />
+            <rect id="80" className={classes.table} x="206" y="56" width="34" height="20" rx="2" />
             <rect id="32" className={classes.table} x="511" y="340" width="34" height="20" rx="2" />
             <rect id="44" className={classes.table} x="364" y="490" width="34" height="20" rx="2" />
           </g>
