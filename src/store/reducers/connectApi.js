@@ -56,7 +56,6 @@ export default (state = initialState, action) => {
       };
 
     case actionTypes.FETCH_TABLES_SUCCESS:
-      console.log(action.type);
       return {
         ...state,
         tables: action.payload.tables,

@@ -14,8 +14,13 @@ class OfficeMapContainer extends Component {
 
   setUserToTable = tableId => {
     const { tables } = this.props;
+    console.log(tables);
+
     Object.keys(tables).forEach(tableId => {
-      if (tables[tableId].email === this.state.currentUserEmail) {
+      if (this.tableId === tableId) {
+        return;
+      }
+      if (tables[tableId] != null && tables[tableId].email === this.state.currentUserEmail) {
         this.props.deleteTable({ tableId, owner: tables[tableId] });
       }
     });
@@ -27,7 +32,7 @@ class OfficeMapContainer extends Component {
 
   componentWillReceiveProps(nextProps) {
     this.setState({ currentUserEmail: nextProps.email });
-    if (nextProps.loaded !== this.props.loaded && this.props.isLoading === false) {
+    if (nextProps.loaded === false && this.props.isLoading === false) {
       this.props.getTables();
     }
   }
