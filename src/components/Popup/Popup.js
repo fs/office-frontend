@@ -16,7 +16,7 @@ const styles = theme => ({
     zIndex: 1000,
     maxWidth: '300px',
     ...theme.mixins.gutters(),
-    paddingTop: theme.spacing.unit * 2,
+    paddingTop: theme.spacing.unit * 5,
     paddingBottom: theme.spacing.unit * 2,
     filter: 'drop-shadow(0 0 2px rgba(0, 0, 0, 0.3))',
     transform: 'translate(-50%,-100%)',
@@ -59,7 +59,6 @@ const Popup = ({
     <Paper className={classes.root} elevation={0} style={{ top: y + 'px', left: x + 17 + 'px' }}>
       {user ? (
         <Fragment>
-          <ClearIcon className={classes.clearButton} onClick={handleClosePopupClick} />
           <Avatar className={classes.avatar}>
             <PersonIcon />
           </Avatar>
@@ -75,6 +74,7 @@ const Popup = ({
       ) : (
         <p>Please, sign in to hold this place</p>
       )}
+      <ClearIcon className={classes.clearButton} onClick={handleClosePopupClick} />
     </Paper>
   );
 };
