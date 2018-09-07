@@ -21,7 +21,7 @@ const prepareTables = ({ classes, setUserToTable, tables, onTableClick }) => {
 
   arr.map(tableRect => {
     if (tables && tables[tableRect.id]) {
-      tableRect.style.fill = '#000000';
+      tableRect.style.fill = '#b4417b';
     } else {
       tableRect.style.fill = '#eeeeee';
     }
@@ -37,12 +37,12 @@ const OfficeMap = ({ classes, setUserToTable, isLoading, loaded, tables, onTable
 
   return (
     <Fragment>
+      {isLoading && 'fuck'}
       {popup &&
         popup.opened && (
           <Popup x={popup.x} y={popup.y} user={popup.user} onHoldPlace={setUserToTable} />
         )}
       <section className={classes.wrapper}>
-        {isLoading && 'fuck'}
         <svg width="100%" height="100%" viewBox="0 0 1005 766" version="1.1">
           <g id="Artboard" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
             <g id="Group-3" transform="translate(239.000000, 116.000000)" fill="#6CADF6">
