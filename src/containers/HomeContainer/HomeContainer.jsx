@@ -10,6 +10,7 @@ class HomeContainer extends Component {
 
   componentDidMount() {
     this.props.onTryAutoSignup();
+    this.props.onGetTables();
   }
 
   handleDrawerToggle = () => {
@@ -20,12 +21,18 @@ class HomeContainer extends Component {
     });
   };
 
+  handleClick = id => {
+    console.log(id);
+  };
+
   render() {
     return (
       <Home
         isAuthenticated={this.props.isAuthenticated}
         handleDrawerToggle={this.handleDrawerToggle}
         {...this.state}
+        tables={this.props.tables}
+        clicked={this.handleClick}
       />
     );
   }
@@ -34,12 +41,14 @@ class HomeContainer extends Component {
 const mapStateToProps = state => {
   return {
     isAuthenticated: state.auth.token !== null,
+    tables: state.connectApi.tables,
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     onTryAutoSignup: () => dispatch(actions.authCheckState()),
+    onGetTables: () => dispatch(actions.getTablesAsync()),
   };
 };
 

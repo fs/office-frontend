@@ -86,7 +86,7 @@ const styles = theme => ({
   },
 });
 
-const Home = ({ handleDrawerToggle, open, isAuthenticated, classes }) => {
+const Home = ({ handleDrawerToggle, open, isAuthenticated, classes, tables, clicked }) => {
   console.log(isAuthenticated);
 
   let auth = (
@@ -118,7 +118,7 @@ const Home = ({ handleDrawerToggle, open, isAuthenticated, classes }) => {
               FS Office
             </Typography>
             <div className={classes.toolBarRight}>
-              <SearchBox />
+              <SearchBox tables={tables} clicked={clicked} />
               {auth}
             </div>
           </Toolbar>

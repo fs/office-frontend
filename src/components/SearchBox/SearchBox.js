@@ -67,9 +67,6 @@ function inputComponent({ inputRef, ...props }) {
 }
 
 function Control(props) {
-  const inputStyle = {
-    color: '#fff',
-  };
   return (
     <MuiThemeProvider theme={darkTheme}>
       <TextField
@@ -82,9 +79,6 @@ function Control(props) {
             inputRef: props.innerRef,
             children: props.children,
             ...props.innerProps,
-          },
-          inputStyle: {
-            input: inputStyle,
           },
         }}
         {...props.selectProps.textFieldProps}
@@ -146,17 +140,37 @@ const components = {
   NoOptionsMessage,
 };
 
-class IntegrationReactSelect extends React.Component {
+class SearchBox extends React.Component {
   render() {
-    const { classes, theme } = this.props;
+    const { classes, theme, tables } = this.props;
+
+    const items = Object.keys(tables).map(item => {
+      const table = {
+        id: item,
+        ...tables[item],
+      };
+      return table;
+    });
+
+    const solutions = items.map(item => {
+      return {
+        id: item.id,
+        value: item.name,
+        label: item.name,
+      };
+    });
+
     return (
       <div className={classes.root}>
         <MuiThemeProvider theme={darkTheme}>
           <Select
             classes={classes}
-            options={suggestions}
+            options={solutions}
             components={components}
             placeholder="Search user"
+            onChange={e => {
+              this.props.clicked(e.id);
+            }}
           />
         </MuiThemeProvider>
       </div>
@@ -164,9 +178,9 @@ class IntegrationReactSelect extends React.Component {
   }
 }
 
-IntegrationReactSelect.propTypes = {
+SearchBox.propTypes = {
   classes: PropTypes.object.isRequired,
   theme: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles, { withTheme: true })(IntegrationReactSelect);
+export default withStyles(styles, { withTheme: true })(SearchBox);
