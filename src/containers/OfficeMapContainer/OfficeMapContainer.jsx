@@ -9,6 +9,7 @@ class OfficeMapContainer extends Component {
 
     this.state = {
       currentUserEmail: null,
+      popup: null,
     };
   }
 
@@ -41,8 +42,28 @@ class OfficeMapContainer extends Component {
     this.props.getTables();
   }
 
+  handleTableClick = (element, user) => {
+    const rect = element.getBoundingClientRect();
+    this.setState({
+      popup: {
+        x: rect.x,
+        y: rect.y,
+        user,
+        tableId: element.id,
+      },
+    });
+  };
+
   render() {
-    return <OfficeMap setUserToTable={this.setUserToTable} {...this.props} />;
+    console.log('State', this.state);
+    return (
+      <OfficeMap
+        onTableClick={this.handleTableClick}
+        setUserToTable={this.setUserToTable}
+        {...this.props}
+        {...this.state}
+      />
+    );
   }
 }
 export default connect(

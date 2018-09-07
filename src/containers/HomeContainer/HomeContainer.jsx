@@ -6,6 +6,7 @@ import * as actions from '../../store/actions/index';
 class HomeContainer extends Component {
   state = {
     open: false,
+    popup: null,
   };
 
   componentDidMount() {
@@ -19,6 +20,8 @@ class HomeContainer extends Component {
       };
     });
   };
+
+  handleTable;
 
   render() {
     return (

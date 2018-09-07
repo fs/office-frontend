@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import Paper from '@material-ui/core/Paper';
 import LockIcon from '@material-ui/icons/LockOutlined';
 import Avatar from '@material-ui/core/Avatar';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
 
 const styles = theme => ({
   root: {
@@ -17,6 +18,7 @@ const styles = theme => ({
     paddingTop: theme.spacing.unit * 2,
     paddingBottom: theme.spacing.unit * 2,
     filter: 'drop-shadow(0 0 2px rgba(0, 0, 0, 0.3))',
+    transform: 'translate(-50%,-100%)',
     '&:before': {
       content: '""',
       display: 'block',
@@ -36,16 +38,24 @@ const styles = theme => ({
   },
 });
 
-const Popup = ({ classes, name, email }) => {
+const Popup = ({ classes, user, x, y, onHoldPlace }) => {
   return (
-    <Paper className={classes.root} elevation={0}>
-      <Avatar className={classes.avatar}>
-        <LockIcon />
-      </Avatar>
-      <Typography variant="headline" component="h3">
-        {name}
-      </Typography>
-      <Typography>{email}</Typography>
+    <Paper className={classes.root} elevation={0} style={{ top: y + 'px', left: x + 17 + 'px' }}>
+      {user ? (
+        <Fragment>
+          <Avatar className={classes.avatar}>
+            <LockIcon />
+          </Avatar>
+          <Typography variant="headline" component="h3">
+            {user.name}
+          </Typography>
+          <Typography>{user.email}</Typography>
+        </Fragment>
+      ) : (
+        <Button variant="contained" fullWidth color="secondary" onClick={onHoldPlace}>
+          Hold this place
+        </Button>
+      )}
     </Paper>
   );
 };
