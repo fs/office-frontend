@@ -13,6 +13,7 @@ import Button from '@material-ui/core/Button';
 import PersonIcon from '@material-ui/icons/Person';
 import OfficeMapContainer from '../../containers/OfficeMapContainer/OfficeMapContainer';
 import AuthContainer from '../../containers/Auth/AuthContainer';
+import SearchBox from '../../components/SearchBox/SearchBox';
 
 const drawerWidth = 340;
 
@@ -47,6 +48,12 @@ const styles = theme => ({
   toolBar: {
     paddingLeft: theme.spacing.unit * 3,
     paddingRight: theme.spacing.unit * 3,
+    justifyContent: 'space-between',
+  },
+  toolBarRight: {
+    maxWidth: '400px',
+    width: '100%',
+    display: 'flex',
     justifyContent: 'space-between',
   },
   drawerPaper: {
@@ -110,7 +117,10 @@ const Home = ({ handleDrawerToggle, open, isAuthenticated, classes }) => {
             <Typography variant="title" color="inherit" noWrap>
               FS Office
             </Typography>
-            {auth}
+            <div className={classes.toolBarRight}>
+              <SearchBox />
+              {auth}
+            </div>
           </Toolbar>
         </AppBar>
         <main className={classNames(classes.content, { [classes.contentShift]: open })}>
