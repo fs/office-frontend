@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles/index';
-import Popup from '../Ui/Popup/Popup';
+import Popup from '../Popup/Popup';
 
 const styles = () => ({
   wrapper: {
