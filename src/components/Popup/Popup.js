@@ -1,81 +1,49 @@
 import React, { Fragment } from 'react';
 import Paper from '@material-ui/core/Paper';
-import Avatar from '@material-ui/core/Avatar';
-import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
-import PersonIcon from '@material-ui/icons/Person';
-import ClearIcon from '@material-ui/icons/Clear';
+import ClickAwayListener from '@material-ui/core/ClickAwayListener';
+import { withStyles } from '@material-ui/core/styles';
+import Profile from '../Profile/Profile';
 
 const styles = theme => ({
   root: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
     position: 'absolute',
-    zIndex: 1000,
-    maxWidth: '300px',
-    ...theme.mixins.gutters(),
-    paddingTop: theme.spacing.unit * 5,
-    paddingBottom: theme.spacing.unit * 2,
-    filter: 'drop-shadow(0 0 2px rgba(0, 0, 0, 0.3))',
+    padding: theme.spacing.unit * 3,
+    minWidth: '250px',
     transform: 'translate(-50%,-100%)',
-    '&:before': {
+    zIndex: 1250,
+    '&:after': {
       content: '""',
       display: 'block',
       position: 'absolute',
-      bottom: '-16px',
+      bottom: `-${theme.spacing.unit * 1.5}px`,
       left: '50%',
-      zIndex: 999,
-      transform: 'translateX(-50%)',
-      borderStyle: 'solid',
-      borderWidth: '16px 16px 0 16px',
-      borderColor: 'white transparent transparent transparent',
+      width: theme.spacing.unit * 3,
+      height: theme.spacing.unit * 3,
+      backgroundColor: 'white',
+      transform: 'translateX(-50%) rotate(45deg)',
     },
-  },
-  avatar: {
-    margin: theme.spacing.unit,
-    backgroundColor: theme.palette.secondary.main,
-  },
-  clearButton: {
-    position: 'absolute',
-    top: '10px',
-    right: '10px',
-    cursor: 'pointer',
   },
 });
 
-const Popup = ({
-  classes,
-  user,
-  x,
-  y,
-  onHoldPlace,
-  isAuthenticated,
-  currentUserEmail,
-  handleClosePopupClick,
-}) => {
+// handleClosePopupClick
+const Popup = props => {
+  const content =
+    props.name && props.email ? (
+      <Profile name={props.name} email={props.email} photoUrl={props.photoUrl} />
+    ) : (
+      <Typography>Please, sign in to hold this place</Typography>
+    );
   return (
-    <Paper className={classes.root} elevation={0} style={{ top: y + 'px', left: x + 17 + 'px' }}>
-      {user ? (
-        <Fragment>
-          <Avatar className={classes.avatar}>
-            <PersonIcon />
-          </Avatar>
-          <Typography variant="headline" component="h3">
-            {currentUserEmail == user.email ? 'You are here' : user.name}
-          </Typography>
-          <Typography>{user.email}</Typography>
-        </Fragment>
-      ) : isAuthenticated ? (
-        <Button variant="contained" fullWidth color="secondary" onClick={onHoldPlace}>
-          Hold this place
-        </Button>
-      ) : (
-        <p>Please, sign in to hold this place</p>
-      )}
-      <ClearIcon className={classes.clearButton} onClick={handleClosePopupClick} />
-    </Paper>
+    <ClickAwayListener onClickAway={props.handleClosePopupClick}>
+      <Paper
+        className={props.classes.root}
+        style={{ top: props.y + 'px', left: props.x + 17 + 'px' }}
+        elevation={24}
+      >
+        {content}
+      </Paper>
+    </ClickAwayListener>
   );
 };
 

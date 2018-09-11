@@ -16,7 +16,7 @@ class HomeContainer extends Component {
   }
 
   componentDidMount() {
-    this.props.onAuth();
+    // this.props.onAuth();
     // this.props.onTryAutoSignup();
     this.props.onGetTables();
   }

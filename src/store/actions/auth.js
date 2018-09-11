@@ -47,6 +47,7 @@ export const signIn = () => {
         dispatch(authSuccess());
       })
       .catch(error => {
+        console.log('Error', error);
         dispatch(authFail(error));
       });
   };
