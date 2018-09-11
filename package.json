@@ -26,11 +26,19 @@
     "precommit": "pretty-quick --staged",
     "prettier": "prettier --write './src/**/*.{js,jsx}'",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d build",
+    "storybook": "start-storybook -p 9009 -s public",
+    "build-storybook": "build-storybook -s public"
   },
   "devDependencies": {
     "husky": "^0.14.3",
     "prettier": "1.14.2",
-    "pretty-quick": "^1.6.0"
+    "pretty-quick": "^1.6.0",
+    "@storybook/react": "^3.4.10",
+    "@storybook/addon-actions": "^3.4.10",
+    "@storybook/addon-links": "^3.4.10",
+    "@storybook/addons": "^3.4.10",
+    "babel-core": "^6.26.3",
+    "babel-runtime": "^6.26.0"
   }
 }
