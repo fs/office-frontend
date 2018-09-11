@@ -93,7 +93,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     onAuth: (email, password, isSignUp, displayName, photoUrl) =>
-      dispatch(actions.auth(email, password, isSignUp, displayName, photoUrl)),
+      dispatch(actions.signIn(email, password, isSignUp, displayName, photoUrl)),
     onLogout: () => dispatch(actions.logout()),
     onUpdateProfile: (idToken, displayName, photoUrl) =>
       dispatch(actions.updateProfile(idToken, displayName, photoUrl)),

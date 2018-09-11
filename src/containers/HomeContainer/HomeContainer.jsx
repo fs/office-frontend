@@ -16,7 +16,8 @@ class HomeContainer extends Component {
   }
 
   componentDidMount() {
-    this.props.onTryAutoSignup();
+    this.props.onAuth();
+    // this.props.onTryAutoSignup();
     this.props.onGetTables();
   }
 
@@ -73,7 +74,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onTryAutoSignup: () => dispatch(actions.authCheckState()),
+    // onTryAutoSignup: () => dispatch(actions.authCheckState()),
+    onAuth: () => dispatch(actions.signIn()),
     onGetTables: () => dispatch(actions.getTablesAsync()),
   };
 };
