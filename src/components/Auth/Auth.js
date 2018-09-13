@@ -21,10 +21,11 @@ const Auth = props => {
       name="Vladimir Gornyy"
       photoUrl="https://lh4.googleusercontent.com/-6BwQjl5LND4/AAAAAAAAAAI/AAAAAAAAAEE/sNDfU2xtZgc/photo.jpg"
       email="vladimir.gornyy@flatstack.com"
+      onLogout={props.onLogout}
       logout
     />
   ) : (
-    <Button variant="contained" fullWidth color="secondary" onClick={props.onLogoutClick}>
+    <Button variant="contained" fullWidth color="secondary" onClick={props.onAuth}>
       <Google className={props.classes.leftIcon} />
       Sign in with Google
     </Button>

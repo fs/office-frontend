@@ -35,7 +35,7 @@ const Profile = props => {
       variant="outlined"
       fullWidth
       color="secondary"
-      onClick={props.onLogoutClick}
+      onClick={props.onLogout}
     >
       Logout
     </Button>

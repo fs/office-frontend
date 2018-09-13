@@ -132,11 +132,11 @@ const Home = ({
         </AppBar>
         <main className={classNames(classes.content, { [classes.contentShift]: open })}>
           <div className={classes.drawerHeader} />
-          <OfficeMapContainer
+          {/* <OfficeMapContainer
             onTableShow={onTableShow}
             popup={popup}
             handleClosePopupClick={handleClosePopupClick}
-          />
+          /> */}
         </main>
         <Drawer
           variant="persistent"

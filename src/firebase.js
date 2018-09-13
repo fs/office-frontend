@@ -8,6 +8,7 @@ const config = {
   messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID || '',
 };
 firebase.initializeApp(config);
-export const auth = firebase.auth();
+export const authRef = firebase.auth();
+export const databaseRef = firebase.database();
 export const googleProvider = new firebase.auth.GoogleAuthProvider();
 export default firebase;

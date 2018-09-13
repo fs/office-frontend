@@ -1,3 +1,2 @@
-export { signIn, logout, authCheckState } from './auth';
-export { updateProfile, fetchUserProfile } from './profile';
+export { auth, logout, authCheckState } from './auth';
 export { getTablesAsync } from './actions';

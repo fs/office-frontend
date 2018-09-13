@@ -75,7 +75,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     // onTryAutoSignup: () => dispatch(actions.authCheckState()),
-    onAuth: () => dispatch(actions.signIn()),
+    onAuth: () => dispatch(actions.auth()),
     onGetTables: () => dispatch(actions.getTablesAsync()),
   };
 };

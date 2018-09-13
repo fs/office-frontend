@@ -1,9 +1,14 @@
 import * as actionTypes from '../actions/actionTypes';
 
+// user: {
+//   userId: 'AS89DFGOHAOA',
+//   email: 'gornyyvladimir@gmail.com',
+//   name: 'Vladimir Gornyy',
+//   photoUrl: 'http://photo.jpg',
+// }
+
 const initialState = {
-  token: null,
-  userId: null,
-  email: null,
+  user: null,
   error: null,
   loading: false,
 };
@@ -19,9 +24,8 @@ const reducer = (state = initialState, action) => {
     case actionTypes.AUTH_SUCCESS:
       return {
         ...state,
-        token: action.payload.token,
-        userId: action.payload.userId,
-        email: action.payload.email,
+        ...state.user,
+        user: action.payload.user,
         error: null,
         loading: false,
       };
@@ -31,12 +35,24 @@ const reducer = (state = initialState, action) => {
         error: action.payload.error,
         loading: false,
       };
-    case actionTypes.AUTH_LOGOUT:
+    case actionTypes.LOGOUT_START:
       return {
         ...state,
-        token: null,
-        userId: null,
-        email: null,
+        error: null,
+        loading: true,
+      };
+    case actionTypes.LOGOUT_SUCCESS:
+      return {
+        ...state,
+        user: null,
+        error: null,
+        loading: false,
+      };
+    case actionTypes.LOGOUT_FAIL:
+      return {
+        ...state,
+        error: action.payload.error,
+        loading: false,
       };
     default:
       return state;

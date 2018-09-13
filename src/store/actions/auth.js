@@ -1,6 +1,6 @@
 import * as actionTypes from './actionTypes';
 import axios from 'axios';
-import { auth, googleProvider } from '../../firebase';
+import { authRef, databaseRef, googleProvider } from '../../firebase';
 
 const API_KEY = process.env.REACT_APP_FIREBASE_API_KEY || '';
 
@@ -10,11 +10,11 @@ export const authStart = () => {
   };
 };
 
-export const authSuccess = userData => {
+export const authSuccess = user => {
   return {
     type: actionTypes.AUTH_SUCCESS,
     payload: {
-      ...userData,
+      user,
     },
   };
 };
@@ -28,27 +28,102 @@ export const authFail = error => {
   };
 };
 
-export const logout = () => {
-  // localStorage.removeItem('token');
-  // localStorage.removeItem('userId');
-  // localStorage.removeItem('expirationDate');
+export const logoutStart = () => {
   return {
-    type: actionTypes.AUTH_LOGOUT,
+    type: actionTypes.LOGOUT_START,
   };
 };
 
-export const signIn = () => {
+export const logoutSuccess = () => {
+  return {
+    type: actionTypes.LOGOUT_SUCCESS,
+  };
+};
+
+export const logoutFail = error => {
+  return {
+    type: actionTypes.LOGOUT_FAIL,
+    payload: {
+      error,
+    },
+  };
+};
+
+// export const logout = () => {
+//   // localStorage.removeItem('token');
+//   // localStorage.removeItem('userId');
+//   // localStorage.removeItem('expirationDate');
+//   return {
+//     type: actionTypes.AUTH_LOGOUT,
+//   };
+// };
+
+// .then(result => {
+//   return dbRef.ref('users/:id').set({});
+// })
+// .then(result => {
+//   console.log(result);
+//   dispatch(authSuccess(result));
+// })
+
+export const auth = () => {
   return dispatch => {
     dispatch(authStart());
-    return auth
+    return authRef
       .signInWithPopup(googleProvider)
       .then(result => {
-        console.log(result);
-        dispatch(authSuccess());
+        const user = {
+          name: result.user.displayName,
+          email: result.user.email,
+          photoUrl: result.user.photoURL,
+        };
+        const uid = result.user.uid;
+        return databaseRef
+          .ref('users/' + uid)
+          .set(user)
+          .then(() => user);
+      })
+      .then(user => {
+        console.log(user);
+        dispatch(authSuccess(user));
       })
       .catch(error => {
         console.log('Error', error);
         dispatch(authFail(error));
+      });
+  };
+};
+
+export const authCheckState = () => {
+  return dispatch => {
+    authRef.onAuthStateChanged(result => {
+      if (result) {
+        console.log('Yeah boy', result);
+        const user = {
+          name: result.displayName,
+          email: result.email,
+          photoUrl: result.photoURL,
+        };
+        dispatch(authSuccess(user));
+      } else {
+        console.log(':(');
+        dispatch(logout());
+      }
+    });
+  };
+};
+
+export const logout = () => {
+  return dispatch => {
+    authRef
+      .signOut()
+      .then(() => {
+        dispatch(logoutSuccess());
+        console.log('Sign out success');
+      })
+      .catch(error => {
+        console.log(error);
+        dispatch(logoutFail(error));
       });
   };
 };
