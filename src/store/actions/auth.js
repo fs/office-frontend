@@ -69,28 +69,10 @@ export const logoutFail = error => {
 export const auth = () => {
   return dispatch => {
     dispatch(authStart());
-    return authRef
-      .signInWithPopup(googleProvider)
-      .then(result => {
-        const user = {
-          name: result.user.displayName,
-          email: result.user.email,
-          photoUrl: result.user.photoURL,
-        };
-        const uid = result.user.uid;
-        return databaseRef
-          .ref('users/' + uid)
-          .set(user)
-          .then(() => user);
-      })
-      .then(user => {
-        console.log(user);
-        dispatch(authSuccess(user));
-      })
-      .catch(error => {
-        console.log('Error', error);
-        dispatch(authFail(error));
-      });
+    return authRef.signInWithPopup(googleProvider).catch(error => {
+      console.log('Error', error);
+      dispatch(authFail(error));
+    });
   };
 };
 
@@ -98,7 +80,7 @@ export const authCheckState = () => {
   return dispatch => {
     authRef.onAuthStateChanged(result => {
       if (result) {
-        console.log('Yeah boy', result);
+        console.log('Login', result);
         const user = {
           name: result.displayName,
           email: result.email,
@@ -106,8 +88,8 @@ export const authCheckState = () => {
         };
         dispatch(authSuccess(user));
       } else {
-        console.log(':(');
-        dispatch(logout());
+        console.log('Logout');
+        dispatch(logoutSuccess());
       }
     });
   };
@@ -115,16 +97,11 @@ export const authCheckState = () => {
 
 export const logout = () => {
   return dispatch => {
-    authRef
-      .signOut()
-      .then(() => {
-        dispatch(logoutSuccess());
-        console.log('Sign out success');
-      })
-      .catch(error => {
-        console.log(error);
-        dispatch(logoutFail(error));
-      });
+    dispatch(logoutStart());
+    authRef.signOut().catch(error => {
+      console.log(error);
+      dispatch(logoutFail(error));
+    });
   };
 };
 
