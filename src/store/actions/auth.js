@@ -69,10 +69,21 @@ export const logoutFail = error => {
 export const auth = () => {
   return dispatch => {
     dispatch(authStart());
-    return authRef.signInWithPopup(googleProvider).catch(error => {
-      console.log('Error', error);
-      dispatch(authFail(error));
-    });
+    return authRef
+      .signInWithPopup(googleProvider)
+      .then(result => {
+        const user = {
+          name: result.user.displayName,
+          email: result.user.email,
+          photoUrl: result.user.photoURL,
+        };
+        const uid = result.user.uid;
+        return databaseRef.ref('users/' + uid).set(user);
+      })
+      .catch(error => {
+        console.log('Error', error);
+        dispatch(authFail(error));
+      });
   };
 };
 
