@@ -26,9 +26,9 @@ const styles = theme => ({
 
 const Profile = props => {
   const avatar = props.photoUrl ? (
-    <Avatar className={props.classes.avatar} src={props.photoUrl} />
+    <Avatar alt={props.name} className={props.classes.avatar} src={props.photoUrl} />
   ) : (
-    <Avatar className={`${props.classes.avatar} ${props.classes.noPhoto}`}>
+    <Avatar alt="No user photo" className={`${props.classes.avatar} ${props.classes.noPhoto}`}>
       <PersonIcon className={props.classes.icon} />
     </Avatar>
   );

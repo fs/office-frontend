@@ -53,6 +53,8 @@ class HomeContainer extends Component {
   render() {
     return (
       <Home
+        user={this.props.user}
+        loading={this.props.loading}
         isAuthenticated={this.props.isAuthenticated}
         handleDrawerToggle={this.handleDrawerToggle}
         tables={this.props.tables}
@@ -66,7 +68,9 @@ class HomeContainer extends Component {
 
 const mapStateToProps = state => {
   return {
-    isAuthenticated: state.auth.token !== null,
+    loading: state.auth.loading,
+    user: state.auth.user,
+    isAuthenticated: !!state.auth.user,
     tables: state.connectApi.tables,
     updateTables: state.connectApi.updateTables,
   };
@@ -74,8 +78,6 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    // onTryAutoSignup: () => dispatch(actions.authCheckState()),
-    onAuth: () => dispatch(actions.auth()),
     onGetTables: () => dispatch(actions.getTablesAsync()),
   };
 };
