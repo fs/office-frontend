@@ -4,8 +4,9 @@ import * as actions from '../../store/actions/index';
 
 const mapStateToProps = state => {
   return {
-    loading: state.auth.loading,
     error: state.auth.error,
+    loading: state.auth.loading,
+    user: state.auth.user,
     isAuthenticated: !!state.auth.user,
   };
 };

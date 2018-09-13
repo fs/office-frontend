@@ -1,10 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Avatar from '@material-ui/core/Avatar';
 import PersonIcon from '@material-ui/icons/Person';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
 import withStyles from '@material-ui/core/styles/withStyles';
-import PropTypes from 'prop-types';
 
 const styles = theme => ({
   root: {
@@ -23,24 +22,9 @@ const styles = theme => ({
   icon: {
     fontSize: '60px',
   },
-  button: {
-    marginTop: theme.spacing.unit * 3,
-  },
 });
 
 const Profile = props => {
-  const logoutButton = props.logout && (
-    <Button
-      className={props.classes.button}
-      variant="outlined"
-      fullWidth
-      color="secondary"
-      onClick={props.onLogout}
-    >
-      Logout
-    </Button>
-  );
-
   const avatar = props.photoUrl ? (
     <Avatar className={props.classes.avatar} src={props.photoUrl} />
   ) : (
@@ -54,7 +38,7 @@ const Profile = props => {
       {avatar}
       <Typography variant="headline">{props.name}</Typography>
       <Typography variant="subheading">{props.email}</Typography>
-      {logoutButton}
+      {props.children}
     </div>
   );
 };
@@ -63,7 +47,6 @@ Profile.propTypes = {
   name: PropTypes.string.isRequired,
   email: PropTypes.string.isRequired,
   photoUrl: PropTypes.string,
-  logout: PropTypes.bool,
 };
 
 export default withStyles(styles)(Profile);

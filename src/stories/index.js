@@ -3,6 +3,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { linkTo } from '@storybook/addon-links';
+import Button from '@material-ui/core/Button';
 
 import Profile from '../components/Profile/Profile';
 import Popup from '../components/Popup/Popup';
@@ -14,8 +15,8 @@ storiesOf('Profile', module)
   .add('Standard', () => (
     <Profile
       name="Vladimir Gornyy"
-      photoUrl="https://lh4.googleusercontent.com/-6BwQjl5LND4/AAAAAAAAAAI/AAAAAAAAAEE/sNDfU2xtZgc/photo.jpg"
       email="vladimir.gornyy@flatstack.com"
+      photoUrl="https://lh4.googleusercontent.com/-6BwQjl5LND4/AAAAAAAAAAI/AAAAAAAAAEE/sNDfU2xtZgc/photo.jpg"
     />
   ))
   .add('Without Photo', () => (
@@ -24,11 +25,19 @@ storiesOf('Profile', module)
   .add('With logout button', () => (
     <Profile
       name="Vladimir Gornyy"
-      photoUrl="https://lh4.googleusercontent.com/-6BwQjl5LND4/AAAAAAAAAAI/AAAAAAAAAEE/sNDfU2xtZgc/photo.jpg"
       email="vladimir.gornyy@flatstack.com"
-      logout
-      onLogoutClick={action('clicked')}
-    />
+      photoUrl="https://lh4.googleusercontent.com/-6BwQjl5LND4/AAAAAAAAAAI/AAAAAAAAAEE/sNDfU2xtZgc/photo.jpg"
+    >
+      <Button
+        style={{ marginTop: '24px' }}
+        variant="outlined"
+        fullWidth
+        color="secondary"
+        onClick={action('Logout')}
+      >
+        Logout
+      </Button>
+    </Profile>
   ));
 
 storiesOf('Popup', module)

@@ -28,12 +28,11 @@ const styles = theme => ({
 
 // handleClosePopupClick
 const Popup = props => {
-  const content =
-    props.name && props.email ? (
-      <Profile name={props.name} email={props.email} photoUrl={props.photoUrl} />
-    ) : (
-      <Typography>Please, sign in to hold this place</Typography>
-    );
+  const content = props.user ? (
+    <Profile name={props.user.name} email={props.user.email} photoUrl={props.user.photoUrl} />
+  ) : (
+    <Typography>Please, sign in to hold this place</Typography>
+  );
   return (
     <ClickAwayListener onClickAway={props.handleClosePopupClick}>
       <Paper
