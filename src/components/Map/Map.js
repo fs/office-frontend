@@ -9,10 +9,6 @@ const styles = () => ({
   },
 });
 
-{
-  /* <rect width="34" height="20" x="511" y="318" rx="2"/> */
-}
-
 const Map = props => {
   const tablesRect = tables.map(item => (
     <rect width="34" height="20" x={item.x} y={item.y} rx="2" transform={item.transform} />
