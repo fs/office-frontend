@@ -24,7 +24,6 @@ const reducer = (state = initialState, action) => {
     case actionTypes.AUTH_SUCCESS:
       return {
         ...state,
-        ...state.user,
         user: action.payload.user,
         error: null,
         loading: false,

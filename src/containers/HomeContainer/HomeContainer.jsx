@@ -51,13 +51,14 @@ class HomeContainer extends Component {
   };
 
   render() {
+    console.log('Tables', this.props.tables);
     return (
       <Home
         user={this.props.user}
         loading={this.props.loading}
         isAuthenticated={this.props.isAuthenticated}
         handleDrawerToggle={this.handleDrawerToggle}
-        tables={this.props.tables}
+        tables={[]}
         onTableShow={this.handleTableShow}
         handleClosePopupClick={this.handleClosePopupClick}
         {...this.state}
@@ -68,17 +69,17 @@ class HomeContainer extends Component {
 
 const mapStateToProps = state => {
   return {
+    tables: state.tables.tables,
     loading: state.auth.loading,
     user: state.auth.user,
     isAuthenticated: !!state.auth.user,
-    tables: state.connectApi.tables,
-    updateTables: state.connectApi.updateTables,
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    onGetTables: () => dispatch(actions.getTablesAsync()),
+    onGetTables: () => dispatch(actions.fetchTables()),
+    // onGetTables: () => dispatch(actions.getTablesAsync()),
   };
 };
 
