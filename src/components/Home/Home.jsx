@@ -17,6 +17,7 @@ import { withStyles } from '@material-ui/core/styles';
 import OfficeMapContainer from '../../containers/OfficeMapContainer/OfficeMapContainer';
 import AuthContainer from '../../containers/Auth/AuthContainer';
 import SearchBox from '../../components/SearchBox/SearchBox';
+import Map from '../Map/Map';
 
 const drawerWidth = 340;
 
@@ -141,6 +142,7 @@ const Home = props => {
           })}
         >
           <div className={props.classes.drawerHeader} />
+          <Map />
           {/* <OfficeMapContainer
             onTableShow={onTableShow}
             popup={popup}
