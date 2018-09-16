@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import { withStyles } from '@material-ui/core/styles';
 import Profile from '../Profile/Profile';
@@ -28,11 +29,27 @@ const styles = theme => ({
 
 // handleClosePopupClick
 const Popup = props => {
-  const content = props.user ? (
-    <Profile name={props.user.name} email={props.user.email} photoUrl={props.user.photoUrl} />
-  ) : (
-    <Typography>Please, sign in to hold this place</Typography>
-  );
+  let content = <Typography>Loading</Typography>;
+
+  if (props.user) {
+    content = (
+      <Profile name={props.user.name} email={props.user.email} photoUrl={props.user.photoUrl} />
+    );
+  } else {
+    content = props.isAuthenticated ? (
+      <Button
+        variant="contained"
+        color="secondary"
+        aria-label="Hold this place"
+        fullWidth
+        onClick={() => props.handleHoldClick(props.tableId)}
+      >
+        Hold this place
+      </Button>
+    ) : (
+      <Typography>Please, sign in to hold this place</Typography>
+    );
+  }
   return (
     <ClickAwayListener onClickAway={props.handlePopupClose}>
       <Paper

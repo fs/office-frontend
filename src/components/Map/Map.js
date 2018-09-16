@@ -20,7 +20,6 @@ const styles = theme => ({
 
 const Map = props => {
   const tables = Object.keys(props.tables).map(i => ({ ...props.tables[i], id: i }));
-  console.log('tables tables', tables);
 
   const tablesRect = tables.map(item => (
     <Table
@@ -39,6 +38,7 @@ const Map = props => {
   );
 
   if (!props.loading) {
+    console.log('USER', props.user);
     map = (
       <section className={props.classes.wrapper}>
         {props.popup.open && (
@@ -47,7 +47,10 @@ const Map = props => {
             y={props.popup.y}
             centerHorizontal={props.popup.centerHorizontal}
             centerVertical={props.popup.centerVertical}
-            user={{ name: 'Bimo', email: 'bimo@adventuretime.com' }}
+            tableId={props.popup.tableId}
+            user={props.user}
+            isAuthenticated={props.isAuthenticated}
+            handleHoldClick={props.handleHoldClick}
             handlePopupClose={props.handlePopupClose}
           />
         )}

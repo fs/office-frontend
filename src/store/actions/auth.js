@@ -96,6 +96,7 @@ export const authCheckState = () => {
           name: result.displayName,
           email: result.email,
           photoUrl: result.photoURL,
+          userId: result.uid,
         };
         dispatch(authSuccess(user));
       } else {
