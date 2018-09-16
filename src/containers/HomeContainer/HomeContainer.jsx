@@ -10,15 +10,15 @@ class HomeContainer extends Component {
   };
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.updateTables === true) {
-      this.props.onGetTables();
-    }
+    // if (nextProps.updateTables === true) {
+    //   this.props.onGetTables();
+    // }
   }
 
   componentDidMount() {
     // this.props.onAuth();
     // this.props.onTryAutoSignup();
-    this.props.onGetTables();
+    // this.props.onGetTables();
   }
 
   handleDrawerToggle = () => {

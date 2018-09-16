@@ -1,7 +1,7 @@
 import * as actionTypes from '../actions/actionTypes';
 
 const initialState = {
-  tables: null,
+  tables: {},
   error: null,
   loading: false,
 };

@@ -10,7 +10,7 @@ const styles = theme => ({
     position: 'absolute',
     padding: theme.spacing.unit * 3,
     minWidth: '250px',
-    transform: 'translate(-50%,-100%)',
+    transform: `translate(-50%, calc(-100% - ${theme.spacing.unit * 1.5}px))`,
     zIndex: 1250,
     '&:after': {
       content: '""',
@@ -34,10 +34,13 @@ const Popup = props => {
     <Typography>Please, sign in to hold this place</Typography>
   );
   return (
-    <ClickAwayListener onClickAway={props.handleClosePopupClick}>
+    <ClickAwayListener onClickAway={props.handlePopupClose}>
       <Paper
         className={props.classes.root}
-        style={{ top: props.y + 'px', left: props.x + 17 + 'px' }}
+        style={{
+          top: props.y + props.centerVertical + 'px',
+          left: props.x + props.centerHorizontal + 'px',
+        }}
         elevation={24}
       >
         {content}

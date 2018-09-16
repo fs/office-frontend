@@ -25,11 +25,12 @@ export const fetchTablesFail = error => {
   };
 };
 
+//fix tables 1 in production
 export const fetchTables = () => {
   return dispatch => {
     dispatch(fetchTablesStart());
     databaseRef
-      .ref('/tables')
+      .ref('/tables1')
       .once('value')
       .then(snapshot => {
         dispatch(fetchTablesSuccess(snapshot.val()));
