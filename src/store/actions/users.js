@@ -34,7 +34,7 @@ export const resetUser = () => {
 export const fetchUser = userId => {
   return dispatch => {
     dispatch(fetchUserStart());
-    databaseRef
+    return databaseRef
       .ref(`/users/${userId}`)
       .once('value')
       .then(snapshot => {

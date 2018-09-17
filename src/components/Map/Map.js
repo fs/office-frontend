@@ -19,6 +19,7 @@ const styles = theme => ({
 });
 
 const Map = props => {
+  console.log(props);
   const tables = Object.keys(props.tables).map(i => ({ ...props.tables[i], id: i }));
 
   const tablesRect = tables.map(item => (
@@ -28,6 +29,7 @@ const Map = props => {
       transform={item.transform}
       id={item.id}
       onClick={props.onTableClick}
+      color={item.userId ? props.theme.palette.primary.light : null}
     />
   ));
 
@@ -38,7 +40,6 @@ const Map = props => {
   );
 
   if (!props.loading) {
-    console.log(props.user);
     map = (
       <section className={props.classes.wrapper}>
         {props.popup.open && (
@@ -105,4 +106,4 @@ const Map = props => {
   return map;
 };
 
-export default withStyles(styles)(Map);
+export default withStyles(styles, { withTheme: true })(Map);

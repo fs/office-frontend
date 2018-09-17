@@ -11,4 +11,5 @@ firebase.initializeApp(config);
 export const authRef = firebase.auth();
 export const databaseRef = firebase.database();
 export const googleProvider = new firebase.auth.GoogleAuthProvider();
+googleProvider.setCustomParameters({ hd: 'flatstack.com' });
 export default firebase;

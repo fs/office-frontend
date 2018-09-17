@@ -78,7 +78,6 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     onGetTables: () => dispatch(actions.fetchTables()),
-    // onGetTables: () => dispatch(actions.getTablesAsync()),
   };
 };
 

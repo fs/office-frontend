@@ -14,10 +14,8 @@ import Avatar from '@material-ui/core/Avatar';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import PersonIcon from '@material-ui/icons/Person';
 import { withStyles } from '@material-ui/core/styles';
-import OfficeMapContainer from '../../containers/OfficeMapContainer/OfficeMapContainer';
 import AuthContainer from '../../containers/Auth/AuthContainer';
 import SearchBox from '../../components/SearchBox/SearchBox';
-import Map from '../Map/Map';
 import MapContainer from '../../containers/MapContainer/MapContainer';
 
 const drawerWidth = 340;

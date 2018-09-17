@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as actions from '../../store/actions/index';
 import Map from '../../components/Map/Map';
+// import {databaseRef} from '../../firebase';
+// import tables from '../../tables';
 
 class MapContainer extends Component {
   // create tables in database
@@ -21,9 +23,17 @@ class MapContainer extends Component {
     },
   };
 
-  componentDidMount() {
-    // this.props.onGetTables();
-  }
+  deleteUser = userId => {
+    return new Promise(resolve => {
+      Object.keys(this.props.tables).map(tableId => {
+        if (this.props.tables[tableId].userId === userId) {
+          const updatedTable = { ...this.props.tables[tableId] };
+          delete updatedTable['userId'];
+          resolve(this.props.onDeleteUser(tableId, updatedTable));
+        }
+      });
+    });
+  };
 
   handlePopupClose = () => {
     this.setState({
@@ -58,9 +68,9 @@ class MapContainer extends Component {
   };
 
   handleHoldClick = tableId => {
-    this.props.onSetUser(tableId, this.props.currentUser.userId).then(() => {
-      this.props.onGetUser(this.props.currentUser.userId);
-    });
+    this.deleteUser(this.props.currentUser.userId)
+      .then(() => this.props.onSetUser(tableId, this.props.currentUser.userId))
+      .then(() => this.props.onGetUser(this.props.currentUser.userId));
   };
 
   render() {
@@ -95,6 +105,7 @@ const mapDispatchToProps = dispatch => {
     onGetUser: userId => dispatch(actions.fetchUser(userId)),
     onSetUser: (tableId, userId) => dispatch(actions.setUser(tableId, userId)),
     onResetUser: () => dispatch(actions.resetUser()),
+    onDeleteUser: (tableId, updatedTable) => dispatch(actions.deleteUser(tableId, updatedTable)),
   };
 };
 

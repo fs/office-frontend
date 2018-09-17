@@ -92,3 +92,40 @@ export const setUser = (tableId, userId) => {
       });
   };
 };
+
+export const deleteUserStart = () => {
+  return {
+    type: actionTypes.DELETE_USER_START,
+  };
+};
+
+export const deleteUserSuccess = () => {
+  return {
+    type: actionTypes.DELETE_USER_SUCCESS,
+  };
+};
+
+export const deleteUserFail = error => {
+  return {
+    type: actionTypes.DELETE_USER_FAIL,
+    payload: {
+      error,
+    },
+  };
+};
+
+export const deleteUser = (tableId, updatedTable) => {
+  return dispatch => {
+    console.log(tableId, updatedTable);
+    dispatch(deleteUserStart());
+    return databaseRef
+      .ref(`/tables1/${tableId}`)
+      .set(updatedTable)
+      .then(() => {
+        dispatch(deleteUserSuccess());
+      })
+      .catch(error => {
+        dispatch(deleteUserFail(error));
+      });
+  };
+};

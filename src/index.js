@@ -10,7 +10,6 @@ import registerServiceWorker from './registerServiceWorker';
 import authReducer from './store/reducers/auth';
 import tablesReducer from './store/reducers/tables';
 import usersReducer from './store/reducers/users';
-import connectApiReducer from './store/reducers/connectApi';
 import * as actions from './store/actions/index';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -19,7 +18,6 @@ const rootReducer = combineReducers({
   auth: authReducer,
   tables: tablesReducer,
   users: usersReducer,
-  connectApi: connectApiReducer,
 });
 
 const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunk)));

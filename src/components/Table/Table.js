@@ -17,6 +17,7 @@ const Table = props => (
     x={props.x}
     y={props.y}
     transform={props.transform}
+    fill={props.color}
     onClick={event => props.onClick(event, props.id)}
   />
 );
