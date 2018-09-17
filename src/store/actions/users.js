@@ -7,11 +7,11 @@ export const fetchUserStart = () => {
   };
 };
 
-export const fetchUserSuccess = tables => {
+export const fetchUserSuccess = user => {
   return {
     type: actionTypes.FETCH_USER_SUCCESS,
     payload: {
-      tables,
+      user,
     },
   };
 };
@@ -25,11 +25,17 @@ export const fetchUserFail = error => {
   };
 };
 
+export const resetUser = () => {
+  return {
+    type: actionTypes.RESET_USER,
+  };
+};
+
 export const fetchUser = userId => {
   return dispatch => {
     dispatch(fetchUserStart());
     databaseRef
-      .ref(`/tables/${userId}`)
+      .ref(`/users/${userId}`)
       .once('value')
       .then(snapshot => {
         dispatch(fetchUserSuccess(snapshot.val()));

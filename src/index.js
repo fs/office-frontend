@@ -24,6 +24,7 @@ const rootReducer = combineReducers({
 
 const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunk)));
 store.dispatch(actions.authCheckState());
+store.dispatch(actions.tablesCheckState());
 
 const app = (
   <Provider store={store}>

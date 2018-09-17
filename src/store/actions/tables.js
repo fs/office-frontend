@@ -40,3 +40,55 @@ export const fetchTables = () => {
       });
   };
 };
+
+export const tablesCheckState = () => {
+  return dispatch => {
+    dispatch(fetchTablesStart());
+    databaseRef.ref('/tables1').on('value', snapshot => {
+      console.log('Tables check state');
+      if (snapshot.val()) {
+        dispatch(fetchTablesSuccess(snapshot.val()));
+      } else {
+        dispatch(fetchTablesSuccess({}));
+      }
+    });
+  };
+};
+
+export const setUserStart = () => {
+  return {
+    type: actionTypes.SET_USER_START,
+  };
+};
+
+export const setUserSuccess = () => {
+  return {
+    type: actionTypes.SET_USER_SUCCESS,
+  };
+};
+
+export const setUserFail = error => {
+  return {
+    type: actionTypes.SET_USER_FAIL,
+    payload: {
+      error,
+    },
+  };
+};
+
+export const setUser = (tableId, userId) => {
+  return dispatch => {
+    dispatch(setUserStart());
+    return databaseRef
+      .ref(`/tables1/${tableId}`)
+      .update({
+        userId,
+      })
+      .then(() => {
+        dispatch(setUserSuccess());
+      })
+      .catch(error => {
+        dispatch(setUserFail(error));
+      });
+  };
+};

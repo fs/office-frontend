@@ -10,7 +10,7 @@ import * as actionTypes from '../actions/actionTypes';
 const initialState = {
   user: null,
   error: null,
-  loading: true,
+  loading: false,
 };
 
 const reducer = (state = initialState, action) => {

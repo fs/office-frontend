@@ -27,6 +27,11 @@ const reducer = (state = initialState, action) => {
         error: action.payload.error,
         loading: false,
       };
+    case actionTypes.RESET_USER:
+      return {
+        ...state,
+        user: null,
+      };
     default:
       return state;
   }

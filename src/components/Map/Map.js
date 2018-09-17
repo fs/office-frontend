@@ -38,7 +38,7 @@ const Map = props => {
   );
 
   if (!props.loading) {
-    console.log('USER', props.user);
+    console.log(props.user);
     map = (
       <section className={props.classes.wrapper}>
         {props.popup.open && (
@@ -52,6 +52,7 @@ const Map = props => {
             isAuthenticated={props.isAuthenticated}
             handleHoldClick={props.handleHoldClick}
             handlePopupClose={props.handlePopupClose}
+            loading={props.loadingUser}
           />
         )}
         <svg
@@ -61,28 +62,28 @@ const Map = props => {
           height="100%"
           viewBox="0 0 1005 766"
         >
-          <g fill="none" fill-rule="evenodd">
+          <g fill="none" fillRule="evenodd">
             <g fill="#E0E0E0" transform="translate(239 116)">
               {tablesRect}
             </g>
             <g stroke="#7D92A9">
               <path
-                stroke-width="8"
+                strokeWidth="8"
                 d="M287.827 136.938l428.398-36.38v147.697h150.432v417.377H437.251V626.45H201.954v39.182h-78.557V294.876l65.799-8.948V232.4h98.63z"
               />
               <path
-                stroke-width="4"
+                strokeWidth="4"
                 d="M714 665.903V576M715 542.903v-40.159h150.967M684.116 574.256v25.645h28.761M684.304 542.785v-132.08M684.292 422.544H531.387M714.287 240.712H580.254v22.632M621.95 241.054v127.782M580.154 290.224v23.86M580.102 300.21h42.07M579.995 340.678v28.38h56.57M684.073 378.6v-9.622"
               />
-              <path stroke-width="3" d="M663.07 369.333h50.89V252.118" />
-              <path stroke-width="4" d="M531.262 341.2v107.53h-91.717v-53.766" />
+              <path strokeWidth="3" d="M663.07 369.333h50.89V252.118" />
+              <path strokeWidth="4" d="M531.262 341.2v107.53h-91.717v-53.766" />
               <path
-                stroke-width="4"
+                strokeWidth="4"
                 d="M439.9 367.93v-7.702h90.436M531.087 314.393v-7.68h48.65M438.79 530.332l.806-79.782M439.24 127.035v188.548h-35.43M403.064 220.456h35.611M289.91 236.14v87.086M190.614 267.24h98.813M124.394 487.9h23.976M180.711 487.212h19.248V625.59M290 438.364V350M390.944 359.901H190.47M191 288v74M290.776 219.844h83.457v31.128"
               />
-              <path stroke-width="5" d="M289.599 316.804h84.582V288.73" />
+              <path strokeWidth="5" d="M289.599 316.804h84.582V288.73" />
               <path
-                stroke-width="4"
+                strokeWidth="4"
                 d="M290 254h56.467M290 286h56.467M346.645 247.637v11.887M346.581 280.59v10.59M346.669 310.934v6.114M346.661 220.508v5.768"
               />
               <path d="M288.233 438.614h102.485v-78.922M189.767 361.618h-64.209" />

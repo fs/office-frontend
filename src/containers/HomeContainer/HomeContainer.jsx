@@ -51,7 +51,6 @@ class HomeContainer extends Component {
   };
 
   render() {
-    console.log('Tables', this.props.tables);
     return (
       <Home
         user={this.props.user}

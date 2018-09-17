@@ -3,6 +3,7 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import { withStyles } from '@material-ui/core/styles';
 import Profile from '../Profile/Profile';
 
@@ -25,30 +26,42 @@ const styles = theme => ({
       transform: 'translateX(-50%) rotate(45deg)',
     },
   },
+  progressWrapper: {
+    display: 'flex',
+    justifyContent: 'center',
+  },
 });
 
 // handleClosePopupClick
 const Popup = props => {
-  let content = <Typography>Loading</Typography>;
+  let content = null;
 
-  if (props.user) {
+  if (props.loading) {
     content = (
-      <Profile name={props.user.name} email={props.user.email} photoUrl={props.user.photoUrl} />
+      <div className={props.classes.progressWrapper}>
+        <CircularProgress color="secondary" size={48} />
+      </div>
     );
   } else {
-    content = props.isAuthenticated ? (
-      <Button
-        variant="contained"
-        color="secondary"
-        aria-label="Hold this place"
-        fullWidth
-        onClick={() => props.handleHoldClick(props.tableId)}
-      >
-        Hold this place
-      </Button>
-    ) : (
-      <Typography>Please, sign in to hold this place</Typography>
-    );
+    if (props.user) {
+      content = (
+        <Profile name={props.user.name} email={props.user.email} photoUrl={props.user.photoUrl} />
+      );
+    } else {
+      content = props.isAuthenticated ? (
+        <Button
+          variant="contained"
+          color="secondary"
+          aria-label="Hold this place"
+          fullWidth
+          onClick={() => props.handleHoldClick(props.tableId)}
+        >
+          Hold this place
+        </Button>
+      ) : (
+        <Typography>Please, sign in to hold this place</Typography>
+      );
+    }
   }
   return (
     <ClickAwayListener onClickAway={props.handlePopupClose}>

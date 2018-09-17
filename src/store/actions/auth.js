@@ -81,7 +81,6 @@ export const auth = () => {
         return databaseRef.ref('users/' + uid).set(user);
       })
       .catch(error => {
-        console.log('Error', error);
         dispatch(authFail(error));
       });
   };
@@ -89,9 +88,9 @@ export const auth = () => {
 
 export const authCheckState = () => {
   return dispatch => {
+    dispatch(authStart());
     authRef.onAuthStateChanged(result => {
       if (result) {
-        console.log('Login', result);
         const user = {
           name: result.displayName,
           email: result.email,
@@ -100,7 +99,6 @@ export const authCheckState = () => {
         };
         dispatch(authSuccess(user));
       } else {
-        console.log('Logout');
         dispatch(logoutSuccess());
       }
     });
@@ -111,7 +109,6 @@ export const logout = () => {
   return dispatch => {
     dispatch(logoutStart());
     authRef.signOut().catch(error => {
-      console.log(error);
       dispatch(logoutFail(error));
     });
   };

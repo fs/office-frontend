@@ -22,7 +22,7 @@ class MapContainer extends Component {
   };
 
   componentDidMount() {
-    this.props.onGetTables();
+    // this.props.onGetTables();
   }
 
   handlePopupClose = () => {
@@ -39,6 +39,8 @@ class MapContainer extends Component {
 
     if (userId) {
       this.props.onGetUser(userId);
+    } else {
+      this.props.onResetUser();
     }
 
     const tableClientRect = event.target.getBoundingClientRect();
@@ -56,11 +58,12 @@ class MapContainer extends Component {
   };
 
   handleHoldClick = tableId => {
-    console.log(tableId);
+    this.props.onSetUser(tableId, this.props.currentUser.userId).then(() => {
+      this.props.onGetUser(this.props.currentUser.userId);
+    });
   };
 
   render() {
-    console.log(this.state);
     return (
       <Map
         {...this.props}
@@ -90,6 +93,8 @@ const mapDispatchToProps = dispatch => {
   return {
     onGetTables: () => dispatch(actions.fetchTables()),
     onGetUser: userId => dispatch(actions.fetchUser(userId)),
+    onSetUser: (tableId, userId) => dispatch(actions.setUser(tableId, userId)),
+    onResetUser: () => dispatch(actions.resetUser()),
   };
 };
 
