@@ -27,19 +27,19 @@ const reducer = (state = initialState, action) => {
         error: action.payload.error,
         loading: false,
       };
-    case actionTypes.SET_USER_START:
+    case actionTypes.SET_STATUS_START:
       return {
         ...state,
         error: null,
         loading: true,
       };
-    case actionTypes.SET_USER_SUCCESS:
+    case actionTypes.SET_STATUS_SUCCESS:
       return {
         ...state,
         error: null,
         loading: false,
       };
-    case actionTypes.SET_USER_FAIL:
+    case actionTypes.SET_STATUS_FAIL:
       return {
         ...state,
         error: action.payload.error,

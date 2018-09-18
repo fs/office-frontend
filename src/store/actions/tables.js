@@ -55,40 +55,40 @@ export const tablesCheckState = () => {
   };
 };
 
-export const setUserStart = () => {
+export const setStatusStart = () => {
   return {
-    type: actionTypes.SET_USER_START,
+    type: actionTypes.SET_STATUS_START,
   };
 };
 
-export const setUserSuccess = () => {
+export const setStatusSuccess = () => {
   return {
-    type: actionTypes.SET_USER_SUCCESS,
+    type: actionTypes.SET_STATUS_SUCCESS,
   };
 };
 
-export const setUserFail = error => {
+export const setStatusFail = error => {
   return {
-    type: actionTypes.SET_USER_FAIL,
+    type: actionTypes.SET_STATUS_FAIL,
     payload: {
       error,
     },
   };
 };
 
-export const setUser = (tableId, userId) => {
+export const setStatus = (tableId, status) => {
   return dispatch => {
-    dispatch(setUserStart());
+    dispatch(setStatusStart());
     return databaseRef
       .ref(`/tables1/${tableId}`)
       .update({
-        userId,
+        status,
       })
       .then(() => {
-        dispatch(setUserSuccess());
+        dispatch(setStatusSuccess());
       })
       .catch(error => {
-        dispatch(setUserFail(error));
+        dispatch(setStatusFail(error));
       });
   };
 };

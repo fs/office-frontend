@@ -29,7 +29,7 @@ const Map = props => {
       transform={item.transform}
       id={item.id}
       onClick={props.onTableClick}
-      color={item.userId ? props.theme.palette.primary.light : null}
+      color={item.status === 'taken' ? props.theme.palette.primary.light : null}
     />
   ));
 

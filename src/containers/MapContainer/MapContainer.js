@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as actions from '../../store/actions/index';
 import Map from '../../components/Map/Map';
-// import {databaseRef} from '../../firebase';
-// import tables from '../../tables';
+import { databaseRef } from '../../firebase';
+import tables from '../../tables';
 
 class MapContainer extends Component {
   // create tables in database
@@ -21,18 +21,6 @@ class MapContainer extends Component {
       centerVertical: 0,
       open: false,
     },
-  };
-
-  deleteUser = userId => {
-    return new Promise(resolve => {
-      Object.keys(this.props.tables).map(tableId => {
-        if (this.props.tables[tableId].userId === userId) {
-          const updatedTable = { ...this.props.tables[tableId] };
-          delete updatedTable['userId'];
-          resolve(this.props.onDeleteUser(tableId, updatedTable));
-        }
-      });
-    });
   };
 
   handlePopupClose = () => {
@@ -61,8 +49,13 @@ class MapContainer extends Component {
 
   handleHoldClick = tableId => {
     this.props
-      .onSetTable(this.props.currentUser.userId, tableId)
-      .then(() => this.props.onGetUser(this.props.currentUser.userId));
+      .onGetUser(this.props.currentUser.userId)
+      .then(() => {
+        if (this.props.user.tableId) return this.props.onSetStatus(this.props.user.tableId, 'free');
+        else return Promise.resolve();
+      })
+      .then(() => this.props.onSetStatus(tableId, 'taken'))
+      .then(() => this.props.onSetTable(this.props.currentUser.userId, tableId));
   };
 
   render() {
@@ -93,13 +86,10 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onGetTables: () => dispatch(actions.fetchTables()),
-    onGetUser: userId => dispatch(actions.fetchUser(userId)),
-    onSetUser: (tableId, userId) => dispatch(actions.setUser(tableId, userId)),
-    onResetUser: () => dispatch(actions.resetUser()),
-    onDeleteUser: (tableId, updatedTable) => dispatch(actions.deleteUser(tableId, updatedTable)),
     onSetTable: (userId, tableId) => dispatch(actions.setTable(userId, tableId)),
     onGetUserByTable: tableId => dispatch(actions.fetchUserByTable(tableId)),
+    onGetUser: userId => dispatch(actions.fetchUser(userId)),
+    onSetStatus: (tableId, status) => dispatch(actions.setStatus(tableId, status)),
   };
 };
 
