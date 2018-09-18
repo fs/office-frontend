@@ -45,3 +45,87 @@ export const fetchUser = userId => {
       });
   };
 };
+
+export const setTableStart = () => {
+  return {
+    type: actionTypes.SET_TABLE_START,
+  };
+};
+
+export const setTableSuccess = user => {
+  return {
+    type: actionTypes.SET_TABLE_SUCCESS,
+    payload: {
+      user,
+    },
+  };
+};
+
+export const setTableFail = error => {
+  return {
+    type: actionTypes.SET_TABLE_FAIL,
+    payload: {
+      error,
+    },
+  };
+};
+
+export const setTable = (userId, tableId) => {
+  return dispatch => {
+    dispatch(setTableStart());
+    return databaseRef
+      .ref(`/users/${userId}`)
+      .update({
+        tableId,
+      })
+      .then(() => {
+        dispatch(setTableSuccess());
+      })
+      .catch(error => {
+        dispatch(setTableFail(error));
+      });
+  };
+};
+
+export const fetchUserByTableStart = () => {
+  return {
+    type: actionTypes.FETCH_USER_BY_TABLE_START,
+  };
+};
+
+export const fetchUserByTableSuccess = user => {
+  return {
+    type: actionTypes.FETCH_USER_BY_TABLE_SUCCESS,
+    payload: {
+      user,
+    },
+  };
+};
+
+export const fetchUserByTableFail = error => {
+  return {
+    type: actionTypes.FETCH_USER_BY_TABLE_FAIL,
+    payload: {
+      error,
+    },
+  };
+};
+
+export const fetchUserByTable = tableId => {
+  return dispatch => {
+    dispatch(fetchUserByTableStart());
+    return databaseRef
+      .ref('/users')
+      .orderByChild('tableId')
+      .equalTo(tableId)
+      .once('value')
+      .then(snapshot => {
+        const rawUser = snapshot.val();
+        const user = rawUser && Object.values(snapshot.val())[0];
+        dispatch(fetchUserByTableSuccess(user));
+      })
+      .catch(error => {
+        dispatch(fetchUserByTableFail(error));
+      });
+  };
+};

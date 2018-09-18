@@ -44,15 +44,7 @@ class MapContainer extends Component {
   };
 
   handleTableClick = (event, tableId) => {
-    const table = this.props.tables[tableId];
-    const userId = table.userId;
-
-    if (userId) {
-      this.props.onGetUser(userId);
-    } else {
-      this.props.onResetUser();
-    }
-
+    this.props.onGetUserByTable(tableId);
     const tableClientRect = event.target.getBoundingClientRect();
     this.setState({
       popup: {
@@ -68,8 +60,8 @@ class MapContainer extends Component {
   };
 
   handleHoldClick = tableId => {
-    this.deleteUser(this.props.currentUser.userId)
-      .then(() => this.props.onSetUser(tableId, this.props.currentUser.userId))
+    this.props
+      .onSetTable(this.props.currentUser.userId, tableId)
       .then(() => this.props.onGetUser(this.props.currentUser.userId));
   };
 
@@ -106,6 +98,8 @@ const mapDispatchToProps = dispatch => {
     onSetUser: (tableId, userId) => dispatch(actions.setUser(tableId, userId)),
     onResetUser: () => dispatch(actions.resetUser()),
     onDeleteUser: (tableId, updatedTable) => dispatch(actions.deleteUser(tableId, updatedTable)),
+    onSetTable: (userId, tableId) => dispatch(actions.setTable(userId, tableId)),
+    onGetUserByTable: tableId => dispatch(actions.fetchUserByTable(tableId)),
   };
 };
 
