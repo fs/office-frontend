@@ -1,18 +1,21 @@
-import * as actionTypes from './actionTypes';
-import axios from 'axios';
 import { authRef, databaseRef, googleProvider } from '../../firebase';
 
-const API_KEY = process.env.REACT_APP_FIREBASE_API_KEY || '';
+export const AUTH_START = 'AUTH_START';
+export const AUTH_SUCCESS = 'AUTH_SUCCESS';
+export const AUTH_FAIL = 'AUTH_FAIL';
+export const LOGOUT_START = 'LOGOUT_START';
+export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
+export const LOGOUT_FAIL = 'LOGOUT_FAIL';
 
 export const authStart = () => {
   return {
-    type: actionTypes.AUTH_START,
+    type: AUTH_START,
   };
 };
 
 export const authSuccess = user => {
   return {
-    type: actionTypes.AUTH_SUCCESS,
+    type: AUTH_SUCCESS,
     payload: {
       user,
     },
@@ -21,7 +24,7 @@ export const authSuccess = user => {
 
 export const authFail = error => {
   return {
-    type: actionTypes.AUTH_FAIL,
+    type: AUTH_FAIL,
     payload: {
       error,
     },
@@ -30,41 +33,24 @@ export const authFail = error => {
 
 export const logoutStart = () => {
   return {
-    type: actionTypes.LOGOUT_START,
+    type: LOGOUT_START,
   };
 };
 
 export const logoutSuccess = () => {
   return {
-    type: actionTypes.LOGOUT_SUCCESS,
+    type: LOGOUT_SUCCESS,
   };
 };
 
 export const logoutFail = error => {
   return {
-    type: actionTypes.LOGOUT_FAIL,
+    type: LOGOUT_FAIL,
     payload: {
       error,
     },
   };
 };
-
-// export const logout = () => {
-//   // localStorage.removeItem('token');
-//   // localStorage.removeItem('userId');
-//   // localStorage.removeItem('expirationDate');
-//   return {
-//     type: actionTypes.AUTH_LOGOUT,
-//   };
-// };
-
-// .then(result => {
-//   return dbRef.ref('users/:id').set({});
-// })
-// .then(result => {
-//   console.log(result);
-//   dispatch(authSuccess(result));
-// })
 
 export const auth = () => {
   return dispatch => {
@@ -76,6 +62,7 @@ export const auth = () => {
           name: result.user.displayName,
           email: result.user.email,
           photoUrl: result.user.photoURL,
+          tableId: result.user.tableId,
         };
         const uid = result.user.uid;
         return databaseRef.ref('users/' + uid).set(user);
@@ -86,7 +73,7 @@ export const auth = () => {
   };
 };
 
-export const authCheckState = () => {
+export const subscribeAuth = () => {
   return dispatch => {
     dispatch(authStart());
     authRef.onAuthStateChanged(result => {
@@ -113,22 +100,3 @@ export const logout = () => {
     });
   };
 };
-
-// export const authCheckState = () => {
-//   return dispatch => {
-//     const token = localStorage.getItem('token');
-//     if (!token) {
-//       dispatch(logout());
-//     } else {
-//       const expirationDate = new Date(localStorage.getItem('expirationDate'));
-
-//       if (expirationDate <= new Date()) {
-//         dispatch(logout());
-//       } else {
-//         const userId = localStorage.getItem('userId');
-//         dispatch(authSuccess(token, userId));
-//         dispatch(checkAuthTimeOut((expirationDate.getTime() - new Date().getTime()) / 1000));
-//       }
-//     }
-//   };
-// };

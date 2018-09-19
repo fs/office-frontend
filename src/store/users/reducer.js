@@ -1,53 +1,52 @@
-import * as actionTypes from '../actions/actionTypes';
-
-// user: {
-//   userId: 'AS89DFGOHAOA',
-//   email: 'gornyyvladimir@gmail.com',
-//   name: 'Vladimir Gornyy',
-//   photoUrl: 'http://photo.jpg',
-// }
+import {
+  FETCH_USERS_START,
+  FETCH_USERS_SUCCESS,
+  FETCH_USERS_FAIL,
+  SET_TABLE_START,
+  SET_TABLE_SUCCESS,
+  SET_TABLE_FAIL,
+} from './actions';
 
 const initialState = {
-  user: null,
+  users: {},
   error: null,
   loading: false,
 };
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case actionTypes.AUTH_START:
+    case FETCH_USERS_START:
       return {
         ...state,
         error: null,
         loading: true,
       };
-    case actionTypes.AUTH_SUCCESS:
+    case FETCH_USERS_SUCCESS:
       return {
         ...state,
-        user: action.payload.user,
+        users: action.payload.users,
         error: null,
         loading: false,
       };
-    case actionTypes.AUTH_FAIL:
+    case FETCH_USERS_FAIL:
       return {
         ...state,
         error: action.payload.error,
         loading: false,
       };
-    case actionTypes.LOGOUT_START:
+    case SET_TABLE_START:
       return {
         ...state,
         error: null,
         loading: true,
       };
-    case actionTypes.LOGOUT_SUCCESS:
+    case SET_TABLE_SUCCESS:
       return {
         ...state,
-        user: null,
         error: null,
         loading: false,
       };
-    case actionTypes.LOGOUT_FAIL:
+    case SET_TABLE_FAIL:
       return {
         ...state,
         error: action.payload.error,

@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import Auth from '../../components/Auth/Auth';
-import * as actions from '../../store/actions/index';
+import { auth, logout } from '../../store/auth/actions';
 
 const mapStateToProps = state => {
   return {
@@ -13,8 +13,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onAuth: () => dispatch(actions.auth()),
-    onLogout: () => dispatch(actions.logout()),
+    onAuth: () => dispatch(auth()),
+    onLogout: () => dispatch(logout()),
   };
 };
 

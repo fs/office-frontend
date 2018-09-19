@@ -19,17 +19,14 @@ const styles = theme => ({
 });
 
 const Map = props => {
-  console.log(props);
-  const tables = Object.keys(props.tables).map(i => ({ ...props.tables[i], id: i }));
-
-  const tablesRect = tables.map(item => (
+  const tablesRect = props.tables.map(table => (
     <Table
-      x={item.x}
-      y={item.y}
-      transform={item.transform}
-      id={item.id}
+      x={table.x}
+      y={table.y}
+      transform={table.transform}
+      id={table.id}
       onClick={props.onTableClick}
-      color={item.status === 'taken' ? props.theme.palette.primary.light : null}
+      color={props.usersConnections[table.id] ? props.theme.palette.primary.light : null}
     />
   ));
 

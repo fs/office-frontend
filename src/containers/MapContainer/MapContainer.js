@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import * as actions from '../../store/actions/index';
+import { setTable } from '../../store/users/actions';
 import Map from '../../components/Map/Map';
 import { databaseRef } from '../../firebase';
 import tables from '../../tables';
@@ -19,8 +19,10 @@ class MapContainer extends Component {
       y: 0,
       centerHorizontal: 0,
       centerVertical: 0,
+      tableId: null,
       open: false,
     },
+    userId: null,
   };
 
   handlePopupClose = () => {
@@ -32,7 +34,9 @@ class MapContainer extends Component {
   };
 
   handleTableClick = (event, tableId) => {
-    this.props.onGetUserByTable(tableId);
+    this.setState({
+      userId: this.props.usersConnections[tableId],
+    });
     const tableClientRect = event.target.getBoundingClientRect();
     this.setState({
       popup: {
@@ -48,21 +52,20 @@ class MapContainer extends Component {
   };
 
   handleHoldClick = tableId => {
-    this.props
-      .onGetUser(this.props.currentUser.userId)
-      .then(() => {
-        if (this.props.user.tableId) return this.props.onSetStatus(this.props.user.tableId, 'free');
-        else return Promise.resolve();
-      })
-      .then(() => this.props.onSetStatus(tableId, 'taken'))
-      .then(() => this.props.onSetTable(this.props.currentUser.userId, tableId));
+    this.props.onSetTable(this.props.currentUser.userId, tableId).then(() => {
+      this.setState({
+        userId: this.props.usersConnections[tableId],
+      });
+    });
   };
 
   render() {
+    console.log(this.props.users[this.state.userId]);
     return (
       <Map
         {...this.props}
-        {...this.state}
+        popup={this.state.popup}
+        user={this.props.users[this.state.userId]}
         onTableClick={this.handleTableClick}
         handlePopupClose={this.handlePopupClose}
         handleHoldClick={this.handleHoldClick}
@@ -73,12 +76,10 @@ class MapContainer extends Component {
 
 const mapStateToProps = state => {
   return {
-    error: state.tables.error || state.users.error,
     loading: state.tables.loading,
-    tables: state.tables.tables,
-    loadingUser: state.users.loading,
-    user: state.users.user,
-    // get user from Database in the feature
+    tables: Object.keys(state.tables.tables).map(i => ({ ...state.tables.tables[i], id: i })),
+    usersConnections: state.tables.usersConnections,
+    users: state.users.users,
     currentUser: state.auth.user,
     isAuthenticated: !!state.auth.user,
   };
@@ -86,10 +87,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onSetTable: (userId, tableId) => dispatch(actions.setTable(userId, tableId)),
-    onGetUserByTable: tableId => dispatch(actions.fetchUserByTable(tableId)),
-    onGetUser: userId => dispatch(actions.fetchUser(userId)),
-    onSetStatus: (tableId, status) => dispatch(actions.setStatus(tableId, status)),
+    onSetTable: (userId, tableId) => dispatch(setTable(userId, tableId)),
   };
 };
 

@@ -1,63 +1,53 @@
-import * as actionTypes from '../actions/actionTypes';
+import {
+  AUTH_START,
+  AUTH_SUCCESS,
+  AUTH_FAIL,
+  LOGOUT_START,
+  LOGOUT_SUCCESS,
+  LOGOUT_FAIL,
+} from './actions';
 
 const initialState = {
-  tables: {},
+  user: null,
   error: null,
   loading: false,
 };
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case actionTypes.FETCH_TABLES_START:
+    case AUTH_START:
       return {
         ...state,
         error: null,
         loading: true,
       };
-    case actionTypes.FETCH_TABLES_SUCCESS:
+    case AUTH_SUCCESS:
       return {
         ...state,
-        tables: action.payload.tables,
+        user: action.payload.user,
         error: null,
         loading: false,
       };
-    case actionTypes.FETCH_TABLES_FAIL:
+    case AUTH_FAIL:
       return {
         ...state,
         error: action.payload.error,
         loading: false,
       };
-    case actionTypes.SET_STATUS_START:
+    case LOGOUT_START:
       return {
         ...state,
         error: null,
         loading: true,
       };
-    case actionTypes.SET_STATUS_SUCCESS:
+    case LOGOUT_SUCCESS:
       return {
         ...state,
+        user: null,
         error: null,
         loading: false,
       };
-    case actionTypes.SET_STATUS_FAIL:
-      return {
-        ...state,
-        error: action.payload.error,
-        loading: false,
-      };
-    case actionTypes.DELETE_USER_START:
-      return {
-        ...state,
-        error: null,
-        loading: true,
-      };
-    case actionTypes.DELETE_USER_SUCCESS:
-      return {
-        ...state,
-        error: null,
-        loading: false,
-      };
-    case actionTypes.DELETE_USER_FAIL:
+    case LOGOUT_FAIL:
       return {
         ...state,
         error: action.payload.error,

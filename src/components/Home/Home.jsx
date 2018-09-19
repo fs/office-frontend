@@ -131,7 +131,7 @@ const Home = props => {
             <Typography variant="title" color="inherit" noWrap>
               FS Office
             </Typography>
-            <SearchBox tables={props.tables} clicked={props.onTableShow} />
+            {/* <SearchBox tables={props.tables} clicked={props.onTableShow} /> */}
             {auth}
           </Toolbar>
         </AppBar>
