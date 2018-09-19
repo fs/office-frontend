@@ -62,12 +62,12 @@ export const auth = () => {
           name: result.user.displayName,
           email: result.user.email,
           photoUrl: result.user.photoURL,
-          tableId: result.user.tableId,
         };
         const uid = result.user.uid;
-        return databaseRef.ref('users/' + uid).set(user);
+        return databaseRef.ref('users/' + uid).update(user);
       })
       .catch(error => {
+        console.error(error);
         dispatch(authFail(error));
       });
   };
