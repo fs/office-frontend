@@ -7,19 +7,25 @@ import thunk from 'redux-thunk';
 import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
-import authReducer from './store/reducers/auth';
-import profileReducer from './store/reducers/profile';
-import connectApiReducer from './store/reducers/connectApi';
+import authReducer from './store/auth/reducer';
+import tablesReducer from './store/tables/reducer';
+import usersReducer from './store/users/reducer';
+import { subscribeAuth } from './store/auth/actions';
+import { subscribeTables } from './store/tables/actions';
+import { subscribeUsers } from './store/users/actions';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const rootReducer = combineReducers({
   auth: authReducer,
-  profile: profileReducer,
-  connectApi: connectApiReducer,
+  tables: tablesReducer,
+  users: usersReducer,
 });
 
 const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunk)));
+store.dispatch(subscribeAuth());
+store.dispatch(subscribeTables());
+store.dispatch(subscribeUsers());
 
 const app = (
   <Provider store={store}>

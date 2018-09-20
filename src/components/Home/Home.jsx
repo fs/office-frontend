@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { withStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -10,10 +9,14 @@ import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import Button from '@material-ui/core/Button';
+import ButtonBase from '@material-ui/core/ButtonBase';
+import Avatar from '@material-ui/core/Avatar';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import PersonIcon from '@material-ui/icons/Person';
-import OfficeMapContainer from '../../containers/OfficeMapContainer/OfficeMapContainer';
+import { withStyles } from '@material-ui/core/styles';
 import AuthContainer from '../../containers/Auth/AuthContainer';
 import SearchBox from '../../components/SearchBox/SearchBox';
+import MapContainer from '../../containers/MapContainer/MapContainer';
 
 const drawerWidth = 340;
 
@@ -50,12 +53,6 @@ const styles = theme => ({
     paddingRight: theme.spacing.unit * 3,
     justifyContent: 'space-between',
   },
-  toolBarRight: {
-    maxWidth: '400px',
-    width: '100%',
-    display: 'flex',
-    justifyContent: 'space-between',
-  },
   drawerPaper: {
     position: 'relative',
     width: drawerWidth,
@@ -84,68 +81,81 @@ const styles = theme => ({
     }),
     marginRight: 0,
   },
+  avatarButton: {
+    borderRadius: '50%',
+    boxShadow: theme.shadows[6],
+  },
 });
 
-const Home = ({
-  handleDrawerToggle,
-  open,
-  isAuthenticated,
-  classes,
-  tables,
-  onTableShow,
-  popup,
-  handleClosePopupClick,
-}) => {
-  let auth = (
-    <Button color="inherit" aria-label="Open login" onClick={handleDrawerToggle}>
-      Login
-    </Button>
-  );
+const Home = props => {
+  let auth = <CircularProgress color="secondary" />;
 
-  if (isAuthenticated) {
-    auth = (
-      <Button
-        variant="fab"
-        color="secondary"
-        aria-label="Profile"
-        onClick={handleDrawerToggle}
-        mini
-      >
-        <PersonIcon />
-      </Button>
-    );
+  if (!props.loading) {
+    if (props.isAuthenticated) {
+      auth = props.user.photoUrl ? (
+        <ButtonBase className={props.classes.avatarButton}>
+          <Avatar
+            alt={props.user.name}
+            src={props.user.photoUrl}
+            className={props.classes.avatar}
+            onClick={props.handleDrawerToggle}
+          />
+        </ButtonBase>
+      ) : (
+        <Button
+          variant="fab"
+          color="secondary"
+          aria-label="Profile"
+          onClick={props.handleDrawerToggle}
+          mini
+        >
+          <PersonIcon />
+        </Button>
+      );
+    } else {
+      auth = (
+        <Button color="inherit" aria-label="Open login" onClick={props.handleDrawerToggle}>
+          Login
+        </Button>
+      );
+    }
   }
 
   return (
-    <div className={classes.root}>
-      <div className={classes.appWrapper}>
-        <AppBar className={classNames(classes.appBar, { [classes.appBarShift]: open })}>
-          <Toolbar className={classes.toolBar}>
+    <div className={props.classes.root}>
+      <div className={props.classes.appWrapper}>
+        <AppBar
+          className={classNames(props.classes.appBar, { [props.classes.appBarShift]: props.open })}
+        >
+          <Toolbar className={props.classes.toolBar}>
             <Typography variant="title" color="inherit" noWrap>
               FS Office
             </Typography>
-            <div className={classes.toolBarRight}>
-              <SearchBox tables={tables} clicked={onTableShow} />
-              {auth}
-            </div>
+            {/* <SearchBox tables={props.tables} clicked={props.onTableShow} /> */}
+            {auth}
           </Toolbar>
         </AppBar>
-        <main className={classNames(classes.content, { [classes.contentShift]: open })}>
-          <div className={classes.drawerHeader} />
-          <OfficeMapContainer
+        <main
+          className={classNames(props.classes.content, {
+            [props.classes.contentShift]: props.open,
+          })}
+        >
+          <div className={props.classes.drawerHeader} />
+          <MapContainer />
+          {/* <OfficeMapContainer
             onTableShow={onTableShow}
             popup={popup}
             handleClosePopupClick={handleClosePopupClick}
-          />
+          /> */}
         </main>
         <Drawer
           variant="persistent"
           anchor={'right'}
-          open={open}
-          classes={{ paper: classes.drawerPaper }}
+          open={props.open}
+          classes={{ paper: props.classes.drawerPaper }}
         >
-          <div className={classes.drawerHeader}>
-            <IconButton onClick={handleDrawerToggle}>
+          <div className={props.classes.drawerHeader}>
+            <IconButton onClick={props.handleDrawerToggle}>
               <ChevronLeftIcon />
             </IconButton>
           </div>

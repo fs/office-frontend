@@ -1,50 +1,53 @@
-import * as actionTypes from '../actions/actionTypes';
+import {
+  AUTH_START,
+  AUTH_SUCCESS,
+  AUTH_FAIL,
+  LOGOUT_START,
+  LOGOUT_SUCCESS,
+  LOGOUT_FAIL,
+} from './actions';
 
 const initialState = {
-  displayName: null,
-  photoUrl: null,
-  email: null,
+  user: null,
   error: null,
   loading: false,
 };
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case actionTypes.UPDATE_PROFILE_START:
+    case AUTH_START:
       return {
         ...state,
         error: null,
         loading: true,
       };
-    case actionTypes.UPDATE_PROFILE_SUCCESS:
+    case AUTH_SUCCESS:
       return {
         ...state,
-        displayName: action.payload.displayName,
-        photoUrl: action.payload.photoUrl,
+        user: action.payload.user,
+        error: null,
         loading: false,
       };
-    case actionTypes.UPDATE_PROFILE_FAIL:
+    case AUTH_FAIL:
       return {
         ...state,
         error: action.payload.error,
         loading: false,
       };
-
-    case actionTypes.FETCH_USER_PROFILE_START:
+    case LOGOUT_START:
       return {
         ...state,
         error: null,
         loading: true,
       };
-    case actionTypes.FETCH_USER_PROFILE_SUCCESS:
+    case LOGOUT_SUCCESS:
       return {
         ...state,
-        displayName: action.payload.displayName,
-        photoUrl: action.payload.photoUrl,
-        email: action.payload.email,
+        user: null,
+        error: null,
         loading: false,
       };
-    case actionTypes.FETCH_USER_PROFILE_FAIL:
+    case LOGOUT_FAIL:
       return {
         ...state,
         error: action.payload.error,

@@ -1,24 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Home from '../../components/Home/Home';
-import * as actions from '../../store/actions/index';
 
 class HomeContainer extends Component {
   state = {
     open: false,
-    popup: null,
   };
-
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.updateTables === true) {
-      this.props.onGetTables();
-    }
-  }
-
-  componentDidMount() {
-    this.props.onTryAutoSignup();
-    this.props.onGetTables();
-  }
 
   handleDrawerToggle = () => {
     this.setState(prevState => {
@@ -28,36 +15,14 @@ class HomeContainer extends Component {
     });
   };
 
-  handleClosePopupClick = () => {
-    this.setState({
-      popup: {
-        opened: false,
-      },
-    });
-  };
-
-  handleTableShow = (element, user) => {
-    const rect = element.getBoundingClientRect();
-    this.setState({
-      popup: {
-        x: rect.x,
-        y: rect.y,
-        user,
-        tableId: element.id,
-        opened: true,
-      },
-    });
-  };
-
   render() {
     return (
       <Home
+        user={this.props.user}
+        loading={this.props.loading}
         isAuthenticated={this.props.isAuthenticated}
         handleDrawerToggle={this.handleDrawerToggle}
-        tables={this.props.tables}
-        onTableShow={this.handleTableShow}
-        handleClosePopupClick={this.handleClosePopupClick}
-        {...this.state}
+        open={this.state.open}
       />
     );
   }
@@ -65,20 +30,10 @@ class HomeContainer extends Component {
 
 const mapStateToProps = state => {
   return {
-    isAuthenticated: state.auth.token !== null,
-    tables: state.connectApi.tables,
-    updateTables: state.connectApi.updateTables,
+    loading: state.auth.loading,
+    user: state.auth.user,
+    isAuthenticated: !!state.auth.user,
   };
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    onTryAutoSignup: () => dispatch(actions.authCheckState()),
-    onGetTables: () => dispatch(actions.getTablesAsync()),
-  };
-};
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(HomeContainer);
+export default connect(mapStateToProps)(HomeContainer);
