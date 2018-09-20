@@ -53,8 +53,9 @@ class MapContainer extends Component {
   };
 
   handleHoldClick = tableId => {
-    const { onSetTable, currentUser, usersConnections } = this.props;
+    const { onSetTable, currentUser } = this.props;
     onSetTable(currentUser.userId, tableId).then(() => {
+      const { usersConnections } = this.props;
       this.setState({
         userId: usersConnections[tableId],
       });
@@ -65,9 +66,6 @@ class MapContainer extends Component {
     const { popup, userId } = this.state;
     const { users } = this.props;
 
-    console.log('users', users);
-    console.log('user', users[userId]);
-    console.log('state userId', userId);
     return (
       <Map
         {...this.props}
