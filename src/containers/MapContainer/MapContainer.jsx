@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { setTable } from '../../store/users/actions';
 import Map from '../../components/Map/Map';
-import { databaseRef } from '../../firebase';
-import tables from '../../tables';
+// import { databaseRef } from '../../firebase';
+// import tables from '../../tables';
 
 class MapContainer extends Component {
   // create tables in database
@@ -34,8 +34,9 @@ class MapContainer extends Component {
   };
 
   handleTableClick = (event, tableId) => {
+    const { usersConnections } = this.props;
     this.setState({
-      userId: this.props.usersConnections[tableId],
+      userId: usersConnections[tableId],
     });
     const tableClientRect = event.target.getBoundingClientRect();
     this.setState({
@@ -45,27 +46,33 @@ class MapContainer extends Component {
         // center of the table
         centerHorizontal: tableClientRect.width / 2,
         centerVertical: tableClientRect.height / 2,
-        tableId: tableId,
+        tableId,
         open: true,
       },
     });
   };
 
   handleHoldClick = tableId => {
-    this.props.onSetTable(this.props.currentUser.userId, tableId).then(() => {
+    const { onSetTable, currentUser, usersConnections } = this.props;
+    onSetTable(currentUser.userId, tableId).then(() => {
       this.setState({
-        userId: this.props.usersConnections[tableId],
+        userId: usersConnections[tableId],
       });
     });
   };
 
   render() {
-    console.log(this.props.users[this.state.userId]);
+    const { popup, userId } = this.state;
+    const { users } = this.props;
+
+    console.log('users', users);
+    console.log('user', users[userId]);
+    console.log('state userId', userId);
     return (
       <Map
         {...this.props}
-        popup={this.state.popup}
-        user={this.props.users[this.state.userId]}
+        popup={popup}
+        user={users[userId]}
         onTableClick={this.handleTableClick}
         handlePopupClose={this.handlePopupClose}
         handleHoldClick={this.handleHoldClick}
@@ -74,22 +81,19 @@ class MapContainer extends Component {
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    loading: state.tables.loading,
-    tables: Object.keys(state.tables.tables).map(i => ({ ...state.tables.tables[i], id: i })),
-    usersConnections: state.tables.usersConnections,
-    users: state.users.users,
-    currentUser: state.auth.user,
-    isAuthenticated: !!state.auth.user,
-  };
-};
+const mapStateToProps = state => ({
+  loading: state.tables.loading,
+  loadingUser: state.users.loading,
+  tables: Object.keys(state.tables.tables).map(i => ({ ...state.tables.tables[i], id: i })),
+  usersConnections: state.tables.usersConnections,
+  users: state.users.users,
+  currentUser: state.auth.user,
+  isAuthenticated: !!state.auth.user,
+});
 
-const mapDispatchToProps = dispatch => {
-  return {
-    onSetTable: (userId, tableId) => dispatch(setTable(userId, tableId)),
-  };
-};
+const mapDispatchToProps = dispatch => ({
+  onSetTable: (userId, tableId) => dispatch(setTable(userId, tableId)),
+});
 
 export default connect(
   mapStateToProps,
