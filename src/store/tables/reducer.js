@@ -1,3 +1,4 @@
+/* eslint-disable no-case-declarations */
 import { FETCH_TABLES_START, FETCH_TABLES_SUCCESS, FETCH_TABLES_FAIL } from './actions';
 import { FETCH_USERS_SUCCESS } from '../users/actions';
 

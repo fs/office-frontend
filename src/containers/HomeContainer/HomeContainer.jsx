@@ -8,32 +8,20 @@ class HomeContainer extends Component {
   };
 
   handleDrawerToggle = () => {
-    this.setState(prevState => {
-      return {
-        open: !prevState.open,
-      };
-    });
+    this.setState(prevState => ({
+      open: !prevState.open,
+    }));
   };
 
   render() {
-    return (
-      <Home
-        user={this.props.user}
-        loading={this.props.loading}
-        isAuthenticated={this.props.isAuthenticated}
-        handleDrawerToggle={this.handleDrawerToggle}
-        open={this.state.open}
-      />
-    );
+    return <Home {...this.props} {...this.state} handleDrawerToggle={this.handleDrawerToggle} />;
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    loading: state.auth.loading,
-    user: state.auth.user,
-    isAuthenticated: !!state.auth.user,
-  };
-};
+const mapStateToProps = state => ({
+  loading: state.auth.loading,
+  currentUser: state.auth.user,
+  isAuthenticated: !!state.auth.user,
+});
 
 export default connect(mapStateToProps)(HomeContainer);

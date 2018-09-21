@@ -15,7 +15,6 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import PersonIcon from '@material-ui/icons/Person';
 import { withStyles } from '@material-ui/core/styles';
 import AuthContainer from '../../containers/Auth/AuthContainer';
-import SearchBox from '../../components/SearchBox/SearchBox';
 import MapContainer from '../../containers/MapContainer/MapContainer';
 
 const drawerWidth = 340;
@@ -87,18 +86,18 @@ const styles = theme => ({
   },
 });
 
-const Home = props => {
+const Home = ({ loading, isAuthenticated, currentUser, classes, handleDrawerToggle, open }) => {
   let auth = <CircularProgress color="secondary" />;
 
-  if (!props.loading) {
-    if (props.isAuthenticated) {
-      auth = props.user.photoUrl ? (
-        <ButtonBase className={props.classes.avatarButton}>
+  if (!loading) {
+    if (isAuthenticated) {
+      auth = currentUser.photoUrl ? (
+        <ButtonBase className={classes.avatarButton}>
           <Avatar
-            alt={props.user.name}
-            src={props.user.photoUrl}
-            className={props.classes.avatar}
-            onClick={props.handleDrawerToggle}
+            alt={currentUser.name}
+            src={currentUser.photoUrl}
+            className={classes.avatar}
+            onClick={handleDrawerToggle}
           />
         </ButtonBase>
       ) : (
@@ -106,7 +105,7 @@ const Home = props => {
           variant="fab"
           color="secondary"
           aria-label="Profile"
-          onClick={props.handleDrawerToggle}
+          onClick={handleDrawerToggle}
           mini
         >
           <PersonIcon />
@@ -114,7 +113,7 @@ const Home = props => {
       );
     } else {
       auth = (
-        <Button color="inherit" aria-label="Open login" onClick={props.handleDrawerToggle}>
+        <Button color="inherit" aria-label="Open login" onClick={handleDrawerToggle}>
           Login
         </Button>
       );
@@ -122,40 +121,32 @@ const Home = props => {
   }
 
   return (
-    <div className={props.classes.root}>
-      <div className={props.classes.appWrapper}>
-        <AppBar
-          className={classNames(props.classes.appBar, { [props.classes.appBarShift]: props.open })}
-        >
-          <Toolbar className={props.classes.toolBar}>
+    <div className={classes.root}>
+      <div className={classes.appWrapper}>
+        <AppBar className={classNames(classes.appBar, { [classes.appBarShift]: open })}>
+          <Toolbar className={classes.toolBar}>
             <Typography variant="title" color="inherit" noWrap>
               FS Office
             </Typography>
-            {/* <SearchBox tables={props.tables} clicked={props.onTableShow} /> */}
             {auth}
           </Toolbar>
         </AppBar>
         <main
-          className={classNames(props.classes.content, {
-            [props.classes.contentShift]: props.open,
+          className={classNames(classes.content, {
+            [classes.contentShift]: open,
           })}
         >
-          <div className={props.classes.drawerHeader} />
+          <div className={classes.drawerHeader} />
           <MapContainer />
-          {/* <OfficeMapContainer
-            onTableShow={onTableShow}
-            popup={popup}
-            handleClosePopupClick={handleClosePopupClick}
-          /> */}
         </main>
         <Drawer
           variant="persistent"
-          anchor={'right'}
-          open={props.open}
-          classes={{ paper: props.classes.drawerPaper }}
+          anchor="right"
+          open={open}
+          classes={{ paper: classes.drawerPaper }}
         >
-          <div className={props.classes.drawerHeader}>
-            <IconButton onClick={props.handleDrawerToggle}>
+          <div className={classes.drawerHeader}>
+            <IconButton onClick={handleDrawerToggle}>
               <ChevronLeftIcon />
             </IconButton>
           </div>
@@ -167,8 +158,31 @@ const Home = props => {
   );
 };
 
+Home.defaultProps = {
+  currentUser: null,
+};
+
 Home.propTypes = {
-  classes: PropTypes.object.isRequired,
+  loading: PropTypes.bool.isRequired,
+  isAuthenticated: PropTypes.bool.isRequired,
+  currentUser: PropTypes.shape({
+    name: PropTypes.string,
+    email: PropTypes.string,
+    photoUrl: PropTypes.string,
+    userId: PropTypes.string,
+  }),
+  classes: PropTypes.shape({
+    root: PropTypes.string,
+    appWrapper: PropTypes.string,
+    appBar: PropTypes.string,
+    appBarShift: PropTypes.string,
+    toolBar: PropTypes.string,
+    drawerPaper: PropTypes.string,
+    drawerHeader: PropTypes.string,
+    content: PropTypes.string,
+    contentShift: PropTypes.string,
+    avatarButton: PropTypes.string,
+  }).isRequired,
   open: PropTypes.bool.isRequired,
   handleDrawerToggle: PropTypes.func.isRequired,
 };
