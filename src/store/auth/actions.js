@@ -21,7 +21,7 @@ export const authSuccess = user => ({
 export const authFail = error => ({
   type: AUTH_FAIL,
   payload: {
-    error,
+    error: error.message,
   },
 });
 
@@ -54,7 +54,6 @@ export const auth = () => dispatch => {
       return databaseRef.ref(`users/${uid}`).update(user);
     })
     .catch(error => {
-      console.error(error);
       dispatch(authFail(error));
     });
 };

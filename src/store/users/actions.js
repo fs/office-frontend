@@ -21,7 +21,7 @@ export const fetchUsersSuccess = users => ({
 export const fetchUsersFail = error => ({
   type: FETCH_USERS_FAIL,
   payload: {
-    error,
+    error: error.message,
   },
 });
 
@@ -48,7 +48,7 @@ export const setTableSuccess = user => ({
 export const setTableFail = error => ({
   type: SET_TABLE_FAIL,
   payload: {
-    error,
+    error: error.message,
   },
 });
 

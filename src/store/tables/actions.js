@@ -18,7 +18,7 @@ export const fetchTablesSuccess = tables => ({
 export const fetchTablesFail = error => ({
   type: FETCH_TABLES_FAIL,
   payload: {
-    error,
+    error: error.message,
   },
 });
 
