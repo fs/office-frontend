@@ -13,6 +13,7 @@ import ButtonBase from '@material-ui/core/ButtonBase';
 import Avatar from '@material-ui/core/Avatar';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import PersonIcon from '@material-ui/icons/Person';
+import Snackbar from '@material-ui/core/Snackbar';
 import { withStyles } from '@material-ui/core/styles';
 import AuthContainer from '../../containers/Auth/AuthContainer';
 import MapContainer from '../../containers/MapContainer/MapContainer';
@@ -86,7 +87,16 @@ const styles = theme => ({
   },
 });
 
-const Home = ({ loading, isAuthenticated, currentUser, classes, handleDrawerToggle, open }) => {
+const Home = ({
+  error,
+  loading,
+  isAuthenticated,
+  currentUser,
+  classes,
+  handleDrawerToggle,
+  handleNotificationClose,
+  open,
+}) => {
   let auth = <CircularProgress color="secondary" />;
 
   if (!loading) {
@@ -138,6 +148,13 @@ const Home = ({ loading, isAuthenticated, currentUser, classes, handleDrawerTogg
         >
           <div className={classes.drawerHeader} />
           <MapContainer />
+          <Snackbar
+            anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+            open={!!error}
+            autoHideDuration={6000}
+            onClose={handleNotificationClose}
+            message={error}
+          />
         </main>
         <Drawer
           variant="persistent"
@@ -160,9 +177,11 @@ const Home = ({ loading, isAuthenticated, currentUser, classes, handleDrawerTogg
 
 Home.defaultProps = {
   currentUser: null,
+  error: null,
 };
 
 Home.propTypes = {
+  error: PropTypes.string,
   loading: PropTypes.bool.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
   currentUser: PropTypes.shape({
@@ -185,6 +204,7 @@ Home.propTypes = {
   }).isRequired,
   open: PropTypes.bool.isRequired,
   handleDrawerToggle: PropTypes.func.isRequired,
+  handleNotificationClose: PropTypes.func.isRequired,
 };
 
 export default withStyles(styles)(Home);

@@ -7,6 +7,8 @@ import {
   SET_TABLE_FAIL,
 } from './actions';
 
+import { RESET_ERROR } from '../error/actions';
+
 const initialState = {
   users: {},
   error: null,
@@ -51,6 +53,11 @@ const reducer = (state = initialState, action) => {
         ...state,
         error: action.payload.error,
         loading: false,
+      };
+    case RESET_ERROR:
+      return {
+        ...state,
+        error: null,
       };
     default:
       return state;
