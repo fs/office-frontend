@@ -158,6 +158,10 @@ const Home = ({ loading, isAuthenticated, currentUser, classes, handleDrawerTogg
   );
 };
 
+Home.defaultProps = {
+  currentUser: null,
+};
+
 Home.propTypes = {
   loading: PropTypes.bool.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
@@ -166,7 +170,7 @@ Home.propTypes = {
     email: PropTypes.string,
     photoUrl: PropTypes.string,
     userId: PropTypes.string,
-  }).isRequired,
+  }),
   classes: PropTypes.shape({
     root: PropTypes.string,
     appWrapper: PropTypes.string,

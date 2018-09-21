@@ -60,6 +60,10 @@ const Auth = ({ isAuthenticated, currentUser, classes, loading, onAuth, onLogout
   return <div className={classes.root}>{profile}</div>;
 };
 
+Auth.defaultProps = {
+  currentUser: null,
+};
+
 Auth.propTypes = {
   loading: PropTypes.bool.isRequired,
   currentUser: PropTypes.shape({
@@ -67,7 +71,7 @@ Auth.propTypes = {
     email: PropTypes.string,
     photoUrl: PropTypes.string,
     userId: PropTypes.string,
-  }).isRequired,
+  }),
   isAuthenticated: PropTypes.bool.isRequired,
   classes: PropTypes.shape({
     root: PropTypes.string,
