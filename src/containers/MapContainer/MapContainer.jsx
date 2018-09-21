@@ -64,13 +64,12 @@ class MapContainer extends Component {
 
   render() {
     const { popup, userId } = this.state;
-    const { users } = this.props;
 
     return (
       <Map
         {...this.props}
+        userId={userId}
         popup={popup}
-        user={users[userId]}
         onTableClick={this.handleTableClick}
         handlePopupClose={this.handlePopupClose}
         handleHoldClick={this.handleHoldClick}

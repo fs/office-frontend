@@ -31,12 +31,16 @@ const styles = theme => ({
     display: 'flex',
     justifyContent: 'center',
   },
+  button: {
+    marginTop: theme.spacing.unit,
+  },
 });
 
 const Popup = ({
   loading,
   classes,
   user,
+  isCurrentUser,
   isAuthenticated,
   handleHoldClick,
   tableId,
@@ -55,7 +59,21 @@ const Popup = ({
       </div>
     );
   } else if (user) {
-    content = <Profile name={user.name} email={user.email} photoUrl={user.photoUrl} />;
+    content = (
+      <Profile name={user.name} email={user.email} photoUrl={user.photoUrl}>
+        {isCurrentUser ? (
+          <Button
+            color="secondary"
+            aria-label="Release this place"
+            fullWidth
+            className={classes.button}
+            onClick={() => handleHoldClick(null)}
+          >
+            Release this place
+          </Button>
+        ) : null}
+      </Profile>
+    );
   } else {
     content = isAuthenticated ? (
       <Button
@@ -89,6 +107,7 @@ const Popup = ({
 
 Popup.defaultProps = {
   user: null,
+  isCurrentUser: null,
 };
 
 Popup.propTypes = {
@@ -102,6 +121,7 @@ Popup.propTypes = {
     name: PropTypes.string,
     photoUrl: PropTypes.string,
   }),
+  isCurrentUser: PropTypes.bool,
   isAuthenticated: PropTypes.bool.isRequired,
   handleHoldClick: PropTypes.func.isRequired,
   tableId: PropTypes.string.isRequired,

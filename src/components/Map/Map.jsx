@@ -27,7 +27,9 @@ const Map = ({
   theme,
   classes,
   popup,
-  user,
+  users,
+  userId,
+  currentUser,
   isAuthenticated,
   handleHoldClick,
   handlePopupClose,
@@ -58,7 +60,8 @@ const Map = ({
           centerHorizontal={popup.centerHorizontal}
           centerVertical={popup.centerVertical}
           tableId={popup.tableId}
-          user={user}
+          user={users[userId]}
+          isCurrentUser={currentUser.userId === userId}
           isAuthenticated={isAuthenticated}
           handleHoldClick={handleHoldClick}
           handlePopupClose={handlePopupClose}
@@ -71,7 +74,9 @@ const Map = ({
 };
 
 Map.defaultProps = {
-  user: null,
+  users: null,
+  userId: null,
+  currentUser: null,
 };
 
 Map.propTypes = {
@@ -104,10 +109,13 @@ Map.propTypes = {
     tableId: PropTypes.string,
     open: PropTypes.bool,
   }).isRequired,
-  user: PropTypes.shape({
+  users: PropTypes.objectOf(PropTypes.object),
+  userId: PropTypes.string,
+  currentUser: PropTypes.shape({
     name: PropTypes.string,
     email: PropTypes.string,
     photoUrl: PropTypes.string,
+    userId: PropTypes.string,
   }),
   isAuthenticated: PropTypes.bool.isRequired,
   handleHoldClick: PropTypes.func.isRequired,
