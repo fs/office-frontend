@@ -61,7 +61,7 @@ const Map = ({
           centerVertical={popup.centerVertical}
           tableId={popup.tableId}
           user={users[userId]}
-          isCurrentUser={currentUser.userId === userId}
+          isCurrentUser={currentUser ? currentUser.userId === userId : false}
           isAuthenticated={isAuthenticated}
           handleHoldClick={handleHoldClick}
           handlePopupClose={handlePopupClose}
