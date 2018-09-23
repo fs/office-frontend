@@ -17,6 +17,7 @@ import Snackbar from '@material-ui/core/Snackbar';
 import { withStyles } from '@material-ui/core/styles';
 import AuthContainer from '../../containers/Auth/AuthContainer';
 import MapContainer from '../../containers/MapContainer/MapContainer';
+import SearchContainer from '../../containers/SearchContainer/SearchContainer';
 
 const drawerWidth = 340;
 
@@ -138,6 +139,7 @@ const Home = ({
             <Typography variant="title" color="inherit" noWrap>
               FS Office
             </Typography>
+            <SearchContainer />
             {auth}
           </Toolbar>
         </AppBar>
