@@ -14,12 +14,11 @@ class TableContainer extends Component {
   };
 
   render() {
-    const { table, isOccupied } = this.props;
+    const { table, isOccupied, currentTableId } = this.props;
     return (
       <Table
-        x={table.x}
-        y={table.y}
-        transform={table.transform}
+        {...table}
+        currentTableId={currentTableId}
         onClick={this.handleTableClick}
         isOccupied={isOccupied}
       />
@@ -30,6 +29,7 @@ class TableContainer extends Component {
 const mapStateToProps = (state, ownProps) => ({
   table: state.tables.tables[ownProps.tableId],
   isOccupied: !!state.tables.usersConnections[ownProps.tableId],
+  currentTableId: state.tables.currentTableId,
 });
 
 const mapDispatchToProps = {

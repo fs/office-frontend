@@ -41,5 +41,5 @@ export const showTableInfo = tableId => ({
 });
 
 export const hideTableInfo = () => ({
-  type: SHOW_TABLE_INFO,
+  type: HIDE_TABLE_INFO,
 });

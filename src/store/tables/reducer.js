@@ -26,7 +26,12 @@ const reducer = (state = initialState, action) => {
     case FETCH_TABLES_SUCCESS:
       return {
         ...state,
-        tables: action.payload.tables,
+        tables: Object.keys(action.payload.tables)
+          .map(id => ({
+            ...action.payload.tables[id],
+            id,
+          }))
+          .reduce((prev, curr) => ({ ...prev, [curr.id]: curr }), {}),
         error: null,
         loading: false,
       };
@@ -62,12 +67,12 @@ const reducer = (state = initialState, action) => {
     case SHOW_TABLE_INFO:
       return {
         ...state,
-        tableId: action.payload.tableId,
+        currentTableId: action.payload.tableId,
       };
     case HIDE_TABLE_INFO:
       return {
         ...state,
-        tableId: null,
+        currentTableId: null,
       };
     default:
       return state;
