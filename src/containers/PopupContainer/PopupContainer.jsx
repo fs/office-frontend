@@ -29,16 +29,12 @@ class PopupContainer extends Component {
     this.props.setTable(this.props.currentUser.userId, null);
   };
 
-  handlePopupClose = () => {
-    const oldTableId = this.props.currentTableId;
-    console.log(oldTableId);
-    setTimeout(() => {
-      console.log(oldTableId);
-      console.log(this.props.currentTableId);
-      if (oldTableId === this.props.currentTableId) {
-        this.props.hideTableInfo();
-      }
-    }, 1000);
+  handlePopupClose = e => {
+    if (e.target.dataset.table) {
+      return;
+    }
+    console.log('Popup close');
+    this.props.hideTableInfo();
   };
 
   render() {

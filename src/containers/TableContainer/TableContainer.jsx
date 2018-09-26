@@ -9,7 +9,8 @@ class TableContainer extends Component {
   //   prop: PropTypes,
   // };
 
-  handleTableClick = () => {
+  handleTableClick = e => {
+    console.log('Table click');
     this.props.showTableInfo(this.props.tableId);
   };
 
