@@ -31,14 +31,12 @@ const styles = theme => ({
     justifyContent: 'space-between',
   },
   content: {
-    height: `calc(100% - ${theme.spacing.unit * 7}px)`,
     marginTop: theme.spacing.unit * 7,
     flexGrow: 1,
     backgroundColor: theme.palette.background.default,
     padding: theme.spacing.unit * 3,
     [theme.breakpoints.up('sm')]: {
       marginTop: theme.spacing.unit * 8,
-      height: `calc(100% - ${theme.spacing.unit * 8}px)`,
     },
   },
   margin: {
