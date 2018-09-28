@@ -39,9 +39,6 @@ const styles = theme => ({
       marginTop: theme.spacing.unit * 8,
     },
   },
-  margin: {
-    ...theme.mixins.toolbar,
-  },
   avatarButton: {
     borderRadius: '50%',
     boxShadow: theme.shadows[6],
