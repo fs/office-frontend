@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import AppBar from '@material-ui/core/AppBar';
@@ -16,10 +16,6 @@ import MapContainer from '../../containers/MapContainer/MapContainer';
 import SearchContainer from '../../containers/SearchContainer/SearchContainer';
 
 const styles = theme => ({
-  root: {
-    flexGrow: 1,
-    height: '100vh',
-  },
   logo: {
     display: 'none',
     [theme.breakpoints.up('md')]: {
@@ -103,7 +99,7 @@ const Home = ({
   }
 
   return (
-    <div className={classes.root}>
+    <Fragment>
       <AppBar position="absolute">
         <Toolbar className={classes.toolBar}>
           <Typography variant="title" color="inherit" noWrap className={classes.logo}>
@@ -132,7 +128,7 @@ const Home = ({
       >
         <AuthContainer />
       </SwipeableDrawer>
-    </div>
+    </Fragment>
   );
 };
 

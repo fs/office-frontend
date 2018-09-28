@@ -32,7 +32,7 @@ const Popup = ({ classes, handlePopupClose, rectRef, ...rest }) => {
   const popupLeft = left + (right - left) / 2;
 
   return (
-    <ClickAwayListener onClickAway={handlePopupClose}>
+    <ClickAwayListener onClickAway={handlePopupClose} touchEvent="onTouchStart">
       <Paper
         className={classes.root}
         style={{
