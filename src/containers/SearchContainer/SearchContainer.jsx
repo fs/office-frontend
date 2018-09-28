@@ -9,46 +9,7 @@ import NoSsr from '@material-ui/core/NoSsr';
 import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
 import MenuItem from '@material-ui/core/MenuItem';
-
-const suggestions = [
-  { label: 'Afghanistan' },
-  { label: 'Aland Islands' },
-  { label: 'Albania' },
-  { label: 'Algeria' },
-  { label: 'American Samoa' },
-  { label: 'Andorra' },
-  { label: 'Angola' },
-  { label: 'Anguilla' },
-  { label: 'Antarctica' },
-  { label: 'Antigua and Barbuda' },
-  { label: 'Argentina' },
-  { label: 'Armenia' },
-  { label: 'Aruba' },
-  { label: 'Australia' },
-  { label: 'Austria' },
-  { label: 'Azerbaijan' },
-  { label: 'Bahamas' },
-  { label: 'Bahrain' },
-  { label: 'Bangladesh' },
-  { label: 'Barbados' },
-  { label: 'Belarus' },
-  { label: 'Belgium' },
-  { label: 'Belize' },
-  { label: 'Benin' },
-  { label: 'Bermuda' },
-  { label: 'Bhutan' },
-  { label: 'Bolivia, Plurinational State of' },
-  { label: 'Bonaire, Sint Eustatius and Saba' },
-  { label: 'Bosnia and Herzegovina' },
-  { label: 'Botswana' },
-  { label: 'Bouvet Island' },
-  { label: 'Brazil' },
-  { label: 'British Indian Ocean Territory' },
-  { label: 'Brunei Darussalam' },
-].map(suggestion => ({
-  value: suggestion.label,
-  label: suggestion.label,
-}));
+import { showTableInfo } from '../../store/tables/actions';
 
 const darkTheme = createMuiTheme({
   palette: {
@@ -173,19 +134,19 @@ const components = {
 };
 
 class SearchContainer extends React.Component {
-  state = {
-    value: null,
-  };
-
-  handleChange = value => {
-    this.setState({
-      value,
-    });
+  handleChange = ({ value }) => {
+    this.props.showTableInfo(this.props.users[value].tableId);
   };
 
   render() {
-    console.log(this.props.users);
-    const { classes, users } = this.props;
+    const { classes, users, currentTableUserId } = this.props;
+
+    const options = Object.keys(users)
+      .map(id => users[id])
+      .map(user => ({
+        value: user.id,
+        label: user.name,
+      }));
 
     const selectStyles = {
       input: base => ({
@@ -204,9 +165,9 @@ class SearchContainer extends React.Component {
             <Select
               classes={classes}
               styles={selectStyles}
-              options={users}
+              options={options}
               components={components}
-              value={this.state.value}
+              value={options.find(({ value }) => currentTableUserId === value) || null}
               onChange={this.handleChange}
               placeholder="Search a user..."
             />
@@ -222,12 +183,17 @@ SearchContainer.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  users: Object.keys(state.users.users)
-    .map(item => state.users.users[item])
-    .map(suggestion => ({
-      value: suggestion.name,
-      label: suggestion.name,
-    })),
+  users: state.users.users,
+  currentTableUserId: state.tables.usersConnections[state.tables.currentTableId],
 });
 
-export default withStyles(styles)(connect(mapStateToProps)(SearchContainer));
+const mapDispatchToProps = {
+  showTableInfo,
+};
+
+export default withStyles(styles)(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(SearchContainer)
+);

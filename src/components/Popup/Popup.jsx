@@ -1,12 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import { withStyles } from '@material-ui/core/styles';
-import Profile from '../Profile/Profile';
+import PopupContent from './PopupContent/PopupContent';
 
 const styles = theme => ({
   root: {
@@ -27,109 +24,38 @@ const styles = theme => ({
       transform: 'translateX(-50%) rotate(45deg)',
     },
   },
-  progressWrapper: {
-    display: 'flex',
-    justifyContent: 'center',
-  },
-  button: {
-    marginTop: theme.spacing.unit,
-  },
 });
 
-const Popup = ({
-  loading,
-  classes,
-  user,
-  isCurrentUser,
-  isAuthenticated,
-  handleHoldClick,
-  tableId,
-  handlePopupClose,
-  x,
-  y,
-  centerVertical,
-  centerHorizontal,
-}) => {
-  let content = null;
+const Popup = ({ classes, handlePopupClose, rectRef, ...rest }) => {
+  const { left, top, right, bottom } = rectRef.current.getBoundingClientRect();
+  const popupTop = top + (bottom - top) / 2;
+  const popupLeft = left + (right - left) / 2;
 
-  if (loading) {
-    content = (
-      <div className={classes.progressWrapper}>
-        <CircularProgress color="secondary" size={48} />
-      </div>
-    );
-  } else if (user) {
-    content = (
-      <Profile name={user.name} email={user.email} photoUrl={user.photoUrl}>
-        {isCurrentUser ? (
-          <Button
-            color="secondary"
-            aria-label="Release this place"
-            fullWidth
-            className={classes.button}
-            onClick={() => handleHoldClick(null)}
-          >
-            Release this place
-          </Button>
-        ) : null}
-      </Profile>
-    );
-  } else {
-    content = isAuthenticated ? (
-      <Button
-        variant="contained"
-        color="secondary"
-        aria-label="Hold this place"
-        fullWidth
-        onClick={() => handleHoldClick(tableId)}
-      >
-        Hold this place
-      </Button>
-    ) : (
-      <Typography>Please, sign in to hold this place</Typography>
-    );
-  }
   return (
     <ClickAwayListener onClickAway={handlePopupClose}>
       <Paper
         className={classes.root}
         style={{
-          top: `${y + centerVertical}px`,
-          left: `${x + centerHorizontal}px`,
+          top: `${popupTop}px`,
+          left: `${popupLeft}px`,
         }}
         elevation={24}
       >
-        {content}
+        <PopupContent {...rest} />
       </Paper>
     </ClickAwayListener>
   );
 };
 
-Popup.defaultProps = {
-  user: null,
-  isCurrentUser: null,
-};
-
 Popup.propTypes = {
-  loading: PropTypes.bool.isRequired,
   classes: PropTypes.shape({
     root: PropTypes.string,
     progressWrapper: PropTypes.string,
   }).isRequired,
-  user: PropTypes.shape({
-    email: PropTypes.string,
-    name: PropTypes.string,
-    photoUrl: PropTypes.string,
-  }),
-  isCurrentUser: PropTypes.bool,
-  isAuthenticated: PropTypes.bool.isRequired,
-  handleHoldClick: PropTypes.func.isRequired,
-  tableId: PropTypes.string.isRequired,
   handlePopupClose: PropTypes.func.isRequired,
-  x: PropTypes.number.isRequired,
-  y: PropTypes.number.isRequired,
-  centerVertical: PropTypes.number.isRequired,
-  centerHorizontal: PropTypes.number.isRequired,
+  rectRef: PropTypes.shape({
+    current: PropTypes.object.isRequired,
+  }).isRequired,
 };
 
 export default withStyles(styles)(Popup);

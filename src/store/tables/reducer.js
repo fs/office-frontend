@@ -1,10 +1,16 @@
-/* eslint-disable no-case-declarations */
-import { FETCH_TABLES_START, FETCH_TABLES_SUCCESS, FETCH_TABLES_FAIL } from './actions';
+import {
+  FETCH_TABLES_START,
+  FETCH_TABLES_SUCCESS,
+  FETCH_TABLES_FAIL,
+  SHOW_TABLE_INFO,
+  HIDE_TABLE_INFO,
+} from './actions';
 import { FETCH_USERS_SUCCESS } from '../users/actions';
 
 const initialState = {
   tables: {},
   usersConnections: {},
+  currentTableId: null,
   error: null,
   loading: false,
 };
@@ -20,7 +26,12 @@ const reducer = (state = initialState, action) => {
     case FETCH_TABLES_SUCCESS:
       return {
         ...state,
-        tables: action.payload.tables,
+        tables: Object.keys(action.payload.tables)
+          .map(id => ({
+            ...action.payload.tables[id],
+            id,
+          }))
+          .reduce((prev, curr) => ({ ...prev, [curr.id]: curr }), {}),
         error: null,
         loading: false,
       };
@@ -30,7 +41,7 @@ const reducer = (state = initialState, action) => {
         error: action.payload.error,
         loading: false,
       };
-    case FETCH_USERS_SUCCESS:
+    case FETCH_USERS_SUCCESS: {
       const userIds = Object.keys(action.payload.users);
 
       const filteredOldConnections = Object.entries(state.usersConnections)
@@ -51,6 +62,17 @@ const reducer = (state = initialState, action) => {
           ...filteredOldConnections,
           ...newConnections,
         },
+      };
+    }
+    case SHOW_TABLE_INFO:
+      return {
+        ...state,
+        currentTableId: action.payload.tableId,
+      };
+    case HIDE_TABLE_INFO:
+      return {
+        ...state,
+        currentTableId: null,
       };
     default:
       return state;

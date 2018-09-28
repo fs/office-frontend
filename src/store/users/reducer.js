@@ -26,7 +26,12 @@ const reducer = (state = initialState, action) => {
     case FETCH_USERS_SUCCESS:
       return {
         ...state,
-        users: action.payload.users,
+        users: Object.keys(action.payload.users)
+          .map(id => ({
+            ...action.payload.users[id],
+            id,
+          }))
+          .reduce((prev, curr) => ({ ...prev, [curr.id]: curr }), {}),
         error: null,
         loading: false,
       };
