@@ -21,7 +21,13 @@ const defaultTheme = createMuiTheme();
 
 const styles = theme => ({
   root: {
-    minWidth: '320px',
+    // minWidth: '320px',
+    width: '100%',
+    marginRight: theme.spacing.unit * 2,
+    [theme.breakpoints.up('md')]: {
+      maxWidth: '320px',
+      marginRight: 0,
+    },
   },
   input: {
     display: 'flex',

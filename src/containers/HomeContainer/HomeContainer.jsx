@@ -15,7 +15,6 @@ class HomeContainer extends Component {
   };
 
   handleNotificationClose = () => {
-    // eslint-disable-next-line
     this.props.onResetError();
   };
 
