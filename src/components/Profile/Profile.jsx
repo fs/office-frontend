@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import Avatar from '@material-ui/core/Avatar';
 import PersonIcon from '@material-ui/icons/Person';
 import Typography from '@material-ui/core/Typography';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import withStyles from '@material-ui/core/styles/withStyles';
 
 const styles = theme => ({
@@ -24,7 +25,7 @@ const styles = theme => ({
   },
 });
 
-const Profile = ({ photoUrl, name, email, children, classes }) => {
+const Profile = ({ photoUrl, name, email, children, classes, loading }) => {
   const avatar = photoUrl ? (
     <Avatar alt={name} className={classes.avatar} src={photoUrl} />
   ) : (
@@ -33,14 +34,19 @@ const Profile = ({ photoUrl, name, email, children, classes }) => {
     </Avatar>
   );
 
-  return (
-    <div className={classes.root}>
-      {avatar}
-      {name && <Typography variant="headline">{name}</Typography>}
-      {email && <Typography variant="subheading">{email}</Typography>}
-      {children}
-    </div>
-  );
+  let profile = <CircularProgress color="secondary" />;
+  if (!loading) {
+    profile = (
+      <Fragment>
+        {avatar}
+        <Typography variant="headline">{name}</Typography>
+        <Typography variant="subheading">{email}</Typography>
+        {children}
+      </Fragment>
+    );
+  }
+
+  return <div className={classes.root}>{profile}</div>;
 };
 
 Profile.defaultProps = {
@@ -51,6 +57,7 @@ Profile.defaultProps = {
 };
 
 Profile.propTypes = {
+  loading: PropTypes.bool,
   name: PropTypes.string,
   email: PropTypes.string,
   photoUrl: PropTypes.string,

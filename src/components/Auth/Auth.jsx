@@ -18,6 +18,9 @@ const styles = theme => ({
   leftIcon: {
     marginRight: theme.spacing.unit,
   },
+  button: {
+    marginTop: theme.spacing.unit * 3,
+  },
   buttonProgress: {
     position: 'absolute',
     top: '50%',
@@ -29,21 +32,22 @@ const styles = theme => ({
 
 const Auth = ({ isAuthenticated, currentUser, classes, loading, onAuth, onLogout }) => {
   const profile = isAuthenticated ? (
-    <Profile name={currentUser.name} email={currentUser.email} photoUrl={currentUser.photoUrl}>
-      <div className={classes.wrapper}>
-        <Button
-          variant="outlined"
-          color="secondary"
-          fullWidth
-          disabled={loading}
-          onClick={onLogout}
-        >
-          Logout
-        </Button>
-        {loading && (
-          <CircularProgress color="secondary" size={24} className={classes.buttonProgress} />
-        )}
-      </div>
+    <Profile
+      name={currentUser.name}
+      email={currentUser.email}
+      photoUrl={currentUser.photoUrl}
+      loading={loading}
+    >
+      <Button
+        className={classes.button}
+        variant="outlined"
+        color="secondary"
+        fullWidth
+        disabled={loading}
+        onClick={onLogout}
+      >
+        Logout
+      </Button>
     </Profile>
   ) : (
     <div className={classes.wrapper}>
