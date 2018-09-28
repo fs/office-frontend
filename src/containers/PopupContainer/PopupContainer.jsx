@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { setTable } from '../../store/users/actions';
 import { hideTableInfo } from '../../store/tables/actions';
@@ -33,7 +32,6 @@ class PopupContainer extends Component {
     if (e.target.dataset.stopPropagation === 'true') {
       return;
     }
-    console.log('Popup close');
     this.props.hideTableInfo();
   };
 
@@ -55,7 +53,6 @@ const mapStateToProps = state => {
   const isAuthenticated = !!currentUser;
   const tableOwner = state.users.users[state.tables.usersConnections[state.tables.currentTableId]];
   const isOccupied = !!tableOwner;
-  console.log(tableOwner);
   return {
     currentUser,
     isAuthenticated,

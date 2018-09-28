@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { showTableInfo } from '../../store/tables/actions';
 import Table from '../../components/Table/Table';
@@ -9,8 +8,7 @@ class TableContainer extends Component {
   //   prop: PropTypes,
   // };
 
-  handleTableClick = e => {
-    console.log('Table click');
+  handleTableClick = () => {
     this.props.showTableInfo(this.props.tableId);
   };
 

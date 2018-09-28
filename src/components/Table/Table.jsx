@@ -35,11 +35,6 @@ class Table extends Component {
   }
 }
 
-Table.defaultProps = {
-  transform: null,
-  color: null,
-};
-
 Table.propTypes = {
   x: PropTypes.string.isRequired,
   y: PropTypes.string.isRequired,
@@ -47,9 +42,24 @@ Table.propTypes = {
   classes: PropTypes.shape({
     root: PropTypes.string,
   }).isRequired,
-  color: PropTypes.string,
   id: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired,
+  currentTableId: PropTypes.string,
+  isOccupied: PropTypes.bool.isRequired,
+  theme: PropTypes.shape({
+    breakpoints: PropTypes.object,
+    direction: PropTypes.string,
+    mixins: PropTypes.object,
+    overrides: PropTypes.object,
+    palette: PropTypes.object,
+    props: PropTypes.object,
+    shadows: PropTypes.arrayOf(PropTypes.string),
+    typography: PropTypes.object,
+    shape: PropTypes.object,
+    spacing: PropTypes.object,
+    transitions: PropTypes.object,
+    zIndex: PropTypes.object,
+  }).isRequired,
 };
 
 export default withStyles(styles, { withTheme: true })(Table);

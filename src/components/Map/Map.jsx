@@ -37,6 +37,10 @@ const Map = ({ loading, tableIds, classes }) => {
 };
 
 Map.propTypes = {
+  classes: PropTypes.shape({
+    wrapper: PropTypes.string,
+    progressWrapper: PropTypes.string,
+  }).isRequired,
   tableIds: PropTypes.arrayOf(PropTypes.string).isRequired,
   loading: PropTypes.bool.isRequired,
 };
