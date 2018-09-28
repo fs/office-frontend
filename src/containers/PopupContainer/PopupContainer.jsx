@@ -30,7 +30,7 @@ class PopupContainer extends Component {
   };
 
   handlePopupClose = e => {
-    if (e.target.dataset.table) {
+    if (e.target.dataset.stopPropagation === 'true') {
       return;
     }
     console.log('Popup close');

@@ -28,7 +28,7 @@ class Table extends Component {
           fill={isOccupied ? theme.palette.primary.light : null}
           onClick={onClick}
           ref={this.rectRef}
-          data-table={id}
+          data-stop-propagation
         />
       </Fragment>
     );

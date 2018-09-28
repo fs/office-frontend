@@ -3,5 +3,10 @@
   "extends": ["airbnb", "plugin:prettier/recommended", "prettier/react"],
   "env": {
     "browser": true
+  },
+  "rules": {
+    "react/no-did-mount-set-state": 0,
+    "react/require-default-props": 0,
+    "react/destructuring-assignment": 0
   }
 }
