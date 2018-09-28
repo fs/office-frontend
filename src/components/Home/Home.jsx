@@ -22,6 +22,9 @@ const styles = theme => ({
       display: 'block',
     },
   },
+  drawerPaper: {
+    minWidth: '268px',
+  },
   toolBar: {
     paddingLeft: theme.spacing.unit * 3,
     paddingRight: theme.spacing.unit * 3,
@@ -125,6 +128,7 @@ const Home = ({
         onClose={handleDrawerToggle}
         onOpen={handleDrawerToggle}
         disableSwipeToOpen={false}
+        classes={{ paper: classes.drawerPaper }}
       >
         <AuthContainer />
       </SwipeableDrawer>
