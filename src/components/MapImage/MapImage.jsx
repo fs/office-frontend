@@ -1,13 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
 
-const MapImage = ({ tablesRect }) => (
+const styles = {
+  image: {
+    width: '100%',
+    height: 'auto',
+  },
+};
+
+const MapImage = ({ tablesRect, classes }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     version="1.1"
-    width="100%"
-    height="100%"
     viewBox="0 0 1005 766"
+    className={classes.image}
   >
     <g fill="none" fillRule="evenodd">
       <g fill="#E0E0E0" transform="translate(239 116)">
@@ -51,4 +58,4 @@ MapImage.propTypes = {
   tablesRect: PropTypes.arrayOf(PropTypes.element).isRequired,
 };
 
-export default MapImage;
+export default withStyles(styles)(MapImage);

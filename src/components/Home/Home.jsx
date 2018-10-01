@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import AppBar from '@material-ui/core/AppBar';
@@ -16,6 +16,11 @@ import MapContainer from '../../containers/MapContainer/MapContainer';
 import SearchContainer from '../../containers/SearchContainer/SearchContainer';
 
 const styles = theme => ({
+  wrapper: {
+    height: '100vh',
+    display: 'flex',
+    flexDirection: 'column',
+  },
   logo: {
     display: 'none',
     [theme.breakpoints.up('md')]: {
@@ -25,19 +30,21 @@ const styles = theme => ({
   drawerPaper: {
     minWidth: '268px',
   },
+  appBar: {
+    flex: 'none',
+  },
   toolBar: {
     paddingLeft: theme.spacing.unit * 3,
     paddingRight: theme.spacing.unit * 3,
     justifyContent: 'space-between',
   },
   content: {
-    marginTop: theme.spacing.unit * 7,
+    display: 'flex',
     flexGrow: 1,
+    flexShrink: 0,
+    justifyContent: 'center',
     backgroundColor: theme.palette.background.default,
     padding: theme.spacing.unit * 3,
-    [theme.breakpoints.up('sm')]: {
-      marginTop: theme.spacing.unit * 8,
-    },
   },
   avatarButton: {
     borderRadius: '50%',
@@ -97,8 +104,8 @@ const Home = ({
   }
 
   return (
-    <Fragment>
-      <AppBar position="absolute">
+    <div className={classes.wrapper}>
+      <AppBar position="relative" className={classes.appBar}>
         <Toolbar className={classes.toolBar}>
           <Typography variant="title" color="inherit" noWrap className={classes.logo}>
             FS Office
@@ -127,7 +134,7 @@ const Home = ({
       >
         <AuthContainer />
       </SwipeableDrawer>
-    </Fragment>
+    </div>
   );
 };
 
@@ -150,10 +157,8 @@ Home.propTypes = {
     root: PropTypes.string,
     appWrapper: PropTypes.string,
     appBar: PropTypes.string,
-    appBarShift: PropTypes.string,
     toolBar: PropTypes.string,
     drawerPaper: PropTypes.string,
-    drawerHeader: PropTypes.string,
     content: PropTypes.string,
     contentShift: PropTypes.string,
     avatarButton: PropTypes.string,
