@@ -10,14 +10,22 @@ class PopupContainer extends Component {
   //   prop: PropTypes
   // }
 
+  state = {
+    popupTop: 0,
+    popupLeft: 0,
+  };
+
   el = document.createElement('div');
 
   componentDidMount() {
     document.body.appendChild(this.el);
+    window.addEventListener('resize', this.handleResize);
+    this.handleResize();
   }
 
   componentWillUnmount() {
     document.body.removeChild(this.el);
+    window.removeEventListener('resize', this.handleResize);
   }
 
   handleHoldClick = () => {
@@ -35,13 +43,29 @@ class PopupContainer extends Component {
     this.props.hideTableInfo();
   };
 
+  handleResize = () => {
+    const { left, top, right, bottom } = this.props.rectRef.current.getBoundingClientRect();
+    const popupTop = top + (bottom - top) / 2;
+    const popupLeft = left + (right - left) / 2;
+    this.setState({
+      popupTop,
+      popupLeft,
+    });
+  };
+
   render() {
+    // const { left, top, right, bottom } = this.props.rectRef.current.getBoundingClientRect();
+    // const popupTop = top + (bottom - top) / 2;
+    // const popupLeft = left + (right - left) / 2;
+
     return ReactDOM.createPortal(
       <Popup
         {...this.props}
         handleHoldClick={this.handleHoldClick}
         handleReleaseClick={this.handleReleaseClick}
         handlePopupClose={this.handlePopupClose}
+        popupTop={this.state.popupTop}
+        popupLeft={this.state.popupLeft}
       />,
       this.el
     );

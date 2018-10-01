@@ -26,26 +26,20 @@ const styles = theme => ({
   },
 });
 
-const Popup = ({ classes, handlePopupClose, rectRef, ...rest }) => {
-  const { left, top, right, bottom } = rectRef.current.getBoundingClientRect();
-  const popupTop = top + (bottom - top) / 2;
-  const popupLeft = left + (right - left) / 2;
-
-  return (
-    <ClickAwayListener onClickAway={handlePopupClose} touchEvent="onTouchStart">
-      <Paper
-        className={classes.root}
-        style={{
-          top: `${popupTop}px`,
-          left: `${popupLeft}px`,
-        }}
-        elevation={24}
-      >
-        <PopupContent {...rest} />
-      </Paper>
-    </ClickAwayListener>
-  );
-};
+const Popup = ({ classes, handlePopupClose, popupTop, popupLeft, ...rest }) => (
+  <ClickAwayListener onClickAway={handlePopupClose} touchEvent="onTouchStart">
+    <Paper
+      className={classes.root}
+      style={{
+        top: `${popupTop}px`,
+        left: `${popupLeft}px`,
+      }}
+      elevation={24}
+    >
+      <PopupContent {...rest} />
+    </Paper>
+  </ClickAwayListener>
+);
 
 Popup.propTypes = {
   classes: PropTypes.shape({
