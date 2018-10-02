@@ -141,7 +141,12 @@ const components = {
 
 class SearchContainer extends React.Component {
   handleChange = ({ value }) => {
-    this.props.showTableInfo(this.props.users[value].tableId);
+    const tableId = this.props.users[value].tableId;
+    if (tableId) {
+      this.props.showTableInfo(tableId);
+    } else {
+      alert('This user did not have a table');
+    }
   };
 
   render() {
