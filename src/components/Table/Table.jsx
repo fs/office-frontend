@@ -13,22 +13,32 @@ class Table extends Component {
   rectRef = React.createRef();
 
   render() {
-    const { classes, x, y, transform, id, currentTableId, isOccupied, theme, onClick } = this.props;
+    const {
+      classes,
+      x,
+      y,
+      width,
+      height,
+      id,
+      currentTableId,
+      isOccupied,
+      theme,
+      onClick,
+    } = this.props;
     return (
       <Fragment>
         {currentTableId === id && <PopupContainer rectRef={this.rectRef} />}
         <rect
           className={classes.root}
-          width="34"
-          height="20"
-          rx="2"
+          width={width}
+          height={height}
           x={x}
           y={y}
-          transform={transform}
           fill={isOccupied ? theme.palette.primary.light : null}
           onClick={onClick}
           ref={this.rectRef}
           data-stop-propagation
+          rx="2"
         />
       </Fragment>
     );
