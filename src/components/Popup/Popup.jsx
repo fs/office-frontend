@@ -27,7 +27,7 @@ const styles = theme => ({
 });
 
 const Popup = ({ classes, handlePopupClose, popupTop, popupLeft, ...rest }) => (
-  <ClickAwayListener onClickAway={handlePopupClose} touchEvent="onTouchStart">
+  <ClickAwayListener onClickAway={handlePopupClose} touchEvent={false}>
     <Paper
       className={classes.root}
       style={{
