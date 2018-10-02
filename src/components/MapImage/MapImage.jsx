@@ -10,7 +10,7 @@ const styles = {
 };
 
 const MapImage = ({ tablesRect, classes }) => (
-  <svg width={832} height={679} viewBox="0 0 832 679" className={classes.image}>
+  <svg viewBox="0 0 832 679" className={classes.image}>
     <g fill="none" fillRule="evenodd">
       <g transform="translate(160 74)" fill="#e0e0e0">
         {tablesRect}
