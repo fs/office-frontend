@@ -48,7 +48,8 @@ class Table extends Component {
 Table.propTypes = {
   x: PropTypes.string.isRequired,
   y: PropTypes.string.isRequired,
-  transform: PropTypes.string,
+  width: PropTypes.string.isRequired,
+  height: PropTypes.string.isRequired,
   classes: PropTypes.shape({
     root: PropTypes.string,
   }).isRequired,

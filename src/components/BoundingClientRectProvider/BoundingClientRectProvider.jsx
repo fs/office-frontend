@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from 'react';
+import PropTypes from 'prop-types';
 import EventListener from 'react-event-listener';
 
 class BoundingClientRectProvider extends Component {
@@ -7,6 +8,13 @@ class BoundingClientRectProvider extends Component {
     left: 0,
     width: 0,
     height: 0,
+  };
+
+  static propTypes = {
+    elem: PropTypes.shape({
+      current: PropTypes.object.isRequired,
+    }),
+    children: PropTypes.func.isRequired,
   };
 
   componentDidMount() {

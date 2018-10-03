@@ -51,6 +51,9 @@ const MapImage = ({ tablesRect, classes }) => (
 
 MapImage.propTypes = {
   tablesRect: PropTypes.arrayOf(PropTypes.element).isRequired,
+  classes: PropTypes.shape({
+    image: PropTypes.string.isRequired,
+  }).isRequired,
 };
 
 export default withStyles(styles)(MapImage);
