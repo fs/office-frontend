@@ -3,7 +3,7 @@ import Map from '../../components/Map/Map';
 // import { databaseRef } from '../../firebase';
 // import tables from '../../tables';
 //   tables.map(item => {
-//     databaseRef.ref('/tables1').push(item);
+//     databaseRef.ref('/tables').push(item);
 //   });
 // }
 
