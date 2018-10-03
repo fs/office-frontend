@@ -2,7 +2,7 @@ language: node_js
 sudo: false
 cache: yarn
 node_js: stable
-script: yarn lint && yarn test
+script: yarn lint && yarn test && yarn build
 deploy:
   provider: firebase
   token:

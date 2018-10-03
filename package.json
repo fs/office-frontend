@@ -27,8 +27,6 @@
     "eject": "react-scripts eject",
     "precommit": "pretty-quick --staged",
     "prettier": "prettier --write './src/**/*.{js,jsx}'",
-    "predeploy": "npm run build",
-    "deploy": "firebase deploy",
     "storybook": "start-storybook -p 9009 -s public",
     "build-storybook": "build-storybook -s public",
     "lint": "eslint ./src --ext .js,.jsx"
