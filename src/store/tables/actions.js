@@ -26,7 +26,7 @@ export const fetchTablesFail = error => ({
 
 export const subscribeTables = () => dispatch => {
   dispatch(fetchTablesStart());
-  databaseRef.ref('/tables1').on('value', snapshot => {
+  databaseRef.ref('/tables').on('value', snapshot => {
     if (snapshot.exists()) {
       dispatch(fetchTablesSuccess(snapshot.val()));
     }
