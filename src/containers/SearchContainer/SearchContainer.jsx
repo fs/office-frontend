@@ -21,7 +21,13 @@ const defaultTheme = createMuiTheme();
 
 const styles = theme => ({
   root: {
-    minWidth: '320px',
+    // minWidth: '320px',
+    width: '100%',
+    marginRight: theme.spacing.unit * 2,
+    [theme.breakpoints.up('md')]: {
+      maxWidth: '320px',
+      marginRight: 0,
+    },
   },
   input: {
     display: 'flex',
@@ -135,7 +141,12 @@ const components = {
 
 class SearchContainer extends React.Component {
   handleChange = ({ value }) => {
-    this.props.showTableInfo(this.props.users[value].tableId);
+    const tableId = this.props.users[value].tableId;
+    if (tableId) {
+      this.props.showTableInfo(tableId);
+    } else {
+      alert('This user did not have a table');
+    }
   };
 
   render() {

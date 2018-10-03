@@ -6,15 +6,8 @@ import TableContainer from '../../containers/TableContainer/TableContainer';
 import MapImage from '../MapImage/MapImage';
 
 const styles = {
-  wrapper: {
-    width: '100%',
-    height: '100%',
-  },
-  progressWrapper: {
-    height: '100%',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
+  progress: {
+    alignSelf: 'center',
   },
 };
 
@@ -22,23 +15,14 @@ const Map = ({ loading, tableIds, classes }) => {
   const tablesRect = tableIds.map(tableId => <TableContainer key={tableId} tableId={tableId} />);
 
   if (loading) {
-    return (
-      <div className={classes.progressWrapper}>
-        <CircularProgress size={96} />
-      </div>
-    );
+    return <CircularProgress size={96} className={classes.progress} />;
   }
 
-  return (
-    <section className={classes.wrapper}>
-      <MapImage tablesRect={tablesRect} />
-    </section>
-  );
+  return <MapImage tablesRect={tablesRect} />;
 };
 
 Map.propTypes = {
   classes: PropTypes.shape({
-    wrapper: PropTypes.string,
     progressWrapper: PropTypes.string,
   }).isRequired,
   tableIds: PropTypes.arrayOf(PropTypes.string).isRequired,

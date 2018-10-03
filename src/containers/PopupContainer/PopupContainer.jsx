@@ -3,13 +3,10 @@ import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import { setTable } from '../../store/users/actions';
 import { hideTableInfo } from '../../store/tables/actions';
+import BoundingClientRectProvider from '../../components/BoundingClientRectProvider/BoundingClientRectProvider';
 import Popup from '../../components/Popup/Popup';
 
 class PopupContainer extends Component {
-  // static propTypes = {
-  //   prop: PropTypes
-  // }
-
   el = document.createElement('div');
 
   componentDidMount() {
@@ -37,12 +34,18 @@ class PopupContainer extends Component {
 
   render() {
     return ReactDOM.createPortal(
-      <Popup
-        {...this.props}
-        handleHoldClick={this.handleHoldClick}
-        handleReleaseClick={this.handleReleaseClick}
-        handlePopupClose={this.handlePopupClose}
-      />,
+      <BoundingClientRectProvider elem={this.props.rectRef.current}>
+        {({ top, left, width, height }) => (
+          <Popup
+            {...this.props}
+            handleHoldClick={this.handleHoldClick}
+            handleReleaseClick={this.handleReleaseClick}
+            handlePopupClose={this.handlePopupClose}
+            popupTop={top + height / 2}
+            popupLeft={left + width / 2}
+          />
+        )}
+      </BoundingClientRectProvider>,
       this.el
     );
   }
