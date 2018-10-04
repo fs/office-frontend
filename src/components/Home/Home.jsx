@@ -129,7 +129,6 @@ const Home = ({
         open={open}
         onClose={handleDrawerToggle}
         onOpen={handleDrawerToggle}
-        disableSwipeToOpen={false}
         classes={{ paper: classes.drawerPaper }}
       >
         <AuthContainer />
